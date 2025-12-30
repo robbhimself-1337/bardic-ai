@@ -5,4 +5,4 @@ openai-whisper
 pyaudio
 sounddevice
 numpy
-TTS
+coqui-tts

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ character.name }} - Bardic AI</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            border-bottom: 2px solid #ffd700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            color: #ffd700;
+            font-size: 1.8em;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-small {
+            padding: 8px 16px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #ffd700;
+            color: #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-small:hover {
+            background: rgba(255, 215, 0, 0.3);
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 2px solid #ffd700;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .character-info {
+            margin-bottom: 30px;
+        }
+        .character-name {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        .character-class {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+        .hp-bar-container {
+            margin: 15px 0;
+        }
+        .hp-label {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .hp-bar {
+            height: 25px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000 0%, #ff6b6b 100%);
+            transition: width 0.5s ease;
+        }
+        .hp-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 5px;
+        }
+        .inventory-item, .quest-item, .enemy-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            border-left: 3px solid #ffd700;
+        }
+        .quest-completed {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+        .enemy-defeated {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+        .game-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .narrative-log {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .narrative-entry {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .narrative-player {
+            border-left-color: #ffd700;
+        }
+        .narrative-dm {
+            border-left-color: #764ba2;
+        }
+        .narrative-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+        .narrative-text {
+            line-height: 1.6;
+        }
+        .input-area {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .voice-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        #recordBtn {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #recordBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        #recordBtn.recording {
+            background: linear-gradient(135deg, #ff0000 0%, #ff6b6b 100%);
+        }
+        .text-input-area {
+            display: flex;
+            gap: 10px;
+        }
+        #textInput {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+        }
+        #textInput:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        #submitBtn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #submitBtn:hover {
+            transform: translateY(-2px);
+        }
+        #status {
+            margin-top: 10px;
+            text-align: center;
+            color: #ffd700;
+            font-style: italic;
+        }
+        .empty-state {
+            color: #808080;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bardic AI</h1>
+        <div class="header-buttons">
+            <a href="/save_game" class="btn-small">Save Game</a>
+            <a href="/" class="btn-small">Main Menu</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar with character stats -->
+        <div class="sidebar">
+            <div class="character-info">
+                <div class="character-name">{{ character.name }}</div>
+                <div class="character-class">Level {{ character.level }} {{ character.char_class }}</div>
+
+                <div class="hp-bar-container">
+                    <div class="hp-label">Hit Points</div>
+                    <div class="hp-bar">
+                        <div class="hp-fill" id="hpFill" style="width: {{ (character.hp / character.max_hp * 100) }}%"></div>
+                        <div class="hp-text" id="hpText">{{ character.hp }}/{{ character.max_hp }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Inventory</div>
+                <div id="inventoryList">
+                    {% if character.inventory %}
+                        {% for item in character.inventory %}
+                        <div class="inventory-item">{{ item }}</div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">Empty</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Active Quests</div>
+                <div id="questList">
+                    {% if active_quests %}
+                        {% for quest in active_quests %}
+                        <div class="quest-item">{{ quest.name }}</div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">No active quests</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if combat_active %}
+            <div class="section">
+                <div class="section-title">Combat</div>
+                <div id="enemyList">
+                    {% for enemy in enemies %}
+                    <div class="enemy-item {% if enemy.defeated %}enemy-defeated{% endif %}">
+                        {{ enemy.name }} (HP: {{ enemy.hp }})
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Main game area -->
+        <div class="game-area">
+            <div class="narrative-log" id="narrativeLog">
+                <div class="narrative-entry narrative-dm">
+                    <div class="narrative-label">Dungeon Master</div>
+                    <div class="narrative-text">{{ initial_narrative }}</div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="voice-controls">
+                    <button id="recordBtn" onmousedown="startRecording()" onmouseup="stopRecording()">
+                        🎤 Hold to Record
+                    </button>
+                </div>
+
+                <div class="text-input-area">
+                    <input type="text" id="textInput" placeholder="Or type your action here..." onkeypress="handleKeyPress(event)">
+                    <button id="submitBtn" onclick="submitAction()">Submit</button>
+                </div>
+
+                <div id="status">Ready</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    await transcribeAudio(audioBlob);
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                mediaRecorder.start();
+                document.getElementById('recordBtn').classList.add('recording');
+                document.getElementById('status').textContent = 'Recording...';
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                document.getElementById('recordBtn').classList.remove('recording');
+                document.getElementById('status').textContent = 'Processing...';
+            }
+        }
+
+        async function transcribeAudio(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.wav');
+
+            try {
+                const response = await fetch('/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.text) {
+                    document.getElementById('textInput').value = data.text;
+                    document.getElementById('status').textContent = 'Transcribed! Click Submit or press Enter.';
+                } else {
+                    document.getElementById('status').textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                submitAction();
+            }
+        }
+
+        async function submitAction() {
+            const action = document.getElementById('textInput').value.trim();
+            if (!action) {
+                document.getElementById('status').textContent = 'Please enter an action';
+                return;
+            }
+
+            // Add player action to narrative log
+            addNarrativeEntry('player', action);
+
+            // Clear input
+            document.getElementById('textInput').value = '';
+            document.getElementById('status').textContent = 'DM is thinking...';
+
+            try {
+                const response = await fetch('/game_action', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: action })
+                });
+
+                const data = await response.json();
+
+                // Add DM response to narrative log
+                addNarrativeEntry('dm', data.narrative);
+
+                // Update game state
+                updateGameState(data);
+
+                // Play audio if available
+                if (data.audio_filename) {
+                    playAudio(data.audio_filename);
+                }
+
+                document.getElementById('status').textContent = 'Ready';
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function addNarrativeEntry(type, text) {
+            const log = document.getElementById('narrativeLog');
+            const entry = document.createElement('div');
+            entry.className = `narrative-entry narrative-${type}`;
+
+            const label = document.createElement('div');
+            label.className = 'narrative-label';
+            label.textContent = type === 'player' ? 'You' : 'Dungeon Master';
+
+            const content = document.createElement('div');
+            content.className = 'narrative-text';
+            content.textContent = text;
+
+            entry.appendChild(label);
+            entry.appendChild(content);
+            log.appendChild(entry);
+
+            // Scroll to bottom
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateGameState(data) {
+            // Update HP
+            const hpPercent = (data.character_hp / data.character_max_hp) * 100;
+            document.getElementById('hpFill').style.width = hpPercent + '%';
+            document.getElementById('hpText').textContent = data.character_hp + '/' + data.character_max_hp;
+
+            // Update inventory
+            const inventoryList = document.getElementById('inventoryList');
+            inventoryList.innerHTML = '';
+            if (data.inventory && data.inventory.length > 0) {
+                data.inventory.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'inventory-item';
+                    div.textContent = item;
+                    inventoryList.appendChild(div);
+                });
+            } else {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.textContent = 'Empty';
+                inventoryList.appendChild(empty);
+            }
+
+            // Update quests
+            const questList = document.getElementById('questList');
+            questList.innerHTML = '';
+            if (data.active_quests && data.active_quests.length > 0) {
+                data.active_quests.forEach(quest => {
+                    const div = document.createElement('div');
+                    div.className = 'quest-item';
+                    div.textContent = quest.name;
+                    questList.appendChild(div);
+                });
+            } else {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.textContent = 'No active quests';
+                questList.appendChild(empty);
+            }
+
+            // Update combat if active
+            if (data.combat_active && data.enemies) {
+                // Show or update enemy list
+                // (Implementation depends on sidebar structure)
+            }
+        }
+
+        function playAudio(filename) {
+            const audio = new Audio('/audio/' + filename);
+            audio.play();
+        }
+    </script>
+</body>
+</html>

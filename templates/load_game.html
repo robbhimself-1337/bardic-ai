@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Game - Bardic AI</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+        .saved-games {
+            display: grid;
+            gap: 20px;
+        }
+        .save-card {
+            padding: 25px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .save-card:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .save-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .character-name {
+            font-size: 1.8em;
+            color: #ffd700;
+        }
+        .character-level {
+            font-size: 1.2em;
+            color: #b0b0b0;
+        }
+        .save-info {
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+        .save-date {
+            color: #808080;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .no-saves {
+            text-align: center;
+            padding: 40px;
+            color: #b0b0b0;
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #ffd700;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-button:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Load Saved Game</h1>
+
+        <div class="saved-games">
+            {% if saved_games %}
+                {% for save in saved_games %}
+                <div class="save-card" onclick="window.location.href='/load_game/{{ save.filename }}'">
+                    <div class="save-header">
+                        <div class="character-name">{{ save.character_name }}</div>
+                        <div class="character-level">Level {{ save.level }} {{ save.char_class }}</div>
+                    </div>
+                    <div class="save-info">
+                        <strong>Campaign:</strong> {{ save.campaign_id }}
+                    </div>
+                    <div class="save-date">
+                        Last saved: {{ save.last_saved }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-saves">
+                    <p>No saved games found.</p>
+                    <p>Start a new adventure to create your first save!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <a href="/" class="back-button">← Back to Main Menu</a>
+    </div>
+</body>
+</html>

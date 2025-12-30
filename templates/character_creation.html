@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Creation - Bardic AI</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #ffd700;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        .class-select {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .class-option {
+            padding: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .class-option:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        .class-option.selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+        }
+        .class-option input[type="radio"] {
+            display: none;
+        }
+        .class-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .class-desc {
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin-top: 20px;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Character</h1>
+
+        <form method="POST" action="/character_creation">
+            <div class="form-group">
+                <label for="name">Character Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your character's name">
+            </div>
+
+            <div class="form-group">
+                <label>Choose Your Class</label>
+                <div class="class-select">
+                    <div class="class-option" onclick="selectClass('Fighter')">
+                        <input type="radio" name="char_class" value="Fighter" id="fighter" required>
+                        <div class="class-name">⚔️ Fighter</div>
+                        <div class="class-desc">Strong and tough, masters of weapons and armor</div>
+                    </div>
+
+                    <div class="class-option" onclick="selectClass('Rogue')">
+                        <input type="radio" name="char_class" value="Rogue" id="rogue" required>
+                        <div class="class-name">🗡️ Rogue</div>
+                        <div class="class-desc">Cunning and agile, experts in stealth and precision</div>
+                    </div>
+
+                    <div class="class-option" onclick="selectClass('Wizard')">
+                        <input type="radio" name="char_class" value="Wizard" id="wizard" required>
+                        <div class="class-name">🔮 Wizard</div>
+                        <div class="class-desc">Wielders of arcane magic and ancient knowledge</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="button">Begin Adventure</button>
+        </form>
+    </div>
+
+    <script>
+        function selectClass(className) {
+            // Remove selected from all
+            document.querySelectorAll('.class-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+
+            // Add selected to clicked
+            event.currentTarget.classList.add('selected');
+
+            // Check the radio button
+            document.getElementById(className.toLowerCase()).checked = true;
+        }
+    </script>
+</body>
+</html>

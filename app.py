@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from services.ollama_client import call_ollama
 from services.voice_input import transcribe_audio
+from services.voice_output import text_to_speech, AUDIO_OUTPUT_DIR
 
 app = Flask(__name__)
 
@@ -144,15 +145,18 @@ def transcribe():
 @app.route('/action', methods=['POST'])
 def action():
     player_action = request.form['player_action']
-    
+
     # Simple DM prompt
-    dm_prompt = f"""You are a Dungeon Master running a D&D adventure. 
+    dm_prompt = f"""You are a Dungeon Master running a D&D adventure.
 The player says: "{player_action}"
 
 Respond as the DM, describing what happens. Keep it to 2-3 sentences."""
-    
+
     dm_response = call_ollama(dm_prompt)
-    
+
+    # Generate TTS audio for DM response
+    audio_filename = text_to_speech(dm_response)
+
     return f"""
     <html>
         <head><title>Bardic AI</title></head>
@@ -160,10 +164,20 @@ Respond as the DM, describing what happens. Keep it to 2-3 sentences."""
             <h1>Bardic AI</h1>
             <p><strong>You:</strong> {player_action}</p>
             <p><strong>DM:</strong> {dm_response}</p>
+            <audio controls autoplay>
+                <source src="/audio/{audio_filename}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <br><br>
             <a href="/">Continue Adventure</a>
         </body>
     </html>
     """
+
+@app.route('/audio/<filename>')
+def serve_audio(filename):
+    """Serve audio files from the temp directory."""
+    return send_from_directory(AUDIO_OUTPUT_DIR, filename)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

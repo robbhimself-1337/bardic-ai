@@ -1,0 +1,107 @@
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache is empty or incomplete. Initializing...
+INFO:services.open5e_client:Refreshing all Open5e cache...
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/races
+INFO:services.open5e_client:Saved races to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/classes
+INFO:services.open5e_client:Saved classes to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/backgrounds
+INFO:services.open5e_client:Saved backgrounds to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=2
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=3
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=4
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=5
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=6
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=7
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=8
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=9
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=10
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=11
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=12
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=13
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=14
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=15
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=16
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=17
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=18
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=19
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=20
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=21
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=22
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=23
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=24
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=25
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=26
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=27
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=28
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/spells/?page=29
+INFO:services.open5e_client:Saved spells to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/weapons
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/weapons/?page=2
+INFO:services.open5e_client:Saved weapons to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/armor
+INFO:services.open5e_client:Saved armor to cache
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=2
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=3
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=4
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=5
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=6
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=7
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=8
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=9
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=10
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=11
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=12
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=13
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=14
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=15
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=16
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=17
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=18
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=19
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=20
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=21
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=22
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=23
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=24
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=25
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=26
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=27
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=28
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=29
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=30
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=31
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=32
+INFO:services.open5e_client:Fetching: https://api.open5e.com/v1/magicitems/?page=33
+INFO:services.open5e_client:Saved magicitems to cache
+INFO:services.open5e_client:Cache refresh complete!
+INFO:__main__:Open5e cache initialized successfully!
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.88:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [30/Dec/2025 00:46:49] "[32mGET /character/new HTTP/1.1[0m" 302 -
+INFO:services.open5e_client:Loaded races from cache
+INFO:werkzeug:127.0.0.1 - - [30/Dec/2025 00:46:49] "GET /character/step1 HTTP/1.1" 200 -
+INFO:services.open5e_client:Loaded races from cache
+INFO:werkzeug:127.0.0.1 - - [30/Dec/2025 00:46:53] "GET /character/step1 HTTP/1.1" 200 -

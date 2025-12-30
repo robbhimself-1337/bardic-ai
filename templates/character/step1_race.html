@@ -1,0 +1,203 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 1: Choose Race{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .step-header h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .step-header p {
+        color: #c0b090;
+        font-size: 1.1em;
+    }
+    .filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        padding: 8px 16px;
+        background: transparent;
+        border: 2px solid #d4af37;
+        color: #d4af37;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .filter-btn.active {
+        background: #d4af37;
+        color: #2c1810;
+    }
+    .filter-btn:hover {
+        background: rgba(212, 175, 55, 0.2);
+    }
+    .search-box {
+        flex: 1;
+        min-width: 200px;
+        padding: 8px 16px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #d4af37;
+        border-radius: 5px;
+        color: #f0e6d2;
+        font-size: 1em;
+    }
+    .race-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .race-card {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .race-card:hover {
+        border-color: #d4af37;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+    .race-card.selected {
+        border-color: #90ee90;
+        background: rgba(144, 238, 144, 0.1);
+    }
+    .race-name {
+        font-size: 1.5em;
+        color: #d4af37;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .race-desc {
+        color: #c0b090;
+        margin-bottom: 15px;
+        line-height: 1.6;
+        max-height: 100px;
+        overflow: hidden;
+    }
+    .race-traits {
+        border-top: 1px solid #8b7355;
+        padding-top: 15px;
+    }
+    .trait-item {
+        margin: 5px 0;
+        color: #90ee90;
+        font-size: 0.95em;
+    }
+    .trait-label {
+        color: #d4af37;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Choose Your Race</h2>
+    <p>Select the race that will define your character's heritage and innate abilities</p>
+</div>
+
+<div class="filters">
+    <button class="filter-btn active" onclick="filterRaces('all')">All Races</button>
+    <button class="filter-btn" onclick="filterRaces('common')">Common</button>
+    <button class="filter-btn" onclick="filterRaces('exotic')">Exotic</button>
+    <input type="text" class="search-box" id="searchBox" placeholder="Search races..." onkeyup="searchRaces()">
+</div>
+
+<div class="race-grid" id="raceGrid">
+    {% for race in races %}
+    <div class="race-card" data-race="{{ race.name }}" data-type="{% if race.name in ['Human', 'Elf', 'Dwarf', 'Halfling'] %}common{% else %}exotic{% endif %}" onclick="selectRace('{{ race.name }}')">
+        <div class="race-name">{{ race.name }}</div>
+        <div class="race-desc">{{ race.desc | truncate(150) }}</div>
+        <div class="race-traits">
+            <div class="trait-item">
+                <span class="trait-label">Speed:</span> {{ race.speed }} ft.
+            </div>
+            <div class="trait-item">
+                <span class="trait-label">Size:</span> {{ race.size }}
+            </div>
+            {% if race.asi %}
+            <div class="trait-item">
+                <span class="trait-label">Ability Bonus:</span> {{ race.asi | join(', ') }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<form method="POST" id="raceForm">
+    <input type="hidden" name="race" id="selectedRace" required>
+    <div class="navigation">
+        <a href="/" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary" id="nextBtn" disabled>Next: Choose Class →</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let selectedRaceName = '';
+
+    function filterRaces(type) {
+        // Update active filter button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        // Filter race cards
+        const cards = document.querySelectorAll('.race-card');
+        cards.forEach(card => {
+            if (type === 'all' || card.dataset.type === type) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function searchRaces() {
+        const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+        const cards = document.querySelectorAll('.race-card');
+
+        cards.forEach(card => {
+            const raceName = card.dataset.race.toLowerCase();
+            const raceDesc = card.querySelector('.race-desc').textContent.toLowerCase();
+
+            if (raceName.includes(searchTerm) || raceDesc.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function selectRace(raceName) {
+        // Remove selection from all cards
+        document.querySelectorAll('.race-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // Add selection to clicked card
+        event.currentTarget.classList.add('selected');
+
+        // Update hidden form field
+        selectedRaceName = raceName;
+        document.getElementById('selectedRace').value = raceName;
+
+        // Enable next button
+        document.getElementById('nextBtn').disabled = false;
+    }
+</script>
+{% endblock %}

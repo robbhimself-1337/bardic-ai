@@ -1,0 +1,143 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 7: Choose Skills{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .step-header h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+    }
+    .skill-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .skill-label:hover {
+        border-color: #d4af37;
+        background: rgba(212, 175, 55, 0.1);
+    }
+    .skill-label.checked {
+        border-color: #90ee90;
+        background: rgba(144, 238, 144, 0.1);
+    }
+    .skill-checkbox {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .skill-name {
+        flex: 1;
+        color: #f0e6d2;
+        font-size: 1.1em;
+    }
+    .skill-ability {
+        color: #d4af37;
+        font-size: 0.9em;
+        font-style: italic;
+    }
+    .counter {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 1.3em;
+    }
+    .counter-value {
+        color: #d4af37;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Choose Your Skills</h2>
+    <p>As a <strong style="color: #90ee90;">{{ wizard_data.character_class }}</strong>, choose <strong style="color: #d4af37;">{{ num_skills }}</strong> skill proficiencies</p>
+</div>
+
+<div class="counter">
+    Selected: <span class="counter-value" id="skillCounter">0</span> / {{ num_skills }}
+</div>
+
+<form method="POST" id="skillsForm">
+    <div class="skills-grid">
+        {% set skill_abilities = {
+            'Acrobatics': 'DEX', 'Animal Handling': 'WIS', 'Arcana': 'INT', 'Athletics': 'STR',
+            'Deception': 'CHA', 'History': 'INT', 'Insight': 'WIS', 'Intimidation': 'CHA',
+            'Investigation': 'INT', 'Medicine': 'WIS', 'Nature': 'INT', 'Perception': 'WIS',
+            'Performance': 'CHA', 'Persuasion': 'CHA', 'Religion': 'INT', 'Sleight of Hand': 'DEX',
+            'Stealth': 'DEX', 'Survival': 'WIS'
+        } %}
+
+        {% for skill in all_skills %}
+        <label class="skill-label" id="label-{{ skill.replace(' ', '-') }}">
+            <input type="checkbox" name="skills" value="{{ skill }}" class="skill-checkbox" onchange="updateSkills()">
+            <div class="skill-name">{{ skill }}</div>
+            <div class="skill-ability">{{ skill_abilities[skill] }}</div>
+        </label>
+        {% endfor %}
+    </div>
+
+    <div class="navigation">
+        <a href="/character/step4" class="btn btn-secondary">← Back</a>
+        <button type="submit" class="btn btn-primary" id="nextBtn" disabled>Next: Review Character →</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const maxSkills = {{ num_skills }};
+
+    function updateSkills() {
+        const checkboxes = document.querySelectorAll('.skill-checkbox');
+        const checked = Array.from(checkboxes).filter(cb => cb.checked);
+
+        // Update counter
+        document.getElementById('skillCounter').textContent = checked.length;
+
+        // Enable/disable submit button
+        document.getElementById('nextBtn').disabled = checked.length !== maxSkills;
+
+        // Update visual state
+        checkboxes.forEach(cb => {
+            const label = cb.closest('.skill-label');
+            if (cb.checked) {
+                label.classList.add('checked');
+            } else {
+                label.classList.remove('checked');
+            }
+
+            // Disable unchecked boxes if at max
+            if (!cb.checked && checked.length >= maxSkills) {
+                cb.disabled = true;
+                label.style.opacity = '0.5';
+                label.style.cursor = 'not-allowed';
+            } else {
+                cb.disabled = false;
+                label.style.opacity = '1';
+                label.style.cursor = 'pointer';
+            }
+        });
+    }
+
+    // Initialize
+    updateSkills();
+</script>
+{% endblock %}

@@ -1,0 +1,1157 @@
+[
+  {
+    "name": "Axespear",
+    "slug": "axespear",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "25 gp",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "weight": "8 lb.",
+    "properties": [
+      "double-headed (1d4)",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Barge Pole",
+    "slug": "barge-pole",
+    "category": "Simple Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "1 sp",
+    "damage_dice": "1d6",
+    "damage_type": "bludgeoning",
+    "weight": "5 lb.",
+    "properties": [
+      "reach",
+      "special",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Battleaxe",
+    "slug": "battleaxe",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "weight": "4 lb.",
+    "properties": [
+      "versatile (1d10)"
+    ]
+  },
+  {
+    "name": "Bladed Scarf",
+    "slug": "bladed-scarf",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "100 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "reach",
+      "special"
+    ]
+  },
+  {
+    "name": "Blowgun",
+    "slug": "blowgun",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "1",
+    "damage_type": "piercing",
+    "weight": "1 lb.",
+    "properties": [
+      "ammunition (range 25/100)",
+      "loading"
+    ]
+  },
+  {
+    "name": "Blunderbuss",
+    "slug": "blunderbuss",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "75 gp",
+    "damage_dice": "2d4",
+    "damage_type": "piercing",
+    "weight": "12 lb.",
+    "properties": [
+      "ammunition",
+      "gunpowder",
+      "loading",
+      "special",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Bolas",
+    "slug": "bolas",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "5 gp",
+    "damage_dice": "",
+    "damage_type": "",
+    "weight": "2 lb.",
+    "properties": [
+      "special",
+      "thrown (range 5/15)"
+    ]
+  },
+  {
+    "name": "Chain Hook",
+    "slug": "chain-hook",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "15 gp",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "reach",
+      "special",
+      "thrown (range 10/20)"
+    ]
+  },
+  {
+    "name": "Chakram",
+    "slug": "chakram",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "15 gp",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "weight": "1 lb.",
+    "properties": [
+      "thrown (range 20/60)"
+    ]
+  },
+  {
+    "name": "Climbing Adze",
+    "slug": "climbing-adze",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "6 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "light"
+    ]
+  },
+  {
+    "name": "Clockwork Crossbow",
+    "slug": "clockwork-crossbow",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "100 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "8 lb.",
+    "properties": [
+      "ammunition (60/240)",
+      "magazine (6)",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Club",
+    "slug": "club",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "1 sp",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "weight": "2 lb.",
+    "properties": [
+      "light"
+    ]
+  },
+  {
+    "name": "Club Shield",
+    "slug": "club-shield",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "25 gp",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "weight": "2 lb.",
+    "properties": [
+      "light",
+      "special"
+    ]
+  },
+  {
+    "name": "Crossbow, hand",
+    "slug": "crossbow-hand",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "75 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "3 lb.",
+    "properties": [
+      "ammunition (range 30/120)",
+      "light",
+      "loading"
+    ]
+  },
+  {
+    "name": "Crossbow, heavy",
+    "slug": "crossbow-heavy",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "50 gp",
+    "damage_dice": "1d10",
+    "damage_type": "piercing",
+    "weight": "18 lb.",
+    "properties": [
+      "ammunition (range 100/400)",
+      "heavy",
+      "loading",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Crossbow, light",
+    "slug": "crossbow-light",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "25 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "5 lb.",
+    "properties": [
+      "ammunition (range 80/320)",
+      "loading",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Dagger",
+    "slug": "dagger",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "2 gp",
+    "damage_dice": "1d4",
+    "damage_type": "piercing",
+    "weight": "1 lb.",
+    "properties": [
+      "finesse",
+      "light",
+      "thrown (range 20/60)"
+    ]
+  },
+  {
+    "name": "Dart",
+    "slug": "dart",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 cp",
+    "damage_dice": "1d4",
+    "damage_type": "piercing",
+    "weight": "1/4 lb.",
+    "properties": [
+      "finesse",
+      "thrown (range 20/60)"
+    ]
+  },
+  {
+    "name": "Double Axe",
+    "slug": "double-axe",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "weight": "10 lb.",
+    "properties": [
+      "double-headed (1d6)",
+      "heavy",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Dwarven Arquebus",
+    "slug": "dwarven-arquebus",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "100 gp",
+    "damage_dice": "2d6",
+    "damage_type": "piercing",
+    "weight": "20 lb.",
+    "properties": [
+      "ammunition (range 25/100)",
+      "gunpowder",
+      "heavy",
+      "loading",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Dwarven Axe",
+    "slug": "dwarven-axe",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "15 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "6 lb.",
+    "properties": [
+      "special",
+      "versatile (1d10)"
+    ]
+  },
+  {
+    "name": "Dwarven Revolving Musket",
+    "slug": "dwarven-revolving-musket",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "200 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "12 lb.",
+    "properties": [
+      "ammunition (range 80/320)",
+      "gunpowder",
+      "magazine (8)",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Elven Dueling Blade",
+    "slug": "elven-dueling-blade",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "4 lb.",
+    "properties": [
+      "finesse",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Flail",
+    "slug": "flail",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "weight": "2 lb.",
+    "properties": []
+  },
+  {
+    "name": "Glaive",
+    "slug": "glaive",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "20 gp",
+    "damage_dice": "1d10",
+    "damage_type": "slashing",
+    "weight": "6 lb.",
+    "properties": [
+      "heavy",
+      "reach",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Granite Fist",
+    "slug": "granite-fist",
+    "category": "Simple Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "25 gp",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "weight": "5 lb.",
+    "properties": [
+      ""
+    ]
+  },
+  {
+    "name": "Greataxe",
+    "slug": "greataxe",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "30 gp",
+    "damage_dice": "1d12",
+    "damage_type": "slashing",
+    "weight": "7 lb.",
+    "properties": [
+      "heavy",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Greatclub",
+    "slug": "greatclub",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "2 sp",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "weight": "10 lb.",
+    "properties": [
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Greatsword",
+    "slug": "greatsword",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "50 gp",
+    "damage_dice": "2d6",
+    "damage_type": "slashing",
+    "weight": "6 lb.",
+    "properties": [
+      "heavy",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Halberd",
+    "slug": "halberd",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "20 gp",
+    "damage_dice": "1d10",
+    "damage_type": "slashing",
+    "weight": "6 lb.",
+    "properties": [
+      "heavy",
+      "reach",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Hand Trebuchet",
+    "slug": "hand-trebuchet",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "4 gp",
+    "damage_dice": "",
+    "damage_type": "",
+    "weight": "3 lb.",
+    "properties": [
+      "ammunition (range 60/240)",
+      "special"
+    ]
+  },
+  {
+    "name": "Handaxe",
+    "slug": "handaxe",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 gp",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "weight": "2 lb.",
+    "properties": [
+      "light",
+      "thrown (range 20/60)"
+    ]
+  },
+  {
+    "name": "Javelin",
+    "slug": "javelin",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 sp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "thrown (range 30/120)"
+    ]
+  },
+  {
+    "name": "Joining Dirks",
+    "slug": "joining-dirks",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "2 lb.",
+    "properties": [
+      "finesse",
+      "light",
+      "special"
+    ]
+  },
+  {
+    "name": "Khopesh",
+    "slug": "khopesh",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "25 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "4 lb.",
+    "properties": [
+      "versatile (1d8)"
+    ]
+  },
+  {
+    "name": "Lance",
+    "slug": "lance",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "1d12",
+    "damage_type": "piercing",
+    "weight": "6 lb.",
+    "properties": [
+      "reach",
+      "special"
+    ]
+  },
+  {
+    "name": "Light hammer",
+    "slug": "light-hammer",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "2 gp",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "weight": "2 lb.",
+    "properties": [
+      "light",
+      "thrown (range 20/60)"
+    ]
+  },
+  {
+    "name": "Light Pick",
+    "slug": "light-pick",
+    "category": "Simple Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "3 gp",
+    "damage_dice": "1d4",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "light",
+      "thrown (20/60)",
+      ""
+    ]
+  },
+  {
+    "name": "Longbow",
+    "slug": "longbow",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "50 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "ammunition (range 150/600)",
+      "heavy",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Longsword",
+    "slug": "longsword",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "15 gp",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "versatile (1d10)"
+    ]
+  },
+  {
+    "name": "Mace",
+    "slug": "mace",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 gp",
+    "damage_dice": "1d6",
+    "damage_type": "bludgeoning",
+    "weight": "4 lb.",
+    "properties": []
+  },
+  {
+    "name": "Maul",
+    "slug": "maul",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "2d6",
+    "damage_type": "bludgeoning",
+    "weight": "10 lb.",
+    "properties": [
+      "heavy",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Morningstar",
+    "slug": "morningstar",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "15 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "4 lb.",
+    "properties": null
+  },
+  {
+    "name": "Musket",
+    "slug": "musket",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d10",
+    "damage_type": "piercing",
+    "weight": "10 lb.",
+    "properties": [
+      "ammunition (range 80/320)",
+      "gunpowder",
+      "loading",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Net",
+    "slug": "net",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "1 gp",
+    "damage_dice": "0",
+    "damage_type": "",
+    "weight": "3 lb.",
+    "properties": [
+      "special",
+      "thrown (range 5/15)"
+    ]
+  },
+  {
+    "name": "Pike",
+    "slug": "pike",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 gp",
+    "damage_dice": "1d10",
+    "damage_type": "piercing",
+    "weight": "18 lb.",
+    "properties": [
+      "heavy",
+      "reach",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Pistol",
+    "slug": "pistol",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "25 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "5 lb.",
+    "properties": [
+      "ammunition (range 30/120)",
+      "gunpowder",
+      "light",
+      "loading"
+    ]
+  },
+  {
+    "name": "Pneumatic War Pick",
+    "slug": "pneumatic-war-pick",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d4",
+    "damage_type": "piercing",
+    "weight": "4 lb.",
+    "properties": [
+      "special"
+    ]
+  },
+  {
+    "name": "Quarterstaff",
+    "slug": "quarterstaff",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "2 sp",
+    "damage_dice": "1d6",
+    "damage_type": "bludgeoning",
+    "weight": "4 lb.",
+    "properties": [
+      "versatile (1d8)"
+    ]
+  },
+  {
+    "name": "Rapier",
+    "slug": "rapier",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "25 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "finesse"
+    ]
+  },
+  {
+    "name": "Scimitar",
+    "slug": "scimitar",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "25 gp",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "light"
+    ]
+  },
+  {
+    "name": "Shashka",
+    "slug": "shashka",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "20 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "4 lb.",
+    "properties": [
+      "special",
+      "versatile (1d10)"
+    ]
+  },
+  {
+    "name": "Shortbow",
+    "slug": "shortbow",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "25 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "ammunition (range 80/320)",
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Shortsword",
+    "slug": "shortsword",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "10 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": [
+      "finesse",
+      "light"
+    ]
+  },
+  {
+    "name": "Shotel",
+    "slug": "shotel",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "special"
+    ]
+  },
+  {
+    "name": "Sickle",
+    "slug": "sickle",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "1 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "2 lb.",
+    "properties": [
+      "light"
+    ]
+  },
+  {
+    "name": "Sling",
+    "slug": "sling",
+    "category": "Simple Ranged Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "1 sp",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "weight": "0 lb.",
+    "properties": [
+      "ammunition (range 30/120)"
+    ]
+  },
+  {
+    "name": "Spear",
+    "slug": "spear",
+    "category": "Simple Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "1 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "3 lb.",
+    "properties": [
+      "thrown (range 20/60)",
+      "versatile (1d8)"
+    ]
+  },
+  {
+    "name": "Stone Rake",
+    "slug": "stone-rake",
+    "category": "Simple Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "5 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "5 lb.",
+    "properties": [
+      "two-handed"
+    ]
+  },
+  {
+    "name": "Temple Sword",
+    "slug": "temple-sword",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "35 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "light"
+    ]
+  },
+  {
+    "name": "Trident",
+    "slug": "trident",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 gp",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "weight": "4 lb.",
+    "properties": [
+      "thrown (range 20/60)",
+      "versatile (1d8)"
+    ]
+  },
+  {
+    "name": "War pick",
+    "slug": "war-pick",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "5 gp",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "weight": "2 lb.",
+    "properties": []
+  },
+  {
+    "name": "Warhammer",
+    "slug": "warhammer",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "15 gp",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "weight": "2 lb.",
+    "properties": [
+      "versatile (1d10)"
+    ]
+  },
+  {
+    "name": "Whip",
+    "slug": "whip",
+    "category": "Martial Melee Weapons",
+    "document__slug": "wotc-srd",
+    "document__title": "5e Core Rules",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "http://dnd.wizards.com/articles/features/systems-reference-document-srd",
+    "cost": "2 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "reach"
+    ]
+  },
+  {
+    "name": "Whipsaw",
+    "slug": "whipsaw",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "15 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "2 lb.",
+    "properties": [
+      "finesse"
+    ]
+  },
+  {
+    "name": "Wormsilk Net",
+    "slug": "wormsilk-net",
+    "category": "Martial Ranged Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "60 gp",
+    "damage_dice": "",
+    "damage_type": "",
+    "weight": "2 lb.",
+    "properties": [
+      "special",
+      "thrown (range 10/20)"
+    ]
+  },
+  {
+    "name": "Wormsilk Whip",
+    "slug": "wormsilk-whip",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "50 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "3 lb.",
+    "properties": [
+      "finesse",
+      "reach"
+    ]
+  },
+  {
+    "name": "Wrist Knife",
+    "slug": "wrist-knife",
+    "category": "Martial Melee Weapons",
+    "document__slug": "toh",
+    "document__title": "Tome of Heroes",
+    "document__license_url": "http://open5e.com/legal",
+    "document__url": "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
+    "cost": "4 gp",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "weight": "1 lb.",
+    "properties": [
+      "finesse",
+      "light"
+    ]
+  }
+]

@@ -1,0 +1,205 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 9: Review Character{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header { text-align: center; margin-bottom: 30px; }
+    .step-header h2 { color: #d4af37; font-size: 2em; margin-bottom: 10px; }
+    .character-sheet {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #d4af37;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 20px 0;
+    }
+    .sheet-section {
+        margin: 20px 0;
+        padding: 15px;
+        border-left: 4px solid #d4af37;
+    }
+    .section-title {
+        color: #d4af37;
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+    }
+    .stat-label {
+        color: #c0b090;
+    }
+    .stat-value {
+        color: #90ee90;
+        font-weight: bold;
+    }
+    .abilities-row {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        margin: 15px 0;
+    }
+    .ability-display {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .ability-display-name {
+        color: #d4af37;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+    .ability-display-score {
+        font-size: 2em;
+        color: #90ee90;
+    }
+    .ability-display-mod {
+        color: #f4d03f;
+        font-size: 1.2em;
+    }
+    .name-input {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.5em;
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid #d4af37;
+        border-radius: 8px;
+        color: #90ee90;
+        text-align: center;
+        margin: 20px 0;
+    }
+    .edit-btn {
+        padding: 5px 15px;
+        background: transparent;
+        border: 1px solid #d4af37;
+        color: #d4af37;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Review Your Character</h2>
+    <p>Review your choices and finalize your character</p>
+</div>
+
+<input type="text" class="name-input" placeholder="Enter Character Name" id="charName" required>
+
+<div class="character-sheet">
+    <div class="sheet-section">
+        <div class="section-title">Basic Information</div>
+        <div class="stat-row">
+            <span class="stat-label">Race:</span>
+            <span class="stat-value">{{ wizard_data.race }} <a href="/character/step1" class="edit-btn">Edit</a></span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Class:</span>
+            <span class="stat-value">{{ wizard_data.character_class }} <a href="/character/step2" class="edit-btn">Edit</a></span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Background:</span>
+            <span class="stat-value">{{ wizard_data.background or 'None' }} <a href="/character/step5" class="edit-btn">Edit</a></span>
+        </div>
+    </div>
+
+    <div class="sheet-section">
+        <div class="section-title">Ability Scores <a href="/character/step4" class="edit-btn">Edit</a></div>
+        <div class="abilities-row">
+            <div class="ability-display">
+                <div class="ability-display-name">STR</div>
+                <div class="ability-display-score">{{ wizard_data.strength }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.strength - 10) // 2) if wizard_data.strength else '+0' }}</div>
+            </div>
+            <div class="ability-display">
+                <div class="ability-display-name">DEX</div>
+                <div class="ability-display-score">{{ wizard_data.dexterity }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.dexterity - 10) // 2) if wizard_data.dexterity else '+0' }}</div>
+            </div>
+            <div class="ability-display">
+                <div class="ability-display-name">CON</div>
+                <div class="ability-display-score">{{ wizard_data.constitution }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.constitution - 10) // 2) if wizard_data.constitution else '+0' }}</div>
+            </div>
+            <div class="ability-display">
+                <div class="ability-display-name">INT</div>
+                <div class="ability-display-score">{{ wizard_data.intelligence }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.intelligence - 10) // 2) if wizard_data.intelligence else '+0' }}</div>
+            </div>
+            <div class="ability-display">
+                <div class="ability-display-name">WIS</div>
+                <div class="ability-display-score">{{ wizard_data.wisdom }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.wisdom - 10) // 2) if wizard_data.wisdom else '+0' }}</div>
+            </div>
+            <div class="ability-display">
+                <div class="ability-display-name">CHA</div>
+                <div class="ability-display-score">{{ wizard_data.charisma }}</div>
+                <div class="ability-display-mod">{{ '%+d' % ((wizard_data.charisma - 10) // 2) if wizard_data.charisma else '+0' }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sheet-section">
+        <div class="section-title">Combat Stats</div>
+        <div class="stat-row">
+            <span class="stat-label">Hit Points:</span>
+            <span class="stat-value">{{ hp }}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Armor Class:</span>
+            <span class="stat-value">{{ ac }}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Initiative:</span>
+            <span class="stat-value">{{ '%+d' % initiative }}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Proficiency Bonus:</span>
+            <span class="stat-value">+2</span>
+        </div>
+    </div>
+
+    {% if wizard_data.skill_proficiencies %}
+    <div class="sheet-section">
+        <div class="section-title">Skill Proficiencies <a href="/character/step7" class="edit-btn">Edit</a></div>
+        <div class="stat-value">{{ wizard_data.skill_proficiencies | join(', ') }}</div>
+    </div>
+    {% endif %}
+
+    {% if wizard_data.equipment %}
+    <div class="sheet-section">
+        <div class="section-title">Equipment <a href="/character/step6" class="edit-btn">Edit</a></div>
+        <div class="stat-value">{{ wizard_data.equipment | join(', ') }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<form method="POST" id="finalizeForm">
+    <input type="hidden" name="character_name" id="finalName">
+    <div class="navigation">
+        <a href="/character/step7" class="btn btn-secondary">← Back</a>
+        <button type="submit" class="btn btn-primary" onclick="return validateName()">✨ Create Character ✨</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function validateName() {
+        const name = document.getElementById('charName').value.trim();
+        if (!name) {
+            alert('Please enter a character name');
+            return false;
+        }
+        document.getElementById('finalName').value = name;
+        return true;
+    }
+</script>
+{% endblock %}

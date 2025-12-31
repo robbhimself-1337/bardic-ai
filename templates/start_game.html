@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Campaign - Bardic AI</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            color: #f0e6d2;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .setup-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(44, 24, 16, 0.9);
+            border-radius: 15px;
+            border: 3px solid #d4af37;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+        }
+        h1 {
+            text-align: center;
+            color: #d4af37;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        .form-section {
+            margin: 30px 0;
+        }
+        .form-section h3 {
+            color: #d4af37;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8b7355;
+        }
+        .character-select-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .character-option {
+            cursor: pointer;
+        }
+        .character-option input[type="radio"] {
+            display: none;
+        }
+        .character-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 3px solid #8b7355;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .character-option:hover .character-card {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+        .character-option input[type="radio"]:checked + .character-card {
+            border-color: #90ee90;
+            background: rgba(144, 238, 144, 0.1);
+            box-shadow: 0 0 20px rgba(144, 238, 144, 0.4);
+        }
+        .char-portrait {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d4af37;
+            margin-bottom: 15px;
+        }
+        .char-name {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .char-details {
+            color: #c0b090;
+            font-size: 0.95em;
+            margin: 5px 0;
+        }
+        .char-level {
+            color: #90ee90;
+            font-size: 0.9em;
+        }
+        .create-new .character-card {
+            border-style: dashed;
+            min-height: 180px;
+        }
+        .plus-icon {
+            font-size: 3em;
+            color: #d4af37;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            color: #2c1810;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            border: none;
+            font-family: 'Georgia', serif;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .back-link {
+            display: inline-block;
+            color: #d4af37;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .back-link:hover {
+            color: #f4d03f;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <h1>⚔️ Start New Campaign</h1>
+
+        <form method="POST">
+            <div class="form-section">
+                <h3>Select Your Character</h3>
+                <div class="character-select-grid">
+                    {% for char in characters %}
+                    <label class="character-option">
+                        <input type="radio" name="character" value="{{ char.name }}" required>
+                        <div class="character-card">
+                            {% if char.portrait %}
+                            <img src="/static/images/characters/{{ char.portrait }}" class="char-portrait" alt="{{ char.name }}">
+                            {% else %}
+                            <div class="char-portrait" style="background: linear-gradient(135deg, #8b7355 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 2em; border: 3px solid #d4af37;">🧙</div>
+                            {% endif %}
+                            <div class="char-name">{{ char.name }}</div>
+                            <div class="char-details">{{ char.race }} {{ char.character_class }}</div>
+                            <div class="char-level">Level {{ char.level or 1 }}</div>
+                        </div>
+                    </label>
+                    {% endfor %}
+
+                    <a href="/character/new" class="character-option create-new">
+                        <div class="character-card">
+                            <div class="plus-icon">+</div>
+                            <div class="char-name">Create New</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Choose Campaign →</button>
+        </form>
+    </div>
+</body>
+</html>

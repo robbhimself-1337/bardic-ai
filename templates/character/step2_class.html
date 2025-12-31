@@ -67,6 +67,10 @@
         margin-bottom: 15px;
         line-height: 1.6;
     }
+    .feature-name {
+        color: #90ee90;
+        font-weight: bold;
+    }
     .class-stats {
         border-top: 1px solid #8b7355;
         padding-top: 15px;
@@ -115,10 +119,17 @@
                 {% endif %}
             </div>
         </div>
-        <div class="class-desc">{{ cls.desc | truncate(200) }}</div>
+        {% set formatted = cls.desc | format_class_desc %}
+        <div class="class-desc">
+            {% if formatted.feature %}
+                <span class="feature-name">{{ formatted.feature }}:</span> {{ formatted.description | truncate(180) }}
+            {% else %}
+                {{ formatted.description | truncate(200) }}
+            {% endif %}
+        </div>
         <div class="class-stats">
             <div class="stat-item">
-                <span class="stat-label">Hit Die:</span> d{{ cls.hit_dice }}
+                <span class="stat-label">Hit Die:</span> {{ cls.hit_dice }}
             </div>
             <div class="stat-item">
                 <span class="stat-label">Primary Ability:</span> {{ cls.spellcasting_ability if cls.spellcasting_ability else 'Strength/Dexterity' }}

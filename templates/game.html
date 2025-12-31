@@ -6,502 +6,909 @@
     <title>{{ character.name }} - Bardic AI</title>
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f0f0f0;
+            background: #000;
+            color: #f0e6d2;
+            overflow: hidden;
             height: 100vh;
+        }
+
+        .game-container {
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            width: 100%;
         }
-        .header {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 30px;
-            border-bottom: 2px solid #ffd700;
+
+        /* Visual Area - 80% of screen (increased from 70%) */
+        .visual-area {
+            flex: 8;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+            min-height: 70vh;
+        }
+
+        .image-display {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .image-fade-out {
+            opacity: 0;
+        }
+
+        .name-plate {
+            position: absolute;
+            bottom: 140px;
+            left: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 2px solid #d4af37;
+            font-size: 1.3em;
+            color: #d4af37;
+            font-weight: bold;
+            display: none;
+            z-index: 10;
+        }
+
+        /* Subtitle Area - overlays bottom of image */
+        .subtitle-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 70%, transparent 100%);
+            padding: 40px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .subtitle-text {
+            font-size: 1.4em;
+            line-height: 1.6;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+            max-width: 90%;
+        }
+
+        /* Control Panel - Minimal */
+        .control-panel {
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            border-top: 3px solid #d4af37;
+            padding: 10px 20px;
+        }
+
+        /* Character Stats Bar */
+        .stats-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #8b7355;
         }
-        .header h1 {
-            color: #ffd700;
-            font-size: 1.8em;
-        }
-        .header-buttons {
+
+        .action-input-row {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
-        .btn-small {
-            padding: 8px 16px;
-            background: rgba(255, 215, 0, 0.2);
-            border: 1px solid #ffd700;
-            color: #ffd700;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        .btn-small:hover {
-            background: rgba(255, 215, 0, 0.3);
-        }
-        .main-container {
+
+        .stat-item {
             display: flex;
-            flex: 1;
-            overflow: hidden;
+            align-items: center;
+            gap: 8px;
         }
-        .sidebar {
-            width: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            border-right: 2px solid #ffd700;
-            padding: 20px;
-            overflow-y: auto;
+
+        .stat-label {
+            color: #c0b090;
+            font-size: 0.95em;
         }
-        .character-info {
-            margin-bottom: 30px;
+
+        .stat-value {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1em;
         }
-        .character-name {
-            font-size: 1.5em;
-            color: #ffd700;
-            margin-bottom: 5px;
-        }
-        .character-class {
-            color: #b0b0b0;
-            margin-bottom: 15px;
-        }
-        .hp-bar-container {
-            margin: 15px 0;
-        }
-        .hp-label {
-            font-size: 0.9em;
-            margin-bottom: 5px;
-        }
+
         .hp-bar {
-            height: 25px;
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px solid #ff0000;
-            border-radius: 12px;
+            width: 150px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #8b7355;
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
+
         .hp-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ff0000 0%, #ff6b6b 100%);
-            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #dc143c, #ff6347);
+            transition: width 0.3s ease;
         }
+
         .hp-text {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85em;
             font-weight: bold;
             color: #fff;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
         }
-        .section {
-            margin-bottom: 25px;
-        }
-        .section-title {
-            color: #ffd700;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 5px;
-        }
-        .inventory-item, .quest-item, .enemy-item {
-            padding: 8px 12px;
-            margin: 5px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            border-left: 3px solid #ffd700;
-        }
-        .quest-completed {
-            opacity: 0.5;
-            text-decoration: line-through;
-        }
-        .enemy-defeated {
-            opacity: 0.5;
-            text-decoration: line-through;
-        }
-        .game-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            overflow: hidden;
-        }
-        .narrative-log {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        .narrative-entry {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        .narrative-player {
-            border-left-color: #ffd700;
-        }
-        .narrative-dm {
-            border-left-color: #764ba2;
-        }
-        .narrative-label {
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #ffd700;
-        }
-        .narrative-text {
-            line-height: 1.6;
-        }
-        .input-area {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #ffd700;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .voice-controls {
-            display: flex;
-            gap: 15px;
+
+        /* Panel Sections */
+        .panel-section {
             margin-bottom: 15px;
         }
-        #recordBtn {
-            flex: 1;
-            padding: 15px;
+
+        .panel-title {
+            color: #d4af37;
             font-size: 1.2em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
+            margin-bottom: 10px;
+            font-weight: bold;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #8b7355;
         }
-        #recordBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-        #recordBtn.recording {
-            background: linear-gradient(135deg, #ff0000 0%, #ff6b6b 100%);
-        }
-        .text-input-area {
-            display: flex;
+
+        /* Choice Buttons */
+        .choices-grid {
+            display: grid;
             gap: 10px;
         }
-        #textInput {
-            flex: 1;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+
+        .choice-btn {
+            background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(92, 64, 51, 0.3));
+            border: 2px solid #8b7355;
+            color: #f0e6d2;
+            padding: 15px 20px;
             border-radius: 8px;
-            color: #fff;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-family: 'Georgia', serif;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(139, 115, 85, 0.3));
+            border-color: #d4af37;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .choice-btn:active {
+            transform: translateX(5px) scale(0.98);
+        }
+
+        /* NPC Buttons */
+        .npcs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .npc-btn {
+            background: rgba(44, 24, 16, 0.5);
+            border: 2px solid #8b7355;
+            color: #d4af37;
+            padding: 12px 16px;
+            border-radius: 8px;
             font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
         }
-        #textInput:focus {
-            outline: none;
-            border-color: #ffd700;
+
+        .npc-btn:hover {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
-        #submitBtn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border: none;
+
+        /* Topic Buttons */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .topic-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #8b7355;
+            color: #90ee90;
+            padding: 10px 14px;
             border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .topic-btn:hover {
+            border-color: #90ee90;
+            background: rgba(144, 238, 144, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Conversation Mode */
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 2px solid #d4af37;
+        }
+
+        .conversation-info {
+            color: #f0e6d2;
+            font-size: 1.1em;
+        }
+
+        .end-conversation-btn {
+            background: linear-gradient(135deg, #dc143c, #8b0000);
+            border: 2px solid #8b0000;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .end-conversation-btn:hover {
+            background: linear-gradient(135deg, #ff0000, #dc143c);
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Loading Indicator */
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px 50px;
+            border-radius: 15px;
+            border: 3px solid #d4af37;
+            font-size: 1.3em;
+            color: #d4af37;
+            z-index: 100;
+            display: none;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        /* Audio controls (hidden but functional) */
+        audio {
+            display: none;
+        }
+
+        /* Custom Action Input */
+        .custom-action-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .custom-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #8b7355;
+            color: #f0e6d2;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: 'Georgia', serif;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .action-submit-btn {
+            background: linear-gradient(135deg, #d4af37, #8b7355);
+            border: none;
+            color: #1a0f0a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .action-submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .voice-btn {
+            background: linear-gradient(135deg, #4a6fa5, #2c4a70);
+            border: none;
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 1.2em;
             cursor: pointer;
             transition: all 0.3s;
         }
-        #submitBtn:hover {
-            transform: translateY(-2px);
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(74, 111, 165, 0.5);
         }
-        #status {
-            margin-top: 10px;
-            text-align: center;
-            color: #ffd700;
-            font-style: italic;
+
+        .voice-btn.recording {
+            background: linear-gradient(135deg, #dc143c, #8b0000);
+            animation: pulse 1s infinite;
         }
-        .empty-state {
-            color: #808080;
-            font-style: italic;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Bardic AI</h1>
-        <div class="header-buttons">
-            <a href="/save_game" class="btn-small">Save Game</a>
-            <a href="/" class="btn-small">Main Menu</a>
+    <div class="game-container">
+        <!-- Visual Area (70% of screen) -->
+        <div class="visual-area" id="visualArea">
+            <div class="image-display" id="imageDisplay">
+                <img id="mainImage"
+                     src="{{ scene_image or dm_portrait or '/static/images/dm/dm_default.png' }}"
+                     alt="Scene"
+                     class="main-image">
+
+                <!-- Name plate for NPCs -->
+                <div class="name-plate" id="namePlate">
+                    <span id="speakerName"></span>
+                </div>
+            </div>
+
+            <!-- Subtitle Area (overlays bottom of image) -->
+            <div class="subtitle-area" id="subtitleArea">
+                <div class="subtitle-text" id="subtitleText">
+                    {{ narration or "Welcome to your adventure..." }}
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading-indicator" id="loadingIndicator">
+                Processing...
+            </div>
         </div>
-    </div>
 
-    <div class="main-container">
-        <!-- Sidebar with character stats -->
-        <div class="sidebar">
-            <div class="character-info">
-                <div class="character-name">{{ character.name }}</div>
-                <div class="character-class">Level {{ character.level }} {{ character.char_class }}</div>
-
-                <div class="hp-bar-container">
-                    <div class="hp-label">Hit Points</div>
+        <!-- Control Panel (30% of screen) -->
+        <div class="control-panel" id="controlPanel">
+            <!-- Character Stats -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label">Character:</span>
+                    <span class="stat-value" id="charName">{{ character.name }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Level {{ character.level or 1 }}</span>
+                    <span class="stat-value">{{ character.char_class }}</span>
+                </div>
+                <div class="stat-item">
                     <div class="hp-bar">
-                        <div class="hp-fill" id="hpFill" style="width: {{ (character.hp / character.max_hp * 100) }}%"></div>
-                        <div class="hp-text" id="hpText">{{ character.hp }}/{{ character.max_hp }}</div>
+                        <div class="hp-fill" id="hpFill" style="width: {{ (character.hp / character.max_hp * 100) if character.max_hp > 0 else 100 }}%;"></div>
+                        <div class="hp-text" id="hpText">{{ character.hp }}/{{ character.max_hp }} HP</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">Inventory</div>
-                <div id="inventoryList">
-                    {% if character.inventory %}
-                        {% for item in character.inventory %}
-                        <div class="inventory-item">{{ item }}</div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="empty-state">Empty</div>
-                    {% endif %}
+                <div class="stat-item">
+                    <span class="stat-label">Location:</span>
+                    <span class="stat-value" id="locationDisplay">{{ location or "Unknown" }}</span>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-title">Active Quests</div>
-                <div id="questList">
-                    {% if active_quests %}
-                        {% for quest in active_quests %}
-                        <div class="quest-item">{{ quest.name }}</div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="empty-state">No active quests</div>
-                    {% endif %}
+            <!-- Minimal Action Input -->
+            <div id="explorationMode">
+                <div class="action-input-row">
+                    <input type="text" id="customActionInput"
+                           placeholder="What do you do?"
+                           class="custom-input"
+                           onkeypress="if(event.key === 'Enter') submitCustomAction()">
+                    <button class="action-submit-btn" onclick="submitCustomAction()">⚔️</button>
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()">🎤</button>
                 </div>
-            </div>
-
-            {% if combat_active %}
-            <div class="section">
-                <div class="section-title">Combat</div>
-                <div id="enemyList">
-                    {% for enemy in enemies %}
-                    <div class="enemy-item {% if enemy.defeated %}enemy-defeated{% endif %}">
-                        {{ enemy.name }} (HP: {{ enemy.hp }})
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- Main game area -->
-        <div class="game-area">
-            <div class="narrative-log" id="narrativeLog">
-                <div class="narrative-entry narrative-dm">
-                    <div class="narrative-label">Dungeon Master</div>
-                    <div class="narrative-text">{{ initial_narrative }}</div>
-                </div>
-            </div>
-
-            <div class="input-area">
-                <div class="voice-controls">
-                    <button id="recordBtn" onmousedown="startRecording()" onmouseup="stopRecording()">
-                        🎤 Hold to Record
-                    </button>
-                </div>
-
-                <div class="text-input-area">
-                    <input type="text" id="textInput" placeholder="Or type your action here..." onkeypress="handleKeyPress(event)">
-                    <button id="submitBtn" onclick="submitAction()">Submit</button>
-                </div>
-
-                <div id="status">Ready</div>
             </div>
         </div>
     </div>
+
+    <!-- Audio element for TTS -->
+    <audio id="narratorAudio" controls></audio>
 
     <script>
-        let mediaRecorder;
-        let audioChunks = [];
+        let currentAudio = null;
 
-        async function startRecording() {
+        // Display mode management
+        function setDisplayMode(mode, data) {
+            console.log('setDisplayMode called:', mode, data);
+            const mainImage = document.getElementById('mainImage');
+            const namePlate = document.getElementById('namePlate');
+            const speakerName = document.getElementById('speakerName');
+
+            if (mode === 'scene') {
+                // Show scene image with DM narration
+                if (data.scene_image) {
+                    fadeImageTransition(data.scene_image);
+                }
+                namePlate.style.display = 'none';
+            } else if (mode === 'npc') {
+                // Show NPC portrait
+                console.log('NPC mode, portrait:', data.npc_portrait);
+                if (data.npc_portrait) {
+                    fadeImageTransition(data.npc_portrait);
+                } else {
+                    console.log('No NPC portrait found!');
+                }
+                speakerName.textContent = data.npc_name || 'NPC';
+                namePlate.style.display = 'block';
+            } else if (mode === 'dm') {
+                // Show DM portrait
+                if (data.dm_portrait) {
+                    fadeImageTransition(data.dm_portrait);
+                }
+                namePlate.style.display = 'none';
+            }
+        }
+
+        // Smooth image transition
+        function fadeImageTransition(newSrc) {
+            const mainImage = document.getElementById('mainImage');
+
+            mainImage.classList.add('image-fade-out');
+
+            setTimeout(() => {
+                mainImage.src = newSrc;
+                mainImage.classList.remove('image-fade-out');
+            }, 500);
+        }
+
+        // Update subtitle text
+        function updateSubtitle(text) {
+            const subtitleText = document.getElementById('subtitleText');
+            subtitleText.textContent = text;
+        }
+
+        // Update character stats
+        function updateStats(data) {
+            if (data.character_hp !== undefined && data.character_max_hp !== undefined) {
+                const hpFill = document.getElementById('hpFill');
+                const hpText = document.getElementById('hpText');
+                const hpPercent = (data.character_hp / data.character_max_hp * 100);
+
+                hpFill.style.width = hpPercent + '%';
+                hpText.textContent = `${data.character_hp}/${data.character_max_hp} HP`;
+            }
+
+            if (data.location) {
+                document.getElementById('locationDisplay').textContent = data.location;
+            }
+        }
+
+        // Audio queue for multi-part narration
+        let audioQueue = [];
+        let isPlayingQueue = false;
+
+        // Play audio narration (supports comma-separated multiple files)
+        function playNarration(audioInput) {
+            console.log('playNarration called with:', audioInput);
+            const audio = document.getElementById('narratorAudio');
+
+            // Stop any current playback
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+            audioQueue = [];
+            isPlayingQueue = false;
+
+            // Handle different input formats
+            let files = [];
+            
+            if (audioInput.includes(',')) {
+                // Multiple files: "uuid1.wav,uuid2.wav,uuid3.wav"
+                files = audioInput.split(',').map(f => {
+                    f = f.trim();
+                    return f.startsWith('/audio/') ? f : `/audio/${f}`;
+                });
+                console.log('Multiple audio files detected:', files);
+            } else if (audioInput.startsWith('/audio/')) {
+                // Single file with path: "/audio/uuid.wav"
+                files = [audioInput];
+            } else {
+                // Single file without path: "uuid.wav"
+                files = [`/audio/${audioInput}`];
+            }
+            
+            console.log('Audio files to play:', files.length);
+            
+            if (files.length === 1) {
+                // Single file - play directly
+                audio.src = files[0];
+                audio.play().catch(e => console.log('Audio play failed:', e));
+                currentAudio = audio;
+            } else {
+                // Multiple files - use queue
+                audioQueue = files;
+                playNextInQueue();
+            }
+        }
+
+        // Play next audio in queue
+        function playNextInQueue() {
+            if (audioQueue.length === 0) {
+                isPlayingQueue = false;
+                return;
+            }
+
+            isPlayingQueue = true;
+            const audio = document.getElementById('narratorAudio');
+            const nextUrl = audioQueue.shift();
+
+            audio.src = nextUrl;
+            audio.play().catch(e => console.log('Audio play failed:', e));
+            currentAudio = audio;
+
+            // When this audio ends, play the next one
+            audio.onended = () => {
+                if (audioQueue.length > 0) {
+                    playNextInQueue();
+                } else {
+                    isPlayingQueue = false;
+                    audio.onended = null;
+                }
+            };
+        }
+
+        // Show/hide loading indicator
+        function setLoading(isLoading) {
+            const indicator = document.getElementById('loadingIndicator');
+            const controlPanel = document.getElementById('controlPanel');
+
+            if (isLoading) {
+                indicator.classList.add('active');
+                controlPanel.classList.add('loading');
+            } else {
+                indicator.classList.remove('active');
+                controlPanel.classList.remove('loading');
+            }
+        }
+
+        // Make a choice
+        async function makeChoice(choiceIndex) {
+            setLoading(true);
+
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
+                const response = await fetch('/game/choice', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({choice_index: choiceIndex})
+                });
 
-                mediaRecorder.ondataavailable = (event) => {
-                    audioChunks.push(event.data);
-                };
+                const data = await response.json();
 
-                mediaRecorder.onstop = async () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    await transcribeAudio(audioBlob);
-                    stream.getTracks().forEach(track => track.stop());
-                };
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
 
-                mediaRecorder.start();
-                document.getElementById('recordBtn').classList.add('recording');
-                document.getElementById('status').textContent = 'Recording...';
+                updateGameUI(data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
             } catch (error) {
-                document.getElementById('status').textContent = 'Error: ' + error.message;
+                console.error('Error making choice:', error);
+                alert('Failed to process choice');
+            } finally {
+                setLoading(false);
             }
         }
 
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
-                document.getElementById('recordBtn').classList.remove('recording');
-                document.getElementById('status').textContent = 'Processing...';
-            }
-        }
-
-        async function transcribeAudio(audioBlob) {
-            const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.wav');
+        // Talk to NPC
+        async function talkToNpc(npcName) {
+            setLoading(true);
 
             try {
-                const response = await fetch('/transcribe', {
+                const response = await fetch('/game/talk', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({npc_name: npcName})
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                enterConversationMode(data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
+            } catch (error) {
+                console.error('Error talking to NPC:', error);
+                alert('Failed to start conversation');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Ask about topic
+        async function askAbout(topic) {
+            setLoading(true);
+
+            try {
+                const response = await fetch('/game/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({topic: topic})
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                updateSubtitle(data.narration);
+                setDisplayMode(data.display_mode || 'npc', data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
+            } catch (error) {
+                console.error('Error asking about topic:', error);
+                alert('Failed to ask about topic');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // End conversation
+        async function endConversation() {
+            setLoading(true);
+
+            try {
+                const response = await fetch('/game/end_conversation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+
+                const data = await response.json();
+
+                exitConversationMode();
+                updateGameUI(data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
+            } catch (error) {
+                console.error('Error ending conversation:', error);
+                alert('Failed to end conversation');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Enter conversation mode
+        // Update game UI
+        function updateGameUI(data) {
+            // Update narration
+            if (data.transition) {
+                updateSubtitle(data.transition);
+                setTimeout(() => {
+                    if (data.narration) {
+                        updateSubtitle(data.narration);
+                    }
+                }, 2000);
+            } else if (data.narration) {
+                updateSubtitle(data.narration);
+            }
+
+            // Update location
+            if (data.location) {
+                document.getElementById('locationDisplay').textContent = data.location;
+            }
+
+            // Update display mode and image
+            if (data.display_mode) {
+                setDisplayMode(data.display_mode, data);
+            }
+
+            // Update stats
+            updateStats(data);
+        }
+
+        // Submit custom action (uses Ollama)
+        async function submitCustomAction() {
+            const input = document.getElementById('customActionInput');
+            const action = input.value.trim();
+
+            if (!action) return;
+
+            input.value = '';
+            setLoading(true);
+
+            try {
+                const response = await fetch('/game/action', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({action: action})
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                updateGameUI(data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
+            } catch (error) {
+                console.error('Error submitting action:', error);
+                alert('Failed to process action');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Voice input toggle
+        let isRecording = false;
+        let mediaRecorder = null;
+
+        async function toggleVoiceInput() {
+            const btn = document.getElementById('voiceBtn');
+
+            if (isRecording) {
+                // Stop recording
+                if (mediaRecorder) {
+                    mediaRecorder.stop();
+                }
+                btn.classList.remove('recording');
+                btn.textContent = '🎤';
+                isRecording = false;
+            } else {
+                // Start recording
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    const chunks = [];
+                    mediaRecorder.ondataavailable = e => chunks.push(e.data);
+
+                    mediaRecorder.onstop = async () => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        await sendVoiceInput(blob);
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    btn.classList.add('recording');
+                    btn.textContent = '⏹️';
+                    isRecording = true;
+                } catch (error) {
+                    console.error('Microphone access denied:', error);
+                    alert('Could not access microphone');
+                }
+            }
+        }
+
+        async function sendVoiceInput(audioBlob) {
+            setLoading(true);
+
+            try {
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.webm');
+
+                const response = await fetch('/game/voice_action', {
                     method: 'POST',
                     body: formData
                 });
 
                 const data = await response.json();
 
-                if (data.text) {
-                    document.getElementById('textInput').value = data.text;
-                    document.getElementById('status').textContent = 'Transcribed! Click Submit or press Enter.';
-                } else {
-                    document.getElementById('status').textContent = 'Error: ' + data.error;
-                }
-            } catch (error) {
-                document.getElementById('status').textContent = 'Error: ' + error.message;
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                submitAction();
-            }
-        }
-
-        async function submitAction() {
-            const action = document.getElementById('textInput').value.trim();
-            if (!action) {
-                document.getElementById('status').textContent = 'Please enter an action';
-                return;
-            }
-
-            // Add player action to narrative log
-            addNarrativeEntry('player', action);
-
-            // Clear input
-            document.getElementById('textInput').value = '';
-            document.getElementById('status').textContent = 'DM is thinking...';
-
-            try {
-                const response = await fetch('/game_action', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ action: action })
-                });
-
-                const data = await response.json();
-
-                // Add DM response to narrative log
-                addNarrativeEntry('dm', data.narrative);
-
-                // Update game state
-                updateGameState(data);
-
-                // Play audio if available
-                if (data.audio_filename) {
-                    playAudio(data.audio_filename);
+                if (data.error) {
+                    alert(data.error);
+                    return;
                 }
 
-                document.getElementById('status').textContent = 'Ready';
+                // Show what was transcribed
+                if (data.transcription) {
+                    document.getElementById('customActionInput').value = data.transcription;
+                }
+
+                updateGameUI(data);
+
+                if (data.audio) {
+                    playNarration(data.audio);
+                }
             } catch (error) {
-                document.getElementById('status').textContent = 'Error: ' + error.message;
+                console.error('Voice input error:', error);
+                alert('Failed to process voice input');
+            } finally {
+                setLoading(false);
             }
         }
 
-        function addNarrativeEntry(type, text) {
-            const log = document.getElementById('narrativeLog');
-            const entry = document.createElement('div');
-            entry.className = `narrative-entry narrative-${type}`;
+        // Initialize display mode on page load
+        window.addEventListener('load', function() {
+            const displayMode = "{{ display_mode or 'scene' }}";
+            const initialData = {
+                scene_image: "{{ scene_image or '' }}",
+                npc_portrait: "{{ npc_portrait or '' }}",
+                dm_portrait: "{{ dm_portrait or '' }}",
+                npc_name: "{{ npc_name or '' }}"
+            };
 
-            const label = document.createElement('div');
-            label.className = 'narrative-label';
-            label.textContent = type === 'player' ? 'You' : 'Dungeon Master';
+            setDisplayMode(displayMode, initialData);
 
-            const content = document.createElement('div');
-            content.className = 'narrative-text';
-            content.textContent = text;
-
-            entry.appendChild(label);
-            entry.appendChild(content);
-            log.appendChild(entry);
-
-            // Scroll to bottom
-            log.scrollTop = log.scrollHeight;
-        }
-
-        function updateGameState(data) {
-            // Update HP
-            const hpPercent = (data.character_hp / data.character_max_hp) * 100;
-            document.getElementById('hpFill').style.width = hpPercent + '%';
-            document.getElementById('hpText').textContent = data.character_hp + '/' + data.character_max_hp;
-
-            // Update inventory
-            const inventoryList = document.getElementById('inventoryList');
-            inventoryList.innerHTML = '';
-            if (data.inventory && data.inventory.length > 0) {
-                data.inventory.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'inventory-item';
-                    div.textContent = item;
-                    inventoryList.appendChild(div);
-                });
-            } else {
-                const empty = document.createElement('div');
-                empty.className = 'empty-state';
-                empty.textContent = 'Empty';
-                inventoryList.appendChild(empty);
-            }
-
-            // Update quests
-            const questList = document.getElementById('questList');
-            questList.innerHTML = '';
-            if (data.active_quests && data.active_quests.length > 0) {
-                data.active_quests.forEach(quest => {
-                    const div = document.createElement('div');
-                    div.className = 'quest-item';
-                    div.textContent = quest.name;
-                    questList.appendChild(div);
-                });
-            } else {
-                const empty = document.createElement('div');
-                empty.className = 'empty-state';
-                empty.textContent = 'No active quests';
-                questList.appendChild(empty);
-            }
-
-            // Update combat if active
-            if (data.combat_active && data.enemies) {
-                // Show or update enemy list
-                // (Implementation depends on sidebar structure)
-            }
-        }
-
-        function playAudio(filename) {
-            const audio = new Audio('/audio/' + filename);
-            audio.play();
-        }
+            // Auto-play initial audio if available
+            {% if audio_url %}
+            setTimeout(() => {
+                playNarration("{{ audio_url }}");
+            }, 500);
+            {% endif %}
+        });
     </script>
 </body>
 </html>

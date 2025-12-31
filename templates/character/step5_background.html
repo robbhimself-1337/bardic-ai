@@ -1,0 +1,117 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 5: Choose Background{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .step-header h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .background-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .background-card {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .background-card:hover {
+        border-color: #d4af37;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+    .background-card.selected {
+        border-color: #90ee90;
+        background: rgba(144, 238, 144, 0.1);
+    }
+    .background-name {
+        font-size: 1.6em;
+        color: #d4af37;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .background-desc {
+        color: #c0b090;
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+    .background-benefits {
+        border-top: 1px solid #8b7355;
+        padding-top: 15px;
+    }
+    .benefit-item {
+        margin: 8px 0;
+        color: #f0e6d2;
+        font-size: 0.95em;
+    }
+    .benefit-label {
+        color: #90ee90;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Choose Your Background</h2>
+    <p style="margin-top: 10px; color: #c0b090;">Your background represents your character's past before becoming an adventurer</p>
+</div>
+
+<div class="background-grid">
+    {% for bg in backgrounds %}
+    <div class="background-card" data-background="{{ bg.name }}" onclick="selectBackground('{{ bg.name }}')">
+        <div class="background-name">{{ bg.name }}</div>
+        <div class="background-desc">{{ bg.desc | strip_markdown | truncate(150) }}</div>
+        <div class="background-benefits">
+            <div class="benefit-item">
+                <span class="benefit-label">Skill Proficiencies:</span> {{ bg.skill_proficiencies if bg.skill_proficiencies else 'Varies' }}
+            </div>
+            {% if bg.tool_proficiencies %}
+            <div class="benefit-item">
+                <span class="benefit-label">Tool Proficiencies:</span> {{ bg.tool_proficiencies | truncate(50) }}
+            </div>
+            {% endif %}
+            {% if bg.languages %}
+            <div class="benefit-item">
+                <span class="benefit-label">Languages:</span> {{ bg.languages | truncate(50) }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<form method="POST" id="backgroundForm">
+    <input type="hidden" name="background" id="selectedBackground" required>
+    <div class="navigation">
+        <a href="/character/step4" class="btn btn-secondary">← Back</a>
+        <button type="submit" class="btn btn-primary" id="nextBtn" disabled>Next: Equipment →</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function selectBackground(backgroundName) {
+        document.querySelectorAll('.background-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        event.currentTarget.classList.add('selected');
+        document.getElementById('selectedBackground').value = backgroundName;
+        document.getElementById('nextBtn').disabled = false;
+    }
+</script>
+{% endblock %}

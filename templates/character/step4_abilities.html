@@ -69,6 +69,10 @@
         border-radius: 5px;
         color: #90ee90;
     }
+    .ability-input option:disabled {
+        color: #666;
+        background: rgba(0, 0, 0, 0.8);
+    }
     .standard-array {
         display: flex;
         gap: 10px;
@@ -126,81 +130,81 @@
     <div class="abilities-grid">
         <div class="ability-box">
             <div class="ability-name">Strength</div>
-            <select class="ability-input" id="str" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="str" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
-                <option value="15">15</option>
+                <option value="15" selected>15</option>
                 <option value="14">14</option>
                 <option value="13">13</option>
                 <option value="12">12</option>
                 <option value="10">10</option>
                 <option value="8">8</option>
             </select>
-            <div class="ability-modifier" id="str-mod">+0</div>
+            <div class="ability-modifier" id="str-mod">+2</div>
         </div>
         <div class="ability-box">
             <div class="ability-name">Dexterity</div>
-            <select class="ability-input" id="dex" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="dex" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
                 <option value="15">15</option>
-                <option value="14">14</option>
+                <option value="14" selected>14</option>
                 <option value="13">13</option>
                 <option value="12">12</option>
                 <option value="10">10</option>
                 <option value="8">8</option>
             </select>
-            <div class="ability-modifier" id="dex-mod">+0</div>
+            <div class="ability-modifier" id="dex-mod">+2</div>
         </div>
         <div class="ability-box">
             <div class="ability-name">Constitution</div>
-            <select class="ability-input" id="con" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="con" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
                 <option value="15">15</option>
                 <option value="14">14</option>
-                <option value="13">13</option>
+                <option value="13" selected>13</option>
                 <option value="12">12</option>
                 <option value="10">10</option>
                 <option value="8">8</option>
             </select>
-            <div class="ability-modifier" id="con-mod">+0</div>
+            <div class="ability-modifier" id="con-mod">+1</div>
         </div>
         <div class="ability-box">
             <div class="ability-name">Intelligence</div>
-            <select class="ability-input" id="int" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="int" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
                 <option value="15">15</option>
                 <option value="14">14</option>
                 <option value="13">13</option>
-                <option value="12">12</option>
+                <option value="12" selected>12</option>
                 <option value="10">10</option>
                 <option value="8">8</option>
             </select>
-            <div class="ability-modifier" id="int-mod">+0</div>
+            <div class="ability-modifier" id="int-mod">+1</div>
         </div>
         <div class="ability-box">
             <div class="ability-name">Wisdom</div>
-            <select class="ability-input" id="wis" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="wis" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
                 <option value="15">15</option>
                 <option value="14">14</option>
                 <option value="13">13</option>
                 <option value="12">12</option>
-                <option value="10">10</option>
+                <option value="10" selected>10</option>
                 <option value="8">8</option>
             </select>
             <div class="ability-modifier" id="wis-mod">+0</div>
         </div>
         <div class="ability-box">
             <div class="ability-name">Charisma</div>
-            <select class="ability-input" id="cha" onchange="updateModifiers()">
+            <select class="ability-input standard-array-select" id="cha" onchange="handleStandardArrayChange()">
                 <option value="">-</option>
                 <option value="15">15</option>
                 <option value="14">14</option>
                 <option value="13">13</option>
                 <option value="12">12</option>
                 <option value="10">10</option>
-                <option value="8">8</option>
+                <option value="8" selected>8</option>
             </select>
-            <div class="ability-modifier" id="cha-mod">+0</div>
+            <div class="ability-modifier" id="cha-mod">-1</div>
         </div>
     </div>
 </div>
@@ -218,7 +222,31 @@
             <input type="number" class="ability-input" id="pb-str" min="8" max="15" value="8" onchange="updatePointBuy()">
             <div class="ability-modifier" id="pb-str-mod">-1</div>
         </div>
-        <!-- Similar for other abilities -->
+        <div class="ability-box">
+            <div class="ability-name">Dexterity</div>
+            <input type="number" class="ability-input" id="pb-dex" min="8" max="15" value="8" onchange="updatePointBuy()">
+            <div class="ability-modifier" id="pb-dex-mod">-1</div>
+        </div>
+        <div class="ability-box">
+            <div class="ability-name">Constitution</div>
+            <input type="number" class="ability-input" id="pb-con" min="8" max="15" value="8" onchange="updatePointBuy()">
+            <div class="ability-modifier" id="pb-con-mod">-1</div>
+        </div>
+        <div class="ability-box">
+            <div class="ability-name">Intelligence</div>
+            <input type="number" class="ability-input" id="pb-int" min="8" max="15" value="8" onchange="updatePointBuy()">
+            <div class="ability-modifier" id="pb-int-mod">-1</div>
+        </div>
+        <div class="ability-box">
+            <div class="ability-name">Wisdom</div>
+            <input type="number" class="ability-input" id="pb-wis" min="8" max="15" value="8" onchange="updatePointBuy()">
+            <div class="ability-modifier" id="pb-wis-mod">-1</div>
+        </div>
+        <div class="ability-box">
+            <div class="ability-name">Charisma</div>
+            <input type="number" class="ability-input" id="pb-cha" min="8" max="15" value="8" onchange="updatePointBuy()">
+            <div class="ability-modifier" id="pb-cha-mod">-1</div>
+        </div>
     </div>
 </div>
 
@@ -226,7 +254,7 @@
     <div class="roll-section">
         <p style="color: #c0b090; margin-bottom: 20px;">Roll 4d6, drop the lowest die, six times</p>
         <button class="roll-btn" onclick="rollAbilities()">🎲 Roll All Abilities 🎲</button>
-        <div id="rollResults"></div>
+        <div id="rollResults" style="margin-top: 30px;"></div>
     </div>
 </div>
 
@@ -252,6 +280,96 @@
 
         event.target.classList.add('active');
         document.getElementById(tabName).classList.add('active');
+
+        // Update validation based on active tab
+        if (tabName === 'standard') {
+            validateStandardArray();
+        } else if (tabName === 'pointbuy') {
+            updatePointBuy();
+        } else if (tabName === 'roll') {
+            // Roll mode - check if abilities have been rolled
+            const rollResults = document.getElementById('rollResults');
+            const hasRolled = rollResults.innerHTML.includes('abilities-grid');
+            document.getElementById('nextBtn').disabled = !hasRolled;
+        }
+    }
+
+    function handleStandardArrayChange() {
+        // Update modifiers for all abilities
+        updateStandardArrayModifiers();
+
+        // Update disabled states to prevent duplicates
+        updateStandardArrayAvailability();
+
+        // Validate all selections
+        validateStandardArray();
+    }
+
+    function updateStandardArrayModifiers() {
+        ['str', 'dex', 'con', 'int', 'wis', 'cha'].forEach(ability => {
+            const score = parseInt(document.getElementById(ability).value) || 10;
+            const modifier = Math.floor((score - 10) / 2);
+            document.getElementById(ability + '-mod').textContent = modifier >= 0 ? '+' + modifier : modifier;
+            document.getElementById('final-' + ability).value = score;
+        });
+    }
+
+    function updateStandardArrayAvailability() {
+        const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        const standardArrayValues = ['15', '14', '13', '12', '10', '8'];
+
+        // Collect currently selected values
+        const selectedValues = {};
+        abilities.forEach(ability => {
+            const select = document.getElementById(ability);
+            const value = select.value;
+            if (value) {
+                selectedValues[ability] = value;
+            }
+        });
+
+        // For each dropdown, disable options that are selected elsewhere
+        abilities.forEach(currentAbility => {
+            const currentSelect = document.getElementById(currentAbility);
+            const currentValue = currentSelect.value;
+
+            // Get all options in this dropdown
+            const options = currentSelect.querySelectorAll('option');
+
+            options.forEach(option => {
+                const optionValue = option.value;
+
+                // Skip the empty option
+                if (optionValue === '') {
+                    return;
+                }
+
+                // Check if this value is selected in another dropdown
+                const isSelectedElsewhere = Object.entries(selectedValues).some(
+                    ([ability, value]) => ability !== currentAbility && value === optionValue
+                );
+
+                // Disable if selected elsewhere, enable if not
+                option.disabled = isSelectedElsewhere;
+            });
+        });
+    }
+
+    function validateStandardArray() {
+        const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        const selectedValues = abilities.map(ability => document.getElementById(ability).value);
+
+        // Check if all values are selected (no empty values)
+        const allSelected = selectedValues.every(value => value !== '');
+
+        // Check for duplicates
+        const hasDuplicates = selectedValues.some((value, index) =>
+            value !== '' && selectedValues.indexOf(value) !== index
+        );
+
+        // Enable next button only if all selected and no duplicates
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.disabled = !allSelected || hasDuplicates;
     }
 
     function updateModifiers() {
@@ -261,6 +379,61 @@
             document.getElementById(ability + '-mod').textContent = modifier >= 0 ? '+' + modifier : modifier;
             document.getElementById('final-' + ability).value = score;
         });
+    }
+
+    function updatePointBuy() {
+        // Point cost lookup table
+        const pointCosts = {
+            8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9
+        };
+
+        const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        let totalPointsSpent = 0;
+
+        // Calculate total points spent and update modifiers
+        abilities.forEach(ability => {
+            const input = document.getElementById('pb-' + ability);
+            let score = parseInt(input.value) || 8;
+
+            // Enforce min/max bounds
+            if (score < 8) {
+                score = 8;
+                input.value = 8;
+            }
+            if (score > 15) {
+                score = 15;
+                input.value = 15;
+            }
+
+            // Add to total points spent
+            totalPointsSpent += pointCosts[score] || 0;
+
+            // Update modifier display
+            const modifier = Math.floor((score - 10) / 2);
+            document.getElementById('pb-' + ability + '-mod').textContent =
+                modifier >= 0 ? '+' + modifier : modifier;
+
+            // Update hidden form field
+            document.getElementById('final-' + ability).value = score;
+        });
+
+        // Update points remaining display
+        const pointsRemaining = 27 - totalPointsSpent;
+        const pointsLeftElement = document.getElementById('pointsLeft');
+        pointsLeftElement.textContent = pointsRemaining;
+
+        // Color code the points remaining
+        if (pointsRemaining < 0) {
+            pointsLeftElement.style.color = '#ff6b6b'; // Red - over budget
+        } else if (pointsRemaining === 0) {
+            pointsLeftElement.style.color = '#90ee90'; // Green - perfect
+        } else {
+            pointsLeftElement.style.color = '#d4af37'; // Gold - points left
+        }
+
+        // Enable next button only if exactly 0 points remaining
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.disabled = (pointsRemaining !== 0);
     }
 
     function rollAbilities() {
@@ -276,10 +449,52 @@
             results.push(total);
         }
 
-        document.getElementById('rollResults').innerHTML = `
-            <div class="roll-result">Your rolls: ${results.join(', ')}</div>
-            <p style="color: #c0b090; margin-top: 20px;">Assign these values to your abilities in the order you prefer</p>
-        `;
+        // Auto-assign to abilities in order
+        const abilities = [
+            { id: 'str', name: 'Strength' },
+            { id: 'dex', name: 'Dexterity' },
+            { id: 'con', name: 'Constitution' },
+            { id: 'int', name: 'Intelligence' },
+            { id: 'wis', name: 'Wisdom' },
+            { id: 'cha', name: 'Charisma' }
+        ];
+
+        // Build the ability grid HTML
+        let gridHTML = '<div class="abilities-grid">';
+
+        abilities.forEach((ability, index) => {
+            const score = results[index];
+            const modifier = Math.floor((score - 10) / 2);
+            const modifierText = modifier >= 0 ? '+' + modifier : modifier;
+            const modifierColor = modifier > 0 ? '#90ee90' : (modifier < 0 ? '#ff6b6b' : '#f0e6d2');
+
+            // Update hidden form field
+            document.getElementById('final-' + ability.id).value = score;
+
+            gridHTML += `
+                <div class="ability-box">
+                    <div class="ability-name">${ability.name}</div>
+                    <div class="ability-score">${score}</div>
+                    <div class="ability-modifier" style="color: ${modifierColor}">${modifierText}</div>
+                </div>
+            `;
+        });
+
+        gridHTML += '</div>';
+        gridHTML += '<p style="text-align: center; color: #c0b090; margin-top: 20px; font-size: 0.9em;">Don\'t like these rolls? Click the button above to reroll!</p>';
+
+        document.getElementById('rollResults').innerHTML = gridHTML;
+
+        // Enable next button
+        document.getElementById('nextBtn').disabled = false;
     }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize standard array with defaults
+        updateStandardArrayModifiers();
+        updateStandardArrayAvailability();
+        validateStandardArray();
+    });
 </script>
 {% endblock %}

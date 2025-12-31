@@ -82,6 +82,195 @@
         cursor: pointer;
         font-size: 0.9em;
     }
+    .appearance-section {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 15px;
+        padding: 25px;
+        margin: 20px 0;
+    }
+    .appearance-field {
+        margin: 15px 0;
+    }
+    .field-label {
+        color: #d4af37;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+    .field-input, .field-select {
+        width: 100%;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid #8b7355;
+        border-radius: 5px;
+        color: #f0e6d2;
+        font-size: 1em;
+    }
+    .radio-group {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #f0e6d2;
+        cursor: pointer;
+    }
+    .radio-label input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    .portrait-section {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .portrait-preview {
+        max-width: 400px;
+        margin: 20px auto;
+        border: 3px solid #d4af37;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .portrait-preview img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .portrait-placeholder {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b7355;
+        font-size: 1.2em;
+    }
+    .generate-btn {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+        border: none;
+        border-radius: 10px;
+        color: #2c1810;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 15px 0;
+    }
+    .generate-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .loading-spinner {
+        display: none;
+        margin: 20px auto;
+        color: #d4af37;
+        font-size: 1.1em;
+    }
+    .loading-spinner.active {
+        display: block;
+    }
+
+    /* RPG-Style Appearance Creator Styling */
+    .appearance-group {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid #8b7355;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+    .group-title {
+        color: #d4af37;
+        font-size: 1.4em;
+        font-weight: bold;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #d4af37;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .field-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin: 15px 0;
+    }
+    .field-row .appearance-field {
+        flex: 1;
+        min-width: 200px;
+    }
+    .appearance-field .field-label {
+        font-size: 0.95em;
+        margin-bottom: 5px;
+    }
+    .appearance-field .field-select {
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #d4af37;
+        color: #f0e6d2;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .appearance-field .field-select:hover {
+        border-color: #f4d03f;
+        background: rgba(0, 0, 0, 0.7);
+    }
+    .appearance-field .field-select:focus {
+        outline: none;
+        border-color: #90ee90;
+        box-shadow: 0 0 10px rgba(144, 238, 144, 0.3);
+    }
+
+    /* Features Grid Styling */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        margin-top: 15px;
+    }
+    .feature-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid #8b7355;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .feature-checkbox:hover {
+        background: rgba(212, 175, 55, 0.1);
+        border-color: #d4af37;
+    }
+    .feature-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #d4af37;
+    }
+    .feature-checkbox label {
+        color: #f0e6d2;
+        cursor: pointer;
+        margin: 0;
+        flex: 1;
+    }
+
+    /* Section Dividers */
+    .appearance-group + .appearance-group {
+        margin-top: 25px;
+        border-top: 3px solid #8b7355;
+    }
+
+    /* Hidden state for facial hair */
+    .facial-hair-field.hidden {
+        display: none;
+    }
 </style>
 {% endblock %}
 
@@ -92,6 +281,195 @@
 </div>
 
 <input type="text" class="name-input" placeholder="Enter Character Name" id="charName" required>
+
+<div class="appearance-section">
+    <div class="section-title">✨ Character Appearance Creator</div>
+    <p style="text-align: center; color: #c0b090; margin-bottom: 20px; font-style: italic;">
+        Customize your character's visual appearance
+    </p>
+
+    <!-- Group 1: Basic Info -->
+    <div class="appearance-group">
+        <div class="group-title">Basic Information</div>
+        <div class="field-row">
+            <div class="appearance-field">
+                <label class="field-label">Gender:</label>
+                <select class="field-select" id="gender" onchange="toggleFacialHair()">
+                    <option value="male" selected>Male</option>
+                    <option value="female">Female</option>
+                    <option value="androgynous">Androgynous</option>
+                </select>
+            </div>
+            <div class="appearance-field">
+                <label class="field-label">Age:</label>
+                <select class="field-select" id="age">
+                    <option value="young">Young (teens-20s)</option>
+                    <option value="adult" selected>Adult (30s-40s)</option>
+                    <option value="middle-aged">Middle-aged (50s-60s)</option>
+                    <option value="elderly">Elderly</option>
+                </select>
+            </div>
+            <div class="appearance-field">
+                <label class="field-label">Build:</label>
+                <select class="field-select" id="build">
+                    <option value="slim">Slim</option>
+                    <option value="average" selected>Average</option>
+                    <option value="athletic">Athletic</option>
+                    <option value="muscular">Muscular</option>
+                    <option value="heavyset">Heavyset</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group 2: Face -->
+    <div class="appearance-group">
+        <div class="group-title">Facial Features</div>
+        <div class="field-row">
+            <div class="appearance-field">
+                <label class="field-label">Skin Tone:</label>
+                <select class="field-select" id="skin_tone">
+                    <option value="pale">Pale</option>
+                    <option value="fair">Fair</option>
+                    <option value="light">Light</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="tan">Tan</option>
+                    <option value="olive">Olive</option>
+                    <option value="brown">Brown</option>
+                    <option value="dark">Dark</option>
+                    <option value="deep">Deep</option>
+                </select>
+            </div>
+            <div class="appearance-field">
+                <label class="field-label">Expression:</label>
+                <select class="field-select" id="expression">
+                    <option value="neutral" selected>Neutral</option>
+                    <option value="fierce">Fierce</option>
+                    <option value="smirking">Smirking</option>
+                    <option value="wise">Wise</option>
+                    <option value="friendly">Friendly</option>
+                    <option value="mysterious">Mysterious</option>
+                    <option value="battle-ready">Battle-ready</option>
+                    <option value="mischievous">Mischievous</option>
+                </select>
+            </div>
+            <div class="appearance-field">
+                <label class="field-label">Eye Color:</label>
+                <select class="field-select" id="eye_color">
+                    <option value="brown" selected>Brown</option>
+                    <option value="amber">Amber</option>
+                    <option value="hazel">Hazel</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="gray">Gray</option>
+                    <option value="violet">Violet</option>
+                    <option value="red">Red</option>
+                    <option value="black">Black</option>
+                    <option value="glowing">Glowing</option>
+                    <option value="heterochromia">Heterochromia (two colors)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group 3: Hair -->
+    <div class="appearance-group">
+        <div class="group-title">Hair & Facial Hair</div>
+        <div class="field-row">
+            <div class="appearance-field">
+                <label class="field-label">Hair Style:</label>
+                <select class="field-select" id="hair_style">
+                    <option value="bald">Bald</option>
+                    <option value="buzz cut">Buzz Cut</option>
+                    <option value="short neat">Short Neat</option>
+                    <option value="short messy">Short Messy</option>
+                    <option value="medium length" selected>Medium Length</option>
+                    <option value="long flowing">Long Flowing</option>
+                    <option value="long braided">Long Braided</option>
+                    <option value="mohawk">Mohawk</option>
+                    <option value="ponytail">Ponytail</option>
+                    <option value="topknot">Topknot</option>
+                    <option value="dreadlocks">Dreadlocks</option>
+                    <option value="wild untamed">Wild Untamed</option>
+                    <option value="slicked back">Slicked Back</option>
+                </select>
+            </div>
+            <div class="appearance-field">
+                <label class="field-label">Hair Color:</label>
+                <select class="field-select" id="hair_color">
+                    <option value="black">Black</option>
+                    <option value="dark brown" selected>Dark Brown</option>
+                    <option value="brown">Brown</option>
+                    <option value="auburn">Auburn</option>
+                    <option value="red">Red</option>
+                    <option value="strawberry blonde">Strawberry Blonde</option>
+                    <option value="blonde">Blonde</option>
+                    <option value="platinum">Platinum</option>
+                    <option value="white">White</option>
+                    <option value="gray">Gray</option>
+                    <option value="silver">Silver</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="purple">Purple</option>
+                    <option value="pink">Pink</option>
+                    <option value="orange">Orange</option>
+                </select>
+            </div>
+            <div class="appearance-field" id="facial-hair-field">
+                <label class="field-label">Facial Hair:</label>
+                <select class="field-select" id="facial_hair">
+                    <option value="none" selected>None</option>
+                    <option value="stubble">Stubble</option>
+                    <option value="short beard">Short Beard</option>
+                    <option value="full beard">Full Beard</option>
+                    <option value="long beard">Long Beard</option>
+                    <option value="braided beard">Braided Beard</option>
+                    <option value="mustache">Mustache</option>
+                    <option value="goatee">Goatee</option>
+                    <option value="mutton chops">Mutton Chops</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group 4: Distinguishing Features -->
+    <div class="appearance-group">
+        <div class="group-title">Distinguishing Features</div>
+        <div class="features-grid">
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="scar across face"> Scar across face</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="scar over eye"> Scar over eye</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="battle-worn scars"> Battle-worn scars</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="tribal tattoos"> Tribal tattoos</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="arcane tattoos"> Arcane/magical tattoos</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="decorative tattoos"> Decorative tattoos</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="war paint"> War paint</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="freckles"> Freckles</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="eye patch"> Eye patch</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="blind eye"> Blind eye</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="pointed teeth"> Pointed teeth/fangs</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="piercings"> Piercings</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="earrings"> Earrings</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="circlet"> Circlet/crown</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="headband"> Headband</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="hood up"> Hood up</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="face paint"> Face paint</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="prominent cheekbones"> Prominent cheekbones</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="strong jawline"> Strong jawline</label>
+            <label class="feature-checkbox"><input type="checkbox" name="features" value="soft features"> Soft features</label>
+        </div>
+    </div>
+
+    <div class="portrait-section">
+        <button class="generate-btn" id="generateBtn" onclick="generatePortrait()">🎨 Generate Portrait</button>
+        <div class="loading-spinner" id="loadingSpinner">
+            <div>⏳ Generating portrait...</div>
+            <div style="font-size: 0.9em; margin-top: 10px; color: #c0b090;">This may take 30-60 seconds</div>
+        </div>
+        <div class="portrait-preview" id="portraitPreview">
+            <div class="portrait-placeholder">No portrait yet - Click "Generate Portrait" above</div>
+        </div>
+    </div>
+</div>
 
 <div class="character-sheet">
     <div class="sheet-section">
@@ -179,12 +557,35 @@
         <div class="stat-value">{{ wizard_data.equipment | join(', ') }}</div>
     </div>
     {% endif %}
+
+    {% if wizard_data.cantrips or wizard_data.spells_known %}
+    <div class="sheet-section">
+        <div class="section-title">Spells <a href="/character/step8" class="edit-btn">Edit</a></div>
+        {% if wizard_data.cantrips %}
+        <div class="stat-row">
+            <span class="stat-label">Cantrips:</span>
+            <span class="stat-value">{{ wizard_data.cantrips | join(', ') }}</span>
+        </div>
+        {% endif %}
+        {% if wizard_data.spells_known %}
+        <div class="stat-row">
+            <span class="stat-label">1st Level Spells:</span>
+            <span class="stat-value">{{ wizard_data.spells_known | join(', ') }}</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 
 <form method="POST" id="finalizeForm">
     <input type="hidden" name="character_name" id="finalName">
+    <input type="hidden" name="portrait_filename" id="portraitFilename">
     <div class="navigation">
+        {% if wizard_data.cantrips or wizard_data.spells_known %}
+        <a href="/character/step8" class="btn btn-secondary">← Back</a>
+        {% else %}
         <a href="/character/step7" class="btn btn-secondary">← Back</a>
+        {% endif %}
         <button type="submit" class="btn btn-primary" onclick="return validateName()">✨ Create Character ✨</button>
     </div>
 </form>
@@ -192,6 +593,8 @@
 
 {% block extra_js %}
 <script>
+    let generatedPortrait = null;
+
     function validateName() {
         const name = document.getElementById('charName').value.trim();
         if (!name) {
@@ -199,7 +602,91 @@
             return false;
         }
         document.getElementById('finalName').value = name;
+
+        // Include portrait filename if generated
+        if (generatedPortrait) {
+            document.getElementById('portraitFilename').value = generatedPortrait;
+        }
+
         return true;
+    }
+
+    function toggleFacialHair() {
+        const gender = document.getElementById('gender').value;
+        const facialHairField = document.getElementById('facial-hair-field');
+
+        if (gender === 'female') {
+            facialHairField.classList.add('hidden');
+            document.getElementById('facial_hair').value = 'none';
+        } else {
+            facialHairField.classList.remove('hidden');
+        }
+    }
+
+    async function generatePortrait() {
+        const name = document.getElementById('charName').value.trim();
+        if (!name) {
+            alert('Please enter a character name first');
+            return;
+        }
+
+        // Get all appearance fields
+        const gender = document.getElementById('gender').value;
+        const age = document.getElementById('age').value;
+        const build = document.getElementById('build').value;
+        const skinTone = document.getElementById('skin_tone').value;
+        const expression = document.getElementById('expression').value;
+        const eyeColor = document.getElementById('eye_color').value;
+        const hairStyle = document.getElementById('hair_style').value;
+        const hairColor = document.getElementById('hair_color').value;
+        const facialHair = document.getElementById('facial_hair').value;
+
+        // Get selected features (checkboxes)
+        const featuresCheckboxes = document.querySelectorAll('input[name="features"]:checked');
+        const features = Array.from(featuresCheckboxes).map(cb => cb.value);
+
+        // Show loading spinner
+        document.getElementById('generateBtn').disabled = true;
+        document.getElementById('loadingSpinner').classList.add('active');
+
+        try {
+            const response = await fetch('/character/generate_portrait', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    character_name: name,
+                    gender: gender,
+                    age: age,
+                    build: build,
+                    skin_tone: skinTone,
+                    expression: expression,
+                    eye_color: eyeColor,
+                    hair_style: hairStyle,
+                    hair_color: hairColor,
+                    facial_hair: facialHair,
+                    features: features
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Display the generated portrait
+                generatedPortrait = data.filename;
+                const preview = document.getElementById('portraitPreview');
+                preview.innerHTML = `<img src="/static/images/characters/${data.filename}" alt="Character Portrait">`;
+            } else {
+                alert('Failed to generate portrait: ' + (data.error || 'Unknown error'));
+            }
+        } catch (error) {
+            alert('Error generating portrait: ' + error.message);
+        } finally {
+            // Hide loading spinner
+            document.getElementById('loadingSpinner').classList.remove('active');
+            document.getElementById('generateBtn').disabled = false;
+        }
     }
 </script>
 {% endblock %}

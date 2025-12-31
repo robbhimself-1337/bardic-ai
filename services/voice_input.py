@@ -12,23 +12,29 @@ model = whisper.load_model("base")
 logger.info("Whisper model loaded successfully")
 
 
-def transcribe_audio(audio_file):
+def transcribe_audio(audio_input):
     """
     Transcribe audio using Whisper base model.
 
     Args:
-        audio_file: File-like object containing audio data (WAV format)
+        audio_input: Either a file path (str) or file-like object with .save() method
 
     Returns:
-        str: Transcribed text
+        str: Transcribed text, or None on error
     """
     try:
-        # Save the uploaded file temporarily
         temp_path = "/tmp/temp_audio.wav"
-        audio_file.save(temp_path)
+        
+        # Handle both file paths and file objects
+        if isinstance(audio_input, str):
+            # It's already a file path
+            temp_path = audio_input
+        else:
+            # It's a file-like object, save it
+            audio_input.save(temp_path)
 
         # Transcribe using Whisper
-        logger.info("Starting transcription...")
+        logger.info(f"Starting transcription of {temp_path}...")
         result = model.transcribe(temp_path)
         transcribed_text = result["text"].strip()
 
@@ -37,4 +43,4 @@ def transcribe_audio(audio_file):
 
     except Exception as e:
         logger.error(f"Error transcribing audio: {str(e)}")
-        return f"Error: Could not transcribe audio - {str(e)}"
+        return None

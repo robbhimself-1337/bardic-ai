@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ campaign.title }} - Bardic AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .intro-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Scene Display */
+        .scene-display {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .scene-image.active {
+            opacity: 1;
+        }
+
+        .scene-image.fade-out {
+            opacity: 0;
+        }
+
+        /* Vignette overlay */
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Title Overlay */
+        .title-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .title-overlay.active {
+            opacity: 1;
+        }
+
+        .campaign-title {
+            font-size: 4em;
+            font-weight: bold;
+            color: #d4af37;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .campaign-subtitle {
+            font-size: 1.5em;
+            color: #f0e6d2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+            text-align: center;
+            max-width: 70%;
+            line-height: 1.6;
+        }
+
+        /* Narration Overlay */
+        .narration-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 70%, transparent 100%);
+            padding: 60px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .narration-overlay.active {
+            opacity: 1;
+        }
+
+        .narration-text {
+            font-size: 1.6em;
+            line-height: 1.8;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
+            max-width: 90%;
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            z-index: 20;
+            display: flex;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: rgba(212, 175, 55, 0.3);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(212, 175, 55, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #2c1810;
+            font-weight: bold;
+        }
+
+        .control-btn.primary:hover {
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+        }
+
+        /* Skip button */
+        .skip-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            z-index: 20;
+            font-family: 'Georgia', serif;
+        }
+
+        .skip-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        /* Progress indicator */
+        .progress-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Audio controls (hidden) */
+        audio {
+            display: none;
+        }
+
+        /* Loading */
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            color: #d4af37;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-container">
+        <!-- Scene Display -->
+        <div class="scene-display" id="sceneDisplay">
+            <!-- Intro images will be dynamically added here -->
+        </div>
+
+        <!-- Vignette -->
+        <div class="vignette"></div>
+
+        <!-- Title Overlay -->
+        <div class="title-overlay" id="titleOverlay">
+            <div class="campaign-title">{{ campaign.title }}</div>
+            <div class="campaign-subtitle">{{ campaign.description }}</div>
+        </div>
+
+        <!-- Narration Overlay -->
+        <div class="narration-overlay" id="narrationOverlay">
+            <div class="narration-text" id="narrationText"></div>
+        </div>
+
+        <!-- Skip Button -->
+        <button class="skip-btn" onclick="skipIntro()">Skip Intro</button>
+
+        <!-- Progress Dots -->
+        <div class="progress-dots" id="progressDots"></div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="control-btn" id="prevBtn" onclick="previousScene()" style="display: none;">Previous</button>
+            <button class="control-btn primary" id="nextBtn" onclick="nextScene()">Continue</button>
+            <button class="control-btn primary" id="startBtn" onclick="startGame()" style="display: none;">Begin Adventure</button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+            Loading...
+        </div>
+    </div>
+
+    <!-- Audio element -->
+    <audio id="narratorAudio" controls></audio>
+
+    <script>
+        // Intro scenes data
+        const introScenes = {{ intro_scenes | tojson | safe }};
+        let currentSceneIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeIntro();
+        });
+
+        function initializeIntro() {
+            // Create progress dots
+            const progressDots = document.getElementById('progressDots');
+            for (let i = 0; i < introScenes.length + 1; i++) {  // +1 for title screen
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                if (i === 0) dot.classList.add('active');
+                progressDots.appendChild(dot);
+            }
+
+            // Show title screen first
+            showTitleScreen();
+        }
+
+        function showTitleScreen() {
+            const titleOverlay = document.getElementById('titleOverlay');
+            titleOverlay.classList.add('active');
+
+            // Hide title after 3 seconds and start first scene
+            setTimeout(() => {
+                titleOverlay.classList.remove('active');
+                setTimeout(() => {
+                    titleOverlay.style.display = 'none';
+                    showScene(0);
+                }, 1000);
+            }, 3000);
+        }
+
+        function showScene(index) {
+            if (index < 0 || index >= introScenes.length) return;
+
+            currentSceneIndex = index;
+            const scene = introScenes[index];
+
+            // Update progress dots
+            updateProgressDots(index + 1); // +1 because title screen is 0
+
+            // Create and show image
+            const sceneDisplay = document.getElementById('sceneDisplay');
+            sceneDisplay.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.className = 'scene-image active';
+            img.src = scene.image_url || '/static/images/dm/dm_default.png';
+            img.alt = scene.narration;
+            sceneDisplay.appendChild(img);
+
+            // Show narration
+            const narrationOverlay = document.getElementById('narrationOverlay');
+            const narrationText = document.getElementById('narrationText');
+            narrationText.textContent = scene.narration;
+
+            setTimeout(() => {
+                narrationOverlay.classList.add('active');
+            }, 500);
+
+            // Play audio if available
+            if (scene.audio_url) {
+                playNarration(scene.audio_url);
+            }
+
+            // Update buttons
+            updateButtons();
+        }
+
+        function nextScene() {
+            if (currentSceneIndex < introScenes.length - 1) {
+                // Fade out current scene
+                const narrationOverlay = document.getElementById('narrationOverlay');
+                narrationOverlay.classList.remove('active');
+
+                setTimeout(() => {
+                    showScene(currentSceneIndex + 1);
+                }, 800);
+            } else {
+                // Last scene - show start button
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('startBtn').style.display = 'block';
+            }
+        }
+
+        function previousScene() {
+            if (currentSceneIndex > 0) {
+                const narrationOverlay = document.getElementById('narrationOverlay');
+                narrationOverlay.classList.remove('active');
+
+                setTimeout(() => {
+                    showScene(currentSceneIndex - 1);
+                }, 800);
+            }
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const startBtn = document.getElementById('startBtn');
+
+            // Show previous button if not on first scene
+            prevBtn.style.display = currentSceneIndex > 0 ? 'block' : 'none';
+
+            // Show next or start button
+            if (currentSceneIndex === introScenes.length - 1) {
+                nextBtn.style.display = 'none';
+                startBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                startBtn.style.display = 'none';
+            }
+        }
+
+        function updateProgressDots(activeIndex) {
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((dot, i) => {
+                if (i === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function playNarration(audioUrl) {
+            const audio = document.getElementById('narratorAudio');
+            audio.src = audioUrl;
+            audio.play();
+        }
+
+        function skipIntro() {
+            if (confirm('Skip the introduction and start the campaign?')) {
+                startGame();
+            }
+        }
+
+        function startGame() {
+            // Redirect to main game
+            window.location.href = '/game';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSceneIndex < introScenes.length - 1) {
+                    nextScene();
+                } else {
+                    startGame();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousScene();
+            } else if (e.key === 'Escape') {
+                skipIntro();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "name": "Anastasia",
+  "level": 1,
+  "race": "Elf",
+  "race_traits": {},
+  "character_class": "Cleric",
+  "subclass": null,
+  "strength": 16,
+  "dexterity": 12,
+  "constitution": 13,
+  "intelligence": 15,
+  "wisdom": 17,
+  "charisma": 10,
+  "hp": 9,
+  "max_hp": 9,
+  "ac": 11,
+  "initiative": 1,
+  "proficiency_bonus": 2,
+  "skill_proficiencies": [
+    "Deception",
+    "Insight"
+  ],
+  "saving_throw_proficiencies": [
+    "wisdom",
+    "charisma"
+  ],
+  "tool_proficiencies": [],
+  "language_proficiencies": [
+    "Common"
+  ],
+  "inventory": [
+    "Scale Mail",
+    "Shield",
+    "Mace",
+    "Holy Symbol",
+    "Common Clothes",
+    "Pouch with 15 gold pieces",
+    "A memento from your past"
+  ],
+  "equipped_armor": null,
+  "equipped_weapons": [],
+  "cantrips": [],
+  "spells_known": [],
+  "spell_slots": {},
+  "spells_prepared": [],
+  "background": "Fate-Touched",
+  "background_feature": null,
+  "alignment": null,
+  "personality_traits": null,
+  "ideals": null,
+  "bonds": null,
+  "flaws": null,
+  "features": [],
+  "portrait": "Anastasia_20251230_222231.png"
+}

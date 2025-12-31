@@ -7,4 +7,5 @@ sounddevice
 numpy
 coqui-tts
 scipy
-torchcodec
+torchcodecopenai
+python-dotenv

@@ -10,11 +10,8 @@
             background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
             color: #f0e6d2;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
         }
         body::before {
@@ -28,107 +25,170 @@
             opacity: 0.3;
             pointer-events: none;
         }
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 50px;
-            background: rgba(44, 24, 16, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.1);
-            border: 3px solid #d4af37;
+        .landing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
             position: relative;
         }
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(135deg, #d4af37 0%, #8b7355 50%, #d4af37 100%);
-            border-radius: 15px;
-            z-index: -1;
-        }
         h1 {
-            font-size: 3.5em;
+            text-align: center;
+            font-size: 4em;
             margin-bottom: 10px;
             color: #d4af37;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
         .subtitle {
-            font-size: 1.3em;
+            text-align: center;
+            font-size: 1.5em;
             color: #c0b090;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             font-style: italic;
         }
-        .button {
-            display: inline-block;
-            padding: 15px 40px;
-            margin: 10px;
-            font-size: 1.2em;
-            color: #2c1810;
-            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-            border: 2px solid #8b7355;
-            border-radius: 8px;
+        .main-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .action-card {
+            background: rgba(44, 24, 16, 0.9);
+            border: 3px solid #8b7355;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
             text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            font-weight: bold;
-        }
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
-            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
-        }
-        .button-secondary {
-            background: linear-gradient(135deg, #8b7355 0%, #a0826d 100%);
             color: #f0e6d2;
-            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.4);
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
-        .button-secondary:hover {
-            box-shadow: 0 6px 25px rgba(139, 115, 85, 0.6);
-            background: linear-gradient(135deg, #a0826d 0%, #8b7355 100%);
+        .action-card:hover {
+            transform: translateY(-8px);
+            border-color: #d4af37;
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4);
         }
-        .features {
-            margin-top: 40px;
-            text-align: left;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid #8b7355;
+        .action-card.primary {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(44, 24, 16, 0.9) 100%);
         }
-        .feature {
-            margin: 15px 0;
-            padding-left: 35px;
-            position: relative;
+        .action-card .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .action-card h3 {
+            color: #d4af37;
+            font-size: 1.8em;
+            margin: 0 0 15px 0;
+        }
+        .action-card p {
             color: #c0b090;
-            line-height: 1.6;
+            font-size: 1.1em;
+            margin: 0;
+            line-height: 1.5;
         }
-        .feature:before {
-            content: "⚔️";
-            position: absolute;
-            left: 0;
-            font-size: 1.3em;
+        .characters-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #8b7355;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        .characters-section h3 {
+            color: #d4af37;
+            font-size: 1.8em;
+            margin: 0 0 25px 0;
+            text-align: center;
+        }
+        .character-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .character-chip {
+            background: rgba(44, 24, 16, 0.8);
+            border: 2px solid #8b7355;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .character-chip:hover {
+            border-color: #d4af37;
+            transform: translateY(-3px);
+        }
+        .char-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d4af37;
+            margin-bottom: 10px;
+        }
+        .char-name {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 10px 0 5px 0;
+        }
+        .char-class {
+            color: #c0b090;
+            font-size: 0.95em;
+        }
+        .no-chars {
+            text-align: center;
+            color: #8b7355;
+            font-style: italic;
+            padding: 40px;
+            grid-column: 1 / -1;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bardic AI</h1>
+    <div class="landing-container">
+        <h1>⚔️ Bardic AI ⚔️</h1>
         <p class="subtitle">Voice-Powered D&D Dungeon Master</p>
 
-        <a href="/new_game" class="button">New Campaign</a>
-        <a href="/load" class="button button-secondary">Load Game</a>
+        <div class="main-actions">
+            <a href="/character/new" class="action-card">
+                <div class="icon">🧙</div>
+                <h3>Create Character</h3>
+                <p>Build a new hero for your adventures</p>
+            </a>
 
-        <div class="features">
-            <div class="feature">Voice input with Whisper speech-to-text</div>
-            <div class="feature">AI DM with voice cloning (Coqui TTS)</div>
-            <div class="feature">Dynamic campaigns with branching paths</div>
-            <div class="feature">Combat, quests, and inventory management</div>
+            <a href="/start" class="action-card primary">
+                <div class="icon">⚔️</div>
+                <h3>Start Campaign</h3>
+                <p>Begin a new adventure</p>
+            </a>
+
+            <a href="/load" class="action-card">
+                <div class="icon">📜</div>
+                <h3>Load Game</h3>
+                <p>Continue a saved adventure</p>
+            </a>
         </div>
+
+        {% if characters %}
+        <div class="characters-section">
+            <h3>Your Characters</h3>
+            <div class="character-list">
+                {% for char in characters %}
+                <div class="character-chip">
+                    {% if char.portrait %}
+                    <img src="/static/images/characters/{{ char.portrait }}" class="char-avatar" alt="{{ char.name }}">
+                    {% else %}
+                    <div class="char-avatar" style="background: linear-gradient(135deg, #8b7355 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 2em;">🧙</div>
+                    {% endif %}
+                    <div class="char-name">{{ char.name }}</div>
+                    <div class="char-class">{{ char.race }} {{ char.character_class }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>

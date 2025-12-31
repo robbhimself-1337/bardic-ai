@@ -157,7 +157,18 @@ class Open5eClient:
     def get_spells_by_level(self, class_name: str, level: int) -> List[Dict]:
         """Get spells of specific level for a class."""
         class_spells = self.get_spells_by_class(class_name)
-        return [s for s in class_spells if s.get('level_int') == level]
+        level_spells = [s for s in class_spells if s.get('level_int') == level]
+
+        # Deduplicate by spell name
+        seen = set()
+        unique_spells = []
+        for spell in level_spells:
+            spell_name = spell.get('name', '')
+            if spell_name and spell_name not in seen:
+                seen.add(spell_name)
+                unique_spells.append(spell)
+
+        return unique_spells
 
     def get_class_details(self, class_name: str) -> Optional[Dict]:
         """Get detailed information for a specific class."""
@@ -265,6 +276,14 @@ def get_weapons():
 
 def get_armor():
     return client.get_armor()
+
+
+def get_spells_for_class(class_name: str, level: int = None) -> List[Dict]:
+    """Get spells available to a specific class, optionally filtered by level."""
+    if level is not None:
+        return client.get_spells_by_level(class_name, level)
+    else:
+        return client.get_spells_by_class(class_name)
 
 
 def get_magic_items():

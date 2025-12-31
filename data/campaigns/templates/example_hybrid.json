@@ -1,0 +1,216 @@
+{
+  "id": "example_hybrid",
+  "title": "Example Hybrid Campaign",
+  "description": "Example campaign demonstrating the new hybrid scripted + AI system with rich dialogue and choices.",
+  "category": "tutorial",
+  "estimated_duration": "1 hour",
+  "difficulty": "beginner",
+  "starting_checkpoint": "tavern_start",
+  "checkpoints": {
+    "tavern_start": {
+      "name": "The Rusty Dragon Tavern",
+      "description": "A cozy tavern with crackling fireplace and warm atmosphere.",
+      "entrance_narration": "You push open the heavy oak door of the Rusty Dragon Tavern. The warm glow of the fireplace washes over you, along with the aroma of roasted meat and fresh bread. A few patrons sit scattered around wooden tables, nursing their drinks. Behind the bar stands a woman with auburn hair, wiping down mugs with practiced efficiency.",
+      "npcs_structured": [
+        {
+          "name": "Ameiko",
+          "role": "Innkeeper",
+          "greeting": "Welcome to the Rusty Dragon! You look like you've traveled far. Can I get you anything to drink, or perhaps you'd like to hear some local news?",
+          "dialogue_topics": {
+            "the tavern": "I inherited this place from my father. Been running it for five years now. We serve the best ale in town, if I do say so myself!",
+            "local news": "Strange things have been happening lately. Travelers report seeing lights in the old forest to the north. Some say it's bandits, others whisper of darker things...",
+            "forest": "The Whispering Woods, we call it. Used to be safe, but not anymore. If you're thinking of investigating, be careful. Take the north road and keep your wits about you.",
+            "goblins": "Nasty little creatures. They've been raiding farms on the outskirts. The mayor put out a bounty - 50 gold pieces for clearing out their den.",
+            "quest": "If you're looking for work, you could help with the goblin problem. Or investigate those strange lights in the forest. Both would earn you coin and gratitude."
+          }
+        },
+        {
+          "name": "Grizzled Merchant",
+          "role": "Traveling Merchant",
+          "greeting": "Eh? What do you want? Can't you see I'm trying to enjoy my ale in peace?",
+          "dialogue_topics": {
+            "merchant business": "I've been trading up and down the coast for twenty years. These days, roads aren't safe like they used to be.",
+            "dangerous roads": "Bandits, mostly. But I've heard stranger tales - travelers gone missing, odd tracks in the mud. Something's not right.",
+            "buy supplies": "I'm off duty right now, friend. But if you need basic supplies, talk to the general store across the street."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "text": "Head north to investigate the Whispering Woods",
+          "next_checkpoint": "forest_path",
+          "narration": "You gather your belongings and set out on the north road. The afternoon sun filters through the trees as you leave the safety of town behind. Soon, the road narrows to a winding path through dense forest."
+        },
+        {
+          "text": "Accept the goblin bounty and head to their den",
+          "next_checkpoint": "goblin_den_entrance",
+          "narration": "Armed with information from Ameiko, you make your way to the eastern hills where the goblins have been spotted. After an hour's trek, you spot crude wooden spikes marking the entrance to a cave."
+        },
+        {
+          "text": "Rest at the tavern and gather more information",
+          "next_checkpoint": "tavern_investigation",
+          "narration": "You decide to take your time and learn more about the area before rushing into danger. Ameiko shows you to a comfortable room upstairs."
+        }
+      ],
+      "items_available": [],
+      "enemies": [],
+      "auto_quests": [
+        {
+          "name": "Investigate the Whispering Woods",
+          "description": "Strange lights have been seen in the northern forest. Discover their source."
+        },
+        {
+          "name": "Clear the Goblin Den",
+          "description": "Goblins have been raiding local farms. The mayor offers 50 gold for eliminating the threat."
+        }
+      ]
+    },
+    "forest_path": {
+      "name": "The Whispering Woods",
+      "description": "Dense forest with an eerie atmosphere.",
+      "entrance_narration": "The forest canopy grows thick overhead, blocking out much of the sunlight. Strange whispers seem to drift through the trees - though it might just be the wind. Up ahead, you notice a faint blue glow emanating from deeper in the woods.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Approach the blue glow cautiously",
+          "next_checkpoint": "fairy_grove",
+          "narration": "You creep forward, hand on your weapon. As you push through a thick wall of ferns, you emerge into a hidden grove. The source of the light becomes clear - dozens of tiny glowing sprites dance in the air above a crystal-clear pool."
+        },
+        {
+          "text": "Search for tracks or clues",
+          "next_checkpoint": "bandit_ambush",
+          "narration": "You kneel to examine the forest floor. Fresh boot prints, multiple sets. Before you can react, you hear the snap of a twig behind you. 'Well, well, what do we have here?' a rough voice says."
+        },
+        {
+          "text": "Return to the tavern",
+          "next_checkpoint": "tavern_start",
+          "narration": "Deciding discretion is the better part of valor, you turn back toward town. The forest seems eager to let you go, and soon you're back on the main road."
+        }
+      ],
+      "items_available": ["Healing Potion"],
+      "enemies": []
+    },
+    "goblin_den_entrance": {
+      "name": "Goblin Den Entrance",
+      "description": "A crude cave entrance marked with goblin totems.",
+      "entrance_narration": "The cave mouth yawns before you, decorated with crude drawings and piles of bones. You hear the chattering and cackling of goblins echoing from within. The smell is... unpleasant.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Charge in boldly",
+          "next_checkpoint": "goblin_combat",
+          "narration": "You draw your weapon and rush into the cave with a battle cry! Three startled goblins scramble for their weapons as you burst into their den."
+        },
+        {
+          "text": "Sneak in quietly",
+          "next_checkpoint": "goblin_stealth",
+          "narration": "You move silently into the cave, keeping to the shadows. You can see two goblins arguing over a piece of rotten meat, unaware of your presence."
+        },
+        {
+          "text": "Try to negotiate with the goblins",
+          "next_checkpoint": "goblin_diplomacy",
+          "narration": "You call out in the common tongue, announcing your peaceful intentions. After a moment of stunned silence, a goblin chieftain emerges, eyeing you suspiciously."
+        }
+      ],
+      "items_available": [],
+      "enemies": ["Goblin Scout", "Goblin Warrior"]
+    },
+    "tavern_investigation": {
+      "name": "The Rusty Dragon Tavern - Evening",
+      "description": "The tavern is busier now as evening approaches.",
+      "entrance_narration": "After a few hours of rest, you come back downstairs. The tavern has filled up with locals finishing their work day. You notice a hooded figure in the corner who wasn't there before.",
+      "npcs_structured": [
+        {
+          "name": "Mysterious Stranger",
+          "role": "Hooded Figure",
+          "greeting": "You're new in town. I can tell. Want to know a secret? Those 'strange lights' everyone's talking about? They're not what you think.",
+          "dialogue_topics": {
+            "secret": "The lights are fairy folk. Ancient guardians of the forest. They're usually peaceful, but something's disturbed them.",
+            "disturbance": "Bandits have been digging in the forest, looking for buried treasure. They've desecrated an old fairy shrine. That's why the lights have been so active.",
+            "bandits": "A group of mercenaries, led by a man named Blackfang. Dangerous, but stupid. You could probably take them if you're clever.",
+            "your identity": "Let's just say I have an interest in keeping the peace between the mortal world and the fey. That's all you need to know."
+          }
+        }
+      ],
+      "choices": [
+        {
+          "text": "Head to the forest with this new information",
+          "next_checkpoint": "forest_path",
+          "narration": "Armed with knowledge of the fairy guardians, you feel more prepared to investigate the forest. You set out as the sun begins to set."
+        },
+        {
+          "text": "Ask around about Blackfang",
+          "next_checkpoint": "blackfang_info",
+          "narration": "You discretely ask the locals about this Blackfang character. Turns out he's well known - a mercenary captain with a violent reputation."
+        }
+      ],
+      "items_available": [],
+      "enemies": []
+    },
+    "fairy_grove": {
+      "name": "Hidden Fairy Grove",
+      "description": "A magical grove protected by fairy guardians.",
+      "entrance_narration": "TO BE WRITTEN - This is where the player discovers the fairy shrine and can choose to help restore it or ignore the fey.",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": [],
+      "enemies": []
+    },
+    "bandit_ambush": {
+      "name": "Forest Ambush",
+      "description": "Surrounded by bandits in the forest.",
+      "entrance_narration": "TO BE WRITTEN - Combat encounter with bandits who reveal they work for Blackfang.",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": [],
+      "enemies": ["Bandit", "Bandit", "Bandit Leader"]
+    },
+    "goblin_combat": {
+      "name": "Goblin Den - Combat",
+      "description": "Fighting goblins in their den.",
+      "entrance_narration": "TO BE WRITTEN - Direct combat with the goblin tribe.",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": ["Gold Coins", "Rusty Sword"],
+      "enemies": ["Goblin", "Goblin", "Goblin Shaman"]
+    },
+    "goblin_stealth": {
+      "name": "Goblin Den - Stealth",
+      "description": "Sneaking through the goblin den.",
+      "entrance_narration": "TO BE WRITTEN - Stealth approach allows player to overhear goblin plans.",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": [],
+      "enemies": []
+    },
+    "goblin_diplomacy": {
+      "name": "Goblin Den - Negotiation",
+      "description": "Negotiating with the goblin chieftain.",
+      "entrance_narration": "TO BE WRITTEN - Diplomatic resolution where goblins reveal they're being forced to raid by bandits.",
+      "npcs_structured": [
+        {
+          "name": "Goblin Chieftain",
+          "role": "Tribal Leader",
+          "greeting": "TO BE WRITTEN",
+          "dialogue_topics": {
+            "raids": "TO BE WRITTEN",
+            "bandits": "TO BE WRITTEN",
+            "peace": "TO BE WRITTEN"
+          }
+        }
+      ],
+      "choices": [],
+      "items_available": [],
+      "enemies": []
+    },
+    "blackfang_info": {
+      "name": "The Rusty Dragon Tavern - Investigation",
+      "description": "Learning about the bandit leader.",
+      "entrance_narration": "TO BE WRITTEN - Locals share stories about Blackfang's camp and activities.",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": [],
+      "enemies": []
+    }
+  }
+}

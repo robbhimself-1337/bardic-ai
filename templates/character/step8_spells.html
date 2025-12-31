@@ -1,0 +1,341 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 8: Choose Spells{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .step-header h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .spell-note {
+        text-align: center;
+        color: #c0b090;
+        font-style: italic;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        border: 1px solid #8b7355;
+    }
+    .spell-section {
+        margin: 30px 0;
+    }
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #d4af37;
+    }
+    .section-title {
+        color: #d4af37;
+        font-size: 1.6em;
+        font-weight: bold;
+    }
+    .spell-counter {
+        color: #f0e6d2;
+        font-size: 1.2em;
+        padding: 8px 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+    .spell-counter.complete {
+        color: #90ee90;
+        border: 2px solid #90ee90;
+    }
+    .spell-counter.over-limit {
+        color: #ff6b6b;
+        border: 2px solid #ff6b6b;
+    }
+    .spells-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .spell-card {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .spell-card:hover {
+        border-color: #d4af37;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    }
+    .spell-card.selected {
+        border-color: #90ee90;
+        background: rgba(144, 238, 144, 0.1);
+        box-shadow: 0 0 15px rgba(144, 238, 144, 0.4);
+    }
+    .spell-card.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .spell-card.disabled:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: #8b7355;
+    }
+    .spell-checkbox {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: #90ee90;
+    }
+    .spell-name {
+        font-size: 1.3em;
+        color: #d4af37;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-right: 30px;
+    }
+    .spell-school {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 5px;
+        font-size: 0.85em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .school-abjuration { background: #4169e1; color: #fff; }
+    .school-conjuration { background: #ffd700; color: #2c1810; }
+    .school-divination { background: #c0c0c0; color: #2c1810; }
+    .school-enchantment { background: #ff69b4; color: #fff; }
+    .school-evocation { background: #ff4500; color: #fff; }
+    .school-illusion { background: #9370db; color: #fff; }
+    .school-necromancy { background: #228b22; color: #fff; }
+    .school-transmutation { background: #ff8c00; color: #fff; }
+    .spell-meta {
+        color: #c0b090;
+        font-size: 0.9em;
+        margin: 10px 0;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .spell-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .spell-components {
+        color: #f4d03f;
+        font-weight: bold;
+        font-size: 0.85em;
+    }
+    .spell-desc {
+        color: #f0e6d2;
+        line-height: 1.6;
+        margin-top: 10px;
+        font-size: 0.95em;
+    }
+    .spell-tags {
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .spell-tag {
+        padding: 3px 8px;
+        background: rgba(212, 175, 55, 0.2);
+        border: 1px solid #d4af37;
+        border-radius: 4px;
+        font-size: 0.8em;
+        color: #d4af37;
+    }
+    .tag-concentration { background: rgba(255, 107, 107, 0.2); border-color: #ff6b6b; color: #ff6b6b; }
+    .tag-ritual { background: rgba(144, 238, 144, 0.2); border-color: #90ee90; color: #90ee90; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Choose Your Spells</h2>
+    <p style="margin-top: 10px; color: #c0b090;">As a <strong style="color: #d4af37;">{{ char_class }}</strong>, you have access to magical abilities</p>
+</div>
+
+<div class="spell-note">
+    {{ spell_note }}
+</div>
+
+<!-- Cantrips Section -->
+<div class="spell-section">
+    <div class="section-header">
+        <div class="section-title">✨ Cantrips (At-Will)</div>
+        <div class="spell-counter" id="cantrip-counter">0/{{ num_cantrips }} selected</div>
+    </div>
+    <div class="spells-grid" id="cantrips-grid">
+        {% for spell in cantrips %}
+        <div class="spell-card" data-spell-id="{{ spell.slug }}" data-type="cantrip">
+            <input type="checkbox" class="spell-checkbox" name="cantrips" value="{{ spell.slug }}" data-type="cantrip">
+            <div class="spell-name">{{ spell.name }}</div>
+            <span class="spell-school school-{{ spell.school|lower }}">{{ spell.school }}</span>
+            <div class="spell-meta">
+                <span class="spell-meta-item">⏱ {{ spell.casting_time }}</span>
+                <span class="spell-meta-item">📍 {{ spell.range }}</span>
+                {% if spell.components %}
+                <span class="spell-components">{{ spell.components }}</span>
+                {% endif %}
+            </div>
+            <div class="spell-desc">{{ spell.desc | strip_markdown | truncate(120) }}</div>
+            <div class="spell-tags">
+                {% if spell.concentration == 'yes' %}
+                <span class="spell-tag tag-concentration">Concentration</span>
+                {% endif %}
+                {% if spell.ritual == 'yes' %}
+                <span class="spell-tag tag-ritual">Ritual</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 1st Level Spells Section -->
+<div class="spell-section">
+    <div class="section-header">
+        <div class="section-title">🔮 1st Level Spells</div>
+        <div class="spell-counter" id="spell-counter">0/{{ num_spells }} selected</div>
+    </div>
+    <div class="spells-grid" id="spells-grid">
+        {% for spell in spells %}
+        <div class="spell-card" data-spell-id="{{ spell.slug }}" data-type="spell">
+            <input type="checkbox" class="spell-checkbox" name="spells" value="{{ spell.slug }}" data-type="spell">
+            <div class="spell-name">{{ spell.name }}</div>
+            <span class="spell-school school-{{ spell.school|lower }}">{{ spell.school }}</span>
+            <div class="spell-meta">
+                <span class="spell-meta-item">⏱ {{ spell.casting_time }}</span>
+                <span class="spell-meta-item">📍 {{ spell.range }}</span>
+                {% if spell.duration != 'Instantaneous' %}
+                <span class="spell-meta-item">⌛ {{ spell.duration }}</span>
+                {% endif %}
+                {% if spell.components %}
+                <span class="spell-components">{{ spell.components }}</span>
+                {% endif %}
+            </div>
+            <div class="spell-desc">{{ spell.desc | strip_markdown | truncate(120) }}</div>
+            <div class="spell-tags">
+                {% if spell.concentration == 'yes' %}
+                <span class="spell-tag tag-concentration">Concentration</span>
+                {% endif %}
+                {% if spell.ritual == 'yes' %}
+                <span class="spell-tag tag-ritual">Ritual</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<form method="POST" id="spellsForm">
+    <div class="navigation">
+        <a href="/character/step7" class="btn btn-secondary">← Back</a>
+        <button type="submit" class="btn btn-primary" id="nextBtn" disabled>Next: Review Character →</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const maxCantrips = {{ num_cantrips }};
+    const maxSpells = {{ num_spells }};
+
+    function updateSpellCount(type) {
+        const checkboxes = document.querySelectorAll(`.spell-checkbox[data-type="${type}"]`);
+        const checked = document.querySelectorAll(`.spell-checkbox[data-type="${type}"]:checked`);
+        const max = type === 'cantrip' ? maxCantrips : maxSpells;
+        const counterId = type === 'cantrip' ? 'cantrip-counter' : 'spell-counter';
+
+        // Update counter display
+        const counter = document.getElementById(counterId);
+        counter.textContent = `${checked.length}/${max} selected`;
+        counter.classList.remove('complete', 'over-limit');
+
+        if (checked.length === max) {
+            counter.classList.add('complete');
+        } else if (checked.length > max) {
+            counter.classList.add('over-limit');
+        }
+
+        // Disable/enable unchecked checkboxes when max is reached
+        checkboxes.forEach(cb => {
+            if (!cb.checked) {
+                cb.disabled = checked.length >= max;
+                // Also disable the parent card
+                const card = cb.closest('.spell-card');
+                if (checked.length >= max) {
+                    card.classList.add('disabled');
+                } else {
+                    card.classList.remove('disabled');
+                }
+            }
+        });
+    }
+
+    function validateSelections() {
+        const cantripCount = document.querySelectorAll('.spell-checkbox[data-type="cantrip"]:checked').length;
+        const spellCount = document.querySelectorAll('.spell-checkbox[data-type="spell"]:checked').length;
+
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.disabled = !(cantripCount === maxCantrips && spellCount === maxSpells);
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add event listeners to all checkboxes
+        document.querySelectorAll('.spell-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function(e) {
+                // Prevent event from bubbling to card
+                e.stopPropagation();
+
+                // Update parent card visual state
+                const card = this.closest('.spell-card');
+                if (this.checked) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+
+                // Update counts and validation
+                updateSpellCount(this.dataset.type);
+                validateSelections();
+            });
+        });
+
+        // Allow clicking card to toggle checkbox (but prevent double-toggle)
+        document.querySelectorAll('.spell-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger if NOT clicking the checkbox itself
+                if (e.target.type !== 'checkbox' && !this.classList.contains('disabled')) {
+                    const checkbox = this.querySelector('.spell-checkbox');
+                    checkbox.checked = !checkbox.checked;
+
+                    // Manually trigger change event
+                    const event = new Event('change');
+                    checkbox.dispatchEvent(event);
+                }
+            });
+        });
+
+        // Initialize counts on load (in case user goes back)
+        updateSpellCount('cantrip');
+        updateSpellCount('spell');
+        validateSelections();
+    });
+</script>
+{% endblock %}

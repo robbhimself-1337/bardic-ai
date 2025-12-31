@@ -1,0 +1,54 @@
+{
+  "name": "Smite",
+  "level": 1,
+  "race": "Half-Orc",
+  "race_traits": {},
+  "character_class": "Barbarian",
+  "subclass": null,
+  "strength": 16,
+  "dexterity": 14,
+  "constitution": 17,
+  "intelligence": 12,
+  "wisdom": 16,
+  "charisma": 15,
+  "hp": 15,
+  "max_hp": 15,
+  "ac": 12,
+  "initiative": 2,
+  "proficiency_bonus": 2,
+  "skill_proficiencies": [
+    "Athletics",
+    "Perception"
+  ],
+  "saving_throw_proficiencies": [
+    "strength",
+    "constitution"
+  ],
+  "tool_proficiencies": [],
+  "language_proficiencies": [
+    "Common"
+  ],
+  "inventory": [
+    "Greataxe",
+    "2 Handaxes",
+    "Explorer's Pack",
+    "Common Clothes",
+    "Pouch with 15 gold pieces",
+    "A memento from your past"
+  ],
+  "equipped_armor": null,
+  "equipped_weapons": [],
+  "cantrips": [],
+  "spells_known": [],
+  "spell_slots": {},
+  "spells_prepared": [],
+  "background": "Scoundrel",
+  "background_feature": null,
+  "alignment": null,
+  "personality_traits": null,
+  "ideals": null,
+  "bonds": null,
+  "flaws": null,
+  "features": [],
+  "portrait": "Smite_20251230_223303.png"
+}

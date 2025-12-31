@@ -1,0 +1,541 @@
+{
+  "id": "goblins_gambit",
+  "title": "The Goblin's Gambit",
+  "description": "A beginner-friendly adventure where heroes must rescue kidnapped villagers from a goblin raiding party. Uncover the mystery of why the goblins have become so bold and face a choice that will determine the fate of the region.",
+  "category": "one-shot",
+  "estimated_duration": "2-3 hours",
+  "difficulty": "beginner",
+  "starting_checkpoint": "tavern_start",
+  "intro": {
+    "title": "The Goblin's Gambit",
+    "subtitle": "A tale of courage in the face of darkness",
+    "scenes": [
+      {
+        "image_prompt": "A peaceful medieval fantasy village at sunset, cozy cottages with thatched roofs, smoke rising from chimneys, rolling green hills in background, warm golden light, idyllic countryside, fantasy art style",
+        "narration": "The village of Millbrook has known peace for a generation. Nestled in the rolling hills between the Thornwood Forest and the Silver River, its people have lived simple lives\u2014farming, fishing, raising families under open skies.",
+        "image_url": "/static/images/generated/scenes/2feb762456a2.png"
+      },
+      {
+        "image_prompt": "Goblins raiding a village at night, torches in darkness, sinister goblin silhouettes, frightened villagers, dark fantasy art, dramatic lighting, ominous atmosphere",
+        "narration": "But peace, like all things, must end. Three nights ago, shadows crept from the forest. Goblins\u2014dozens of them\u2014descended on the village under cover of darkness. They took three souls: Thomas and Sara Miller, beloved farmers, and young Pip, a boy of barely fifteen winters.",
+        "image_url": "/static/images/generated/scenes/70cee3ab221e.png"
+      },
+      {
+        "image_prompt": "A lone heroic adventurer silhouette standing at the entrance of a medieval village at dawn, dramatic lighting, fantasy art, hopeful atmosphere, epic composition",
+        "narration": "The village militia is too weak to mount a rescue. The mayor cowers behind locked doors. Hope fades with each passing hour. And then... you arrive. A stranger with steel in your eyes and purpose in your stride. Your legend begins now.",
+        "image_url": "/static/images/generated/scenes/1e55cfb54f7f.png"
+      }
+    ]
+  },
+  "checkpoints": {
+    "tavern_start": {
+      "name": "The Rusty Dragon Tavern",
+      "description": "A cozy establishment filled with the smell of ale and roasted meat.",
+      "scene_prompt": "Interior of a cozy medieval fantasy tavern, warm fireplace, wooden beams, candles on tables, worried patrons in shadows, atmospheric lighting, fantasy art style",
+      "entrance_narration": "The heavy oak door of the Rusty Dragon Tavern swings open, and warmth envelops you like a welcome embrace. Firelight dances across weathered wooden beams, casting flickering shadows on walls decorated with old adventuring trophies\u2014a rusted shield here, a tattered banner there. The air is thick with the aroma of roasting venison and fresh-baked bread, mingled with the earthy scent of spilled ale.\n\nA handful of patrons nurse their drinks in worried silence, their conversations reduced to hushed whispers. Behind the bar, a half-elf woman with striking features and worry lines etched across her brow looks up as you enter. Her eyes\u2014sharp and assessing\u2014flicker with something between hope and desperation.\n\n'Thank the gods,' she breathes, setting down the mug she was polishing. 'You have the look of an adventurer. Please, I need your help.'",
+      "npcs_structured": [
+        {
+          "name": "Ameiko",
+          "role": "Innkeeper",
+          "portrait_prompt": "Portrait of a half-elf woman innkeeper, auburn hair in a braid, worried but determined expression, wearing a simple dress with an apron, warm tavern lighting, fantasy character art",
+          "greeting": "Three of our people were taken last night. Dragged from their homes by goblins while the rest of us cowered behind locked doors. I know it's dangerous, but someone has to do something. The mayor's too scared to act, and our militia is... well, what militia we have left.",
+          "dialogue_topics": {
+            "villagers": "The Miller family\u2014Thomas and his wife Sara, along with young Pip, the blacksmith's apprentice. Good, honest folk who never hurt anyone. The goblins broke down their doors in the dead of night. We heard the screams...",
+            "goblins": "They've always been a nuisance\u2014stealing chickens, raiding root cellars. But this? Taking people? That's new. Something's changed. Something's made them bold... or desperate.",
+            "tracks": "Old Man Tobias\u2014he lives at the edge of town\u2014saw them dragging the villagers toward Thornwood Forest. Said there were at least a dozen of the little monsters. He's too old to follow, but he knows these woods better than anyone.",
+            "tobias": "Tobias is a bit... eccentric. Talks to his goats more than people. But he's got a good heart, and he knows things about these parts that most folk have forgotten. You'll find his cottage at the north edge of town, where the cobblestones turn to dirt.",
+            "reward": "I've pooled together what coin I can\u2014fifty gold pieces. It's not much, but it's all we have. More importantly, you'd have the gratitude of the entire village. And free room and board here whenever you need it.",
+            "militia": "Most of our able-bodied fighters left years ago, seeking fortune in the bigger cities. What remains is farmers with pitchforks and old men with rusty swords. They'd march to their deaths if I let them."
+          },
+          "portrait_url": "/static/images/generated/npcs/7ab0a019f50f.png"
+        },
+        {
+          "name": "Guard Captain Marcus",
+          "role": "Weary Soldier",
+          "portrait_prompt": "Portrait of a grizzled middle-aged human guard captain, short gray hair, weathered face with stubble, tired but alert eyes, wearing worn chainmail armor, fantasy character art",
+          "greeting": "Another adventurer, eh? Good. We need all the help we can get. I've got three guards left, and I can't spare them\u2014not with the village so scared. But I can tell you what I know.",
+          "dialogue_topics": {
+            "situation": "In my twenty years of service, I've never seen goblins act like this. Coordinated. Organized. They knew exactly which houses to hit and how to avoid our patrols. Someone's commanding them.",
+            "forest": "Thornwood Forest is bad news. Dense, dark, easy to get lost in. There's an old cave system on the eastern edge\u2014we used to use it for storage before the goblins moved in years back.",
+            "cave": "If I were a goblin looking to stash prisoners, I'd use those caves. Natural fortress. One way in, easy to defend. But getting to them... that's the trick.",
+            "advice": "Don't underestimate goblins. They're cowardly alone, but in numbers they're dangerous. And if something's organizing them... watch your back in there."
+          },
+          "portrait_url": "/static/images/generated/npcs/98c24b8a8690.png"
+        }
+      ],
+      "choices": [
+        {
+          "text": "Visit Old Man Tobias for more information",
+          "next_checkpoint": "tobias_cottage",
+          "narration": "You thank Ameiko and make your way through the village streets. The few villagers you pass avert their eyes, fear hanging over them like a shroud. At the edge of town, where the cobblestones give way to a dirt path, you spot a weathered cottage with a small herd of goats grazing nearby."
+        },
+        {
+          "text": "Head directly to Thornwood Forest",
+          "next_checkpoint": "forest_entrance",
+          "narration": "Time is of the essence. Every moment wasted is another moment those villagers suffer. You gather your gear and march toward the dark treeline at the edge of town, ignoring the worried stares of the villagers watching from their windows."
+        },
+        {
+          "text": "Ask around town for supplies and information",
+          "next_checkpoint": "village_square",
+          "narration": "Before rushing headlong into danger, you decide to prepare properly. The village square is quiet but not deserted\u2014a few merchants still man their stalls, though their usual cheer has been replaced with nervous glances toward the forest."
+        }
+      ],
+      "items_available": [],
+      "enemies": [],
+      "auto_quests": [
+        {
+          "name": "The Missing Villagers",
+          "description": "Rescue Thomas, Sara, and young Pip from the goblins. Time may be running out."
+        }
+      ],
+      "scene_url": "/static/images/generated/scenes/5bf8d2ac7049.png"
+    },
+    "tobias_cottage": {
+      "name": "Tobias's Cottage",
+      "description": "A weathered home at the edge of civilization.",
+      "scene_prompt": "A rustic cottage at the edge of a medieval village, moss-covered roof, goats grazing in yard, elderly man on porch, twilight atmosphere, fantasy art style",
+      "entrance_narration": "The cottage looks like it grew from the earth itself\u2014moss covers the roof, and vines crawl up the stone walls. A dozen goats of various sizes mill about a small fenced yard, bleating contentedly. As you approach, you notice an elderly man sitting on a rocking chair on the porch, whittling a piece of wood with a knife older than most kingdoms.\n\nHe looks up at you with eyes that are cloudy but somehow still sharp. 'Figured someone would come eventually,' he says, his voice like rustling leaves. 'Sit down. I'll tell you what I saw.'",
+      "npcs_structured": [
+        {
+          "name": "Old Man Tobias",
+          "role": "Village Elder",
+          "portrait_prompt": "Portrait of an elderly human man with cloudy eyes but wise expression, long gray beard, weathered face with deep wrinkles, wearing simple peasant clothing, rustic background, fantasy character art",
+          "greeting": "I was up with my Bessie\u2014she's been having stomach troubles\u2014when I heard the screaming. Saw the whole thing from my window. Torches in the dark, moving fast toward the forest. Counted fourteen goblins, maybe fifteen. But that's not what worried me.",
+          "dialogue_topics": {
+            "what worried you": "There was something else with them. Bigger. Moved different than the little ones. Walked upright like a man but... wrong somehow. Gave orders in a voice that made my bones ache. Whatever that thing was, it's the one running the show.",
+            "tracks": "The tracks lead northeast, toward the old caves. But there's a fork in the path about half a mile in. Left path goes to the caves directly\u2014but it's exposed, they'll see you coming. Right path loops around through a ravine. Harder going, but you'd have the element of surprise.",
+            "caves": "Those caves have been goblin territory for years. But they never bothered us much before. Just stole sheep now and then. Something's changed in there. Something's woken up.",
+            "the creature": "In my grandfather's time, they told stories of hobgoblins\u2014bigger, smarter cousins of the regular goblins. Military minded. Cruel. I thought they were just tales to scare children. Now I'm not so sure.",
+            "advice": "If you're going in there, go smart. Goblins are cowards when you get them alone. Scare them enough, and they'll turn on each other. But that big one... that one won't scare easy."
+          },
+          "portrait_url": "/static/images/generated/npcs/db4bcf8c8688.png"
+        }
+      ],
+      "choices": [
+        {
+          "text": "Head to the forest immediately",
+          "next_checkpoint": "forest_entrance",
+          "narration": "Armed with Tobias's knowledge, you set off toward Thornwood Forest. The old man watches you go from his porch, one gnarled hand raised in farewell\u2014or perhaps blessing. The treeline looms ahead, dark and foreboding."
+        },
+        {
+          "text": "Return to town for supplies first",
+          "next_checkpoint": "village_square",
+          "narration": "'Smart,' Tobias nods approvingly. 'Preparation has saved more heroes than bravery ever did.' You make your way back to the village square, the old man's warnings echoing in your mind."
+        }
+      ],
+      "items_available": [],
+      "enemies": [],
+      "scene_url": "/static/images/generated/scenes/f324bd63998b.png"
+    },
+    "village_square": {
+      "name": "Millbrook Village Square",
+      "description": "The heart of the village, subdued by recent events.",
+      "scene_prompt": "Medieval village square at dusk, market stalls with worried vendors, well in center, shrine in background, subdued atmosphere, few people, fantasy art style",
+      "entrance_narration": "The village square, usually bustling with merchants and children at play, feels like a held breath. A few vendors remain at their stalls, but their calls are muted, their smiles forced. The well at the center of the square stands silent\u2014no one wants to linger in the open.\n\nYou notice a general store with a crooked sign, an herbalist's shop with bundles of dried plants hanging in the window, and a small shrine to the gods tucked between two buildings.",
+      "npcs_structured": [
+        {
+          "name": "Henrik",
+          "role": "General Store Owner",
+          "portrait_prompt": "Portrait of a friendly middle-aged human merchant, balding with kind eyes, wearing a shopkeeper's apron, surrounded by goods and supplies, warm lighting, fantasy character art",
+          "greeting": "Need supplies for the rescue, do you? Take what you need\u2014I won't charge a hero. Well, not much anyway. Can't exactly afford to give everything away, but I'll cut you a deal.",
+          "dialogue_topics": {
+            "supplies": "I've got rope, torches, a few healing potions\u2014the basic stuff. Nothing fancy, but it'll keep you alive. Better equipped than our militia, at least.",
+            "healing potions": "Just got a shipment from the capital. Three gold each, but for you? Two gold. They're not the fancy kind\u2014won't regrow a limb or anything\u2014but they'll close wounds quick enough.",
+            "goblins": "Nasty business. My brother was nearly taken years ago. Goblins grabbed him right out of the field. Got away with some scars, but the nightmares never left him. You do what you have to do in there.",
+            "advice": "Fire. Goblins hate fire. They can see in the dark, so torches won't blind them, but they're scared of it. Wave a torch in their faces and watch them scatter."
+          },
+          "portrait_url": "/static/images/generated/npcs/39fe13d90b52.png"
+        },
+        {
+          "name": "Wise Woman Mira",
+          "role": "Herbalist",
+          "portrait_prompt": "Portrait of an elderly wise woman herbalist, silver hair with herbs woven in, knowing mystical eyes, wearing simple robes with pouches of herbs, surrounded by dried plants, fantasy character art",
+          "greeting": "You have the look of someone walking toward death. Come, come\u2014let me give you something to help you walk back again.",
+          "dialogue_topics": {
+            "help": "I've prepared a salve that will help wounds close faster, and a poultice that will draw out poison. The forest has venomous creatures, and goblin blades are often coated in filth.",
+            "the forest": "Thornwood has always been a place of old magic. Not evil, exactly, but wild. Unpredictable. The creatures there remember when humans were prey, not predators. Respect the forest, and it may let you pass.",
+            "blessing": "I can offer a small blessing\u2014nothing powerful, but it may turn aside a blow that would otherwise land true. The gods are fickle, but sometimes they favor the brave.",
+            "goblins": "Goblins worship dark things. Things that whisper in caves and feed on fear. If something has organized them, it speaks to darker powers than we usually see in these parts."
+          },
+          "portrait_url": "/static/images/generated/npcs/af3526011dde.png"
+        }
+      ],
+      "choices": [
+        {
+          "text": "Head to Thornwood Forest",
+          "next_checkpoint": "forest_entrance",
+          "narration": "Supplies gathered and preparations made, you turn toward the dark treeline. The villagers watch you go\u2014some with hope, others with the resigned look of those saying goodbye to someone they don't expect to see again."
+        },
+        {
+          "text": "Visit Old Man Tobias for more information",
+          "next_checkpoint": "tobias_cottage",
+          "narration": "You decide to seek out the old tracker before entering the forest. Knowledge is a weapon too, after all. You make your way to the edge of town where Tobias's cottage sits."
+        }
+      ],
+      "items_available": [
+        "Healing Potion",
+        "Torch",
+        "Rope (50ft)"
+      ],
+      "enemies": [],
+      "scene_url": "/static/images/generated/scenes/fd693f61dd8c.png"
+    },
+    "forest_entrance": {
+      "name": "Edge of Thornwood Forest",
+      "description": "Where civilization meets the wild.",
+      "scene_prompt": "Dark foreboding forest entrance with twisted thorny trees, narrow path leading into darkness, ominous atmosphere, muddy ground with tracks, fantasy dark forest, dramatic lighting",
+      "entrance_narration": "The boundary between village and forest is stark\u2014a line where tamed fields end and ancient trees begin. Thornwood earns its name from the brambles that cluster at its edge, their thorns as long as daggers, their branches twisted into shapes that seem almost deliberate.\n\nA narrow path winds into the darkness between the trees. The canopy is so thick that even in daylight, the forest floor is shrouded in gloom. You can hear... nothing. No birdsong. No rustle of small animals. The forest holds its breath.\n\nGoblin tracks\u2014dozens of them\u2014churn the muddy path. Among them, you spot larger footprints. Heavier. More deliberate.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Take the direct path toward the caves",
+          "next_checkpoint": "forest_path_direct",
+          "narration": "Time is lives. You push forward on the main path, moving quickly but quietly. The goblin tracks are easy to follow\u2014they weren't trying to hide their passage. The forest seems to close in around you as you go deeper."
+        },
+        {
+          "text": "Look for the hidden ravine path Tobias mentioned",
+          "next_checkpoint": "forest_path_ravine",
+          "narration": "You search the undergrowth until you find it\u2014a gap in the brambles that most would overlook. The ravine path is harder going, but it will let you approach unseen. You squeeze through and begin picking your way down the rocky slope."
+        },
+        {
+          "text": "Scout the area before proceeding",
+          "next_checkpoint": "forest_scouting",
+          "narration": "Caution first. You circle the forest entrance, looking for signs of goblin sentries or traps. Your patience pays off\u2014you spot movement in the trees ahead."
+        }
+      ],
+      "items_available": [],
+      "enemies": [],
+      "scene_url": "/static/images/generated/scenes/cd807fe29226.png"
+    },
+    "forest_path_direct": {
+      "name": "The Direct Path",
+      "description": "The main trail through Thornwood Forest.",
+      "entrance_narration": "The path winds deeper into Thornwood, the trees pressing close like curious observers. Shafts of pale light filter through gaps in the canopy, but they only make the shadows darker by comparison.\n\nYou've been walking for perhaps ten minutes when you hear it\u2014a chittering laugh from somewhere in the branches above. Then another, answering from your left. And another from behind.\n\nGoblins melt out of the shadows, their yellow eyes gleaming with malicious glee. Five of them, crude weapons drawn, blocking the path ahead and behind. 'Look what walked into our web,' one cackles in broken Common. 'Boss will give us extra meat for this one!'",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Fight your way through",
+          "next_checkpoint": "goblin_ambush_combat",
+          "narration": "You draw your weapon in one fluid motion. If these goblins want a fight, they'll get one. The first goblin's grin fades as it realizes you're not afraid."
+        },
+        {
+          "text": "Try to intimidate them into fleeing",
+          "next_checkpoint": "goblin_ambush_intimidate",
+          "narration": "You stand tall and let out a roar that echoes through the trees. Your hand moves to your weapon, but you don't draw\u2014not yet. Let them see what they're dealing with first."
+        },
+        {
+          "text": "Attempt to flee back to the forest entrance",
+          "next_checkpoint": "forest_entrance",
+          "narration": "Discretion over valor\u2014you turn and bolt back the way you came. The goblins give chase for a moment, but their laughter fades as you burst out of the treeline. They won't follow into the open."
+        }
+      ],
+      "items_available": [],
+      "enemies": [
+        "Goblin",
+        "Goblin",
+        "Goblin",
+        "Goblin",
+        "Goblin"
+      ]
+    },
+    "forest_path_ravine": {
+      "name": "The Hidden Ravine",
+      "description": "A concealed path through a rocky gorge.",
+      "entrance_narration": "The ravine is slow going\u2014loose rocks threaten to twist your ankle with every step, and the walls are slick with moisture and moss. But it's quiet here, sheltered from prying eyes.\n\nAfter perhaps half an hour of careful descent and ascent, you emerge onto a ridge overlooking a small clearing. Below, you can see the mouth of a cave\u2014and more importantly, you can see what guards it.\n\nTwo goblins squat by a small fire, roasting what looks disturbingly like a human boot. They're laughing, poking each other, completely unaware of your presence above them. The cave mouth yawns dark behind them, and from within, you hear... crying. Soft. Human. Alive.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Ambush the guards from above",
+          "next_checkpoint": "cave_entrance_stealth",
+          "narration": "You find a handhold and begin your silent descent. The goblins never see you coming. By the time they realize something's wrong, it's already too late."
+        },
+        {
+          "text": "Look for another way into the cave",
+          "next_checkpoint": "cave_alternate_entrance",
+          "narration": "Where there's a main entrance, there's often a back door. You continue along the ridge, searching for any crack or crevice that might lead inside."
+        },
+        {
+          "text": "Observe longer to learn patrol patterns",
+          "next_checkpoint": "cave_observation",
+          "narration": "Patience. You settle into a comfortable position and watch. Over the next hour, you learn much about the goblin operation below."
+        }
+      ],
+      "items_available": [],
+      "enemies": []
+    },
+    "forest_scouting": {
+      "name": "Forest Scouting",
+      "description": "Careful reconnaissance of the area.",
+      "entrance_narration": "Your caution is rewarded. From your hidden vantage point, you spot a goblin scout perched in a tree about thirty yards into the forest. It's watching the main path, occasionally picking its nose and flicking the results at passing squirrels.\n\nBeyond it, you can see the forest opens into a small clearing where two more goblins seem to be arguing over something\u2014probably who gets to eat what. The path to the caves lies beyond them.\n\nYou also notice something interesting: a series of crude tripwires strung across the main path, designed to alert the goblins to intruders. Amateur work, easy to spot now that you're looking for it.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Take out the scout silently and proceed",
+          "next_checkpoint": "forest_scout_eliminated",
+          "narration": "You move like a shadow, circling around until you're directly below the distracted scout. One quick motion, and the goblin tumbles from its perch without a sound."
+        },
+        {
+          "text": "Carefully navigate around the traps and sentries",
+          "next_checkpoint": "forest_bypass",
+          "narration": "Why fight when you can sneak? You map out the traps and patrols in your mind, then begin picking your way through the gaps in their defenses."
+        },
+        {
+          "text": "Set off a trap intentionally to draw them out",
+          "next_checkpoint": "forest_trap_distraction",
+          "narration": "Sometimes the best way through a problem is to make the problem solve itself. You find a long stick and, from a safe distance, trigger one of the tripwires."
+        }
+      ],
+      "items_available": [],
+      "enemies": []
+    },
+    "goblin_ambush_combat": {
+      "name": "Forest Ambush - Combat",
+      "description": "Fighting off goblin attackers.",
+      "entrance_narration": "The battle is brief but vicious. Goblins are cowards at heart, and when the first two fall to your blade, the others' courage breaks. They scatter into the underbrush, chittering curses and promises of revenge.\n\nYou catch your breath, checking yourself for wounds. A few scratches, nothing serious. The path ahead is clear now, though you've lost the element of surprise. Somewhere deeper in the forest, a horn sounds\u2014a warning call. They know you're coming.\n\nBut you also notice something on one of the fallen goblins: a crude map, drawn in what you hope is berry juice, showing the layout of the caves ahead.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Press on quickly before they can organize",
+          "next_checkpoint": "cave_entrance_direct",
+          "narration": "Speed is your ally now. You break into a run, following the path toward the caves. If you move fast enough, you might still catch them off guard."
+        },
+        {
+          "text": "Study the map carefully before proceeding",
+          "next_checkpoint": "study_goblin_map",
+          "narration": "You take a moment to examine the map. Crude as it is, it shows the cave system in surprising detail\u2014including what looks like a back entrance."
+        }
+      ],
+      "items_available": [
+        "Crude Goblin Map"
+      ],
+      "enemies": []
+    },
+    "goblin_ambush_intimidate": {
+      "name": "Forest Ambush - Intimidation",
+      "description": "Facing down the goblin ambushers.",
+      "entrance_narration": "Your roar echoes through the trees, and for a moment, everything freezes. The goblins' grins falter. You take a step forward, and they take a step back.\n\n'I am here for the villagers,' you say, your voice low and dangerous. 'Stand aside, and you may live. Fight me, and I will make an example that your kin will whisper about for generations.'\n\nThe goblins exchange nervous glances. One of them\u2014slightly larger than the others, probably their leader\u2014steps forward. 'You... you strong. But boss stronger. Boss will\u2014'\n\n'Your boss isn't here,' you cut him off. 'I am.'\n\nThe silence stretches. Then, one by one, the goblins lower their weapons and slink back into the shadows. The leader is last to go, shooting you a look of pure hatred before vanishing into the undergrowth.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Continue toward the caves",
+          "next_checkpoint": "cave_entrance_direct",
+          "narration": "With the ambushers scattered, the path lies open. You move quickly but carefully, knowing that word of your coming will reach the caves before you do."
+        },
+        {
+          "text": "Follow the retreating goblins at a distance",
+          "next_checkpoint": "follow_goblins",
+          "narration": "Where better to find the lair than to follow its inhabitants? You give them a head start, then begin tracking their panicked flight through the underbrush."
+        }
+      ],
+      "items_available": [],
+      "enemies": []
+    },
+    "cave_entrance_direct": {
+      "name": "The Goblin Caves - Entrance",
+      "description": "The mouth of the goblin lair.",
+      "entrance_narration": "The cave entrance is exactly as described\u2014a jagged wound in a rocky hillside, decorated with crude totems made of bones and feathers. The stench hits you before you even get close: rotting meat, unwashed bodies, and something else... something sulfurous.\n\nTorchlight flickers from within, casting dancing shadows on the walls. You hear goblins\u2014many of them\u2014arguing and squabbling deeper inside. And beneath their noise, you hear something else: the sound of someone crying.\n\nThe villagers are alive. For now.\n\nTwo goblin guards stand at the entrance, more alert than their forest brethren. They've been warned you're coming.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Charge in with weapons drawn",
+          "next_checkpoint": "cave_combat_entrance",
+          "narration": "No more sneaking. You burst from cover with a battle cry, closing the distance before the guards can raise an alarm. Steel flashes in the torchlight."
+        },
+        {
+          "text": "Try to lure them away from the entrance",
+          "next_checkpoint": "cave_lure_guards",
+          "narration": "You pick up a rock and throw it into the bushes to your left. Both guards turn toward the sound, and one takes a few steps to investigate. Perfect."
+        },
+        {
+          "text": "Look for another way in",
+          "next_checkpoint": "cave_alternate_entrance",
+          "narration": "A frontal assault against an alerted enemy rarely ends well. You circle the hillside, searching for any gap or crack that might provide a different approach."
+        }
+      ],
+      "items_available": [],
+      "enemies": [
+        "Goblin Guard",
+        "Goblin Guard"
+      ]
+    },
+    "cave_entrance_stealth": {
+      "name": "The Goblin Caves - Stealth Entry",
+      "description": "Entering the caves undetected.",
+      "entrance_narration": "The guards never knew what hit them. You slip into the cave mouth, stepping over their unconscious forms and into the darkness beyond.\n\nThe tunnel is low\u2014clearly carved by and for creatures shorter than yourself. You have to duck in places, but the goblins have lined the walls with guttering torches, providing just enough light to see by.\n\nThe main tunnel branches ahead. To the left, you hear goblin voices\u2014raucous laughter and what sounds like gambling. To the right, the crying you heard before, clearer now. Definitely human. Definitely afraid.\n\nStraight ahead, the tunnel continues into darkness. A faint breeze carries from that direction... and something else. A rhythmic chanting, low and guttural.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Head toward the crying - rescue the prisoners first",
+          "next_checkpoint": "prisoner_chamber",
+          "narration": "The prisoners are the priority. Everything else is secondary. You move silently toward the sound of weeping, pressing yourself against the wall as a goblin passes unknowingly."
+        },
+        {
+          "text": "Investigate the chanting",
+          "next_checkpoint": "ritual_chamber",
+          "narration": "Something about that chanting raises the hair on the back of your neck. Whatever the goblins are doing down there, it can't be good. You need to stop it."
+        },
+        {
+          "text": "Clear out the gambling goblins first",
+          "next_checkpoint": "goblin_barracks",
+          "narration": "Can't rescue anyone with a horde of goblins at your back. Better to thin their numbers first, then deal with the rest."
+        }
+      ],
+      "items_available": [],
+      "enemies": []
+    },
+    "prisoner_chamber": {
+      "name": "The Prisoner Chamber",
+      "description": "Where the captured villagers are held.",
+      "scene_prompt": "Dark cave prison chamber with crude wooden cage, frightened villagers huddled inside, torchlight, damp stone walls, desperate atmosphere, fantasy dungeon art",
+      "entrance_narration": "The chamber is small and rank with the smell of fear and worse. A crude cage made of wooden bars and leather straps holds three figures\u2014a man, a woman, and a young boy, all huddled together.\n\nThomas Miller looks up as you enter, his eyes widening with disbelief. 'Gods above,' he breathes. 'Sara, look\u2014someone's come!'\n\nSara clutches young Pip tighter, too frightened to hope. But the boy's eyes are fixed on you with something like awe.\n\n'Can you get us out of here?' Thomas asks urgently. 'They've been taking us one by one to somewhere deeper in the caves. We don't know what they want, but... the others who went didn't come back.'",
+      "npcs_structured": [
+        {
+          "name": "Thomas Miller",
+          "role": "Captured Villager",
+          "portrait_prompt": "Portrait of a disheveled middle-aged farmer, dirt on face, torn clothes, hopeful but exhausted expression, dark cave background with torch light, fantasy character art",
+          "greeting": "Thank the gods you've come! Please, you have to get us out of here before they come back. They've been taking people deeper into the caves\u2014something about a ritual.",
+          "dialogue_topics": {
+            "ritual": "I don't know the details, but I heard them talking. They're trying to summon something. The big one\u2014their leader\u2014keeps talking about 'opening the door.' I don't know what door, but the way he says it makes my blood run cold.",
+            "leader": "He's not like the others. Taller, smarter, crueler. A hobgoblin, if the old stories are true. He commands the goblins absolutely\u2014they're terrified of him. He carries a staff with a glowing gem.",
+            "escape": "If you can break these bars, we can make it out. We know the way back\u2014they didn't blindfold us when they brought us in. Just get us free, and we'll run.",
+            "others": "There were five of us originally. Two have already been taken. I don't... I don't think they're alive anymore."
+          },
+          "portrait_url": "/static/images/generated/npcs/a9cca3b1fe1a.png"
+        }
+      ],
+      "choices": [
+        {
+          "text": "Free the prisoners immediately",
+          "next_checkpoint": "prisoners_freed",
+          "narration": "You work quickly at the cage's leather bindings. Crude construction means crude weaknesses\u2014within minutes, the bars fall away. Thomas helps Sara to her feet while Pip clings to your arm."
+        },
+        {
+          "text": "Ask them to wait while you deal with the threat",
+          "next_checkpoint": "ritual_chamber",
+          "narration": "'Stay here and stay quiet,' you tell them. 'I'm going to end this.' Thomas nods grimly. 'Go. Stop whatever they're doing. We'll wait.' You move deeper into the caves, toward the chanting."
+        }
+      ],
+      "items_available": [],
+      "enemies": [],
+      "scene_url": "/static/images/generated/scenes/620510db7e35.png"
+    },
+    "ritual_chamber": {
+      "name": "The Ritual Chamber",
+      "description": "Where dark magic is being worked.",
+      "scene_prompt": "Dark ritual chamber in cave, glowing green portal in center, blood runes on floor, hobgoblin warlord with staff, goblins bowing, ominous dark magic, epic fantasy battle scene art",
+      "entrance_narration": "The tunnel opens into a vast natural cavern, its ceiling lost in darkness. At the center, illuminated by sickly green torches, stands a circle of runes drawn in blood. Within the circle, a tear in reality itself seems to pulse and breathe\u2014a window into somewhere else, somewhere dark and hungry.\n\nBefore the circle stands the hobgoblin\u2014seven feet of armored malevolence, its face scarred and twisted with concentration as it chants in a language that hurts to hear. In one hand, it clutches a staff topped with a gem that pulses in time with the portal. In the other, it holds a wicked curved blade.\n\nAround the circle, a dozen goblins prostrate themselves, adding their voices to the chant. They're so focused on the ritual that they haven't noticed you.\n\nThe portal pulses again, and something moves in its depths. Something massive. Something hungry. Whatever they're trying to bring through, it's almost here.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Attack the hobgoblin directly",
+          "next_checkpoint": "hobgoblin_battle",
+          "narration": "No time for subtlety. You charge across the cavern with a battle cry, aiming straight for the hobgoblin. If you can stop the ritual, you stop whatever's coming through."
+        },
+        {
+          "text": "Try to disrupt the ritual circle",
+          "next_checkpoint": "disrupt_ritual",
+          "narration": "The runes are the key. Break the circle, break the spell. You snatch a torch from its sconce and hurl it at the blood-drawn symbols."
+        },
+        {
+          "text": "Target the staff and its gem",
+          "next_checkpoint": "destroy_staff",
+          "narration": "That gem is clearly the focus of the ritual. Destroy it, and the whole thing should fall apart. You take aim at the hobgoblin's staff."
+        }
+      ],
+      "items_available": [],
+      "enemies": [
+        "Warlord Skullcrusher",
+        "Goblin Cultist",
+        "Goblin Cultist",
+        "Goblin Cultist"
+      ],
+      "scene_url": "/static/images/generated/scenes/94b941bbe6f0.png"
+    },
+    "hobgoblin_battle": {
+      "name": "Battle with Warlord Skullcrusher",
+      "description": "The final confrontation.",
+      "entrance_narration": "The hobgoblin's eyes snap toward you, and for a moment, time seems to freeze. Then its lips curl into a savage grin.\n\n'So the hero arrives,' it says, its voice like gravel scraping stone. 'Too late. The door is almost open. Soon my master will walk your world, and all will kneel or die.'\n\nIt raises its blade and charges to meet you. The goblin cultists scatter in panic\u2014this is beyond their understanding. The ritual continues on its own momentum, the portal growing larger with each passing second.\n\nYou have moments to stop this.\n\nThe hobgoblin's blade crashes against yours with enough force to rattle your teeth. It's strong\u2014stronger than any goblin has a right to be. But you see something in its eyes: desperation. It knows that if the ritual fails now, all its work is for nothing.\n\nTime to make it fail.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Focus entirely on defeating the hobgoblin",
+          "next_checkpoint": "victory_martial",
+          "narration": "You pour everything into the fight\u2014every ounce of skill, every trick you know. The hobgoblin is powerful, but it's divided, trying to fight you while maintaining focus on the ritual. You are not divided. You are singular purpose made flesh."
+        },
+        {
+          "text": "Fight defensively while looking for an opportunity to disrupt the ritual",
+          "next_checkpoint": "victory_tactical",
+          "narration": "You give ground, letting the hobgoblin press its attack while your eyes scan the chamber for weaknesses. There\u2014the support pillars. If you could bring down part of the ceiling on the ritual circle..."
+        }
+      ],
+      "items_available": [],
+      "enemies": [
+        "Warlord Skullcrusher"
+      ]
+    },
+    "victory_martial": {
+      "name": "Victory Through Valor",
+      "description": "The hobgoblin falls.",
+      "entrance_narration": "The battle is fierce and desperate, but in the end, there can be only one victor. With a final, mighty blow, you drive your weapon through the hobgoblin's defenses and into its heart.\n\n'No...' it gasps, black blood bubbling from its lips. 'The door... was almost... open...'\n\nIt falls, and with its fall, the staff clatters to the ground. The gem shatters on impact, and the portal screams\u2014a sound like reality itself being torn\u2014before collapsing in on itself. Whatever was trying to come through is thrown back into the void.\n\nThe cavern shakes. Rocks begin to fall from the ceiling. Whatever dark power was sustaining this place is failing. You need to get out\u2014now.\n\nYou run back the way you came, scooping up the prisoners along the way. Behind you, the caves collapse in a thunderous roar. You emerge into daylight just as the entrance caves in, sealing the evil within forever.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Return to the village as heroes",
+          "next_checkpoint": "victory_return",
+          "narration": "The walk back to Millbrook is long, but lighter than your spirits. Thomas carries Sara when she falters; Pip won't leave your side, looking at you like you hung the moon and stars. The villagers see you coming from a long way off."
+        }
+      ],
+      "items_available": [
+        "Skullcrusher's Blade",
+        "Dark Ritual Notes"
+      ],
+      "enemies": []
+    },
+    "victory_tactical": {
+      "name": "Victory Through Cunning",
+      "description": "Bringing down the ritual.",
+      "entrance_narration": "You parry another blow, then roll away toward the nearest support pillar. The hobgoblin sees your intent too late.\n\n'NO!' it screams, breaking off its attack to rush toward the ritual circle.\n\nBut you're faster. You strike the already-cracked pillar with everything you have. For a heartbeat, nothing happens\u2014then, with a groan that shakes the earth, a section of ceiling gives way.\n\nThe hobgoblin throws up its arms to shield itself as tons of rock crash down, crushing the ritual circle beneath it. The portal shrieks and convulses, then implodes with a thunderclap that throws you off your feet.\n\nWhen the dust clears, the ritual is destroyed. The hobgoblin lies half-buried in rubble, weakly trying to free itself. The staff is shattered, the gem nothing but dust.\n\n'You... fool,' it wheezes. 'You have no idea... what you've prevented... or delayed...' Its eyes go dim, and it moves no more.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Rescue the prisoners and escape",
+          "next_checkpoint": "victory_return",
+          "narration": "No time to investigate the hobgoblin's cryptic words. The caves are collapsing around you. You grab the prisoners and run for daylight."
+        }
+      ],
+      "items_available": [
+        "Dark Ritual Notes"
+      ],
+      "enemies": []
+    },
+    "victory_return": {
+      "name": "Heroes' Welcome",
+      "description": "Returning to Millbrook in triumph.",
+      "scene_prompt": "Village celebration scene, happy villagers cheering, hero returning with rescued people, torches and lanterns, joyful atmosphere, medieval fantasy village at night, warm lighting, triumphant mood",
+      "entrance_narration": "The village of Millbrook has never seen such celebration. When you emerged from the forest with the survivors, word spread faster than wildfire. By the time you reached the village square, it seemed like every soul in town had gathered to welcome you home.\n\nAmeiko weeps with joy as she embraces the Miller family. Guard Captain Marcus clasps your arm with newfound respect. Even Old Man Tobias has made the journey from his cottage, nodding at you with a knowing smile.\n\n'You did it,' Ameiko says, pressing a heavy coin purse into your hands. 'You actually did it. How can we ever repay you?'\n\nThe coins are nice, but it's the look on young Pip's face\u2014pure, uncomplicated hero worship\u2014that will stay with you. Some rewards can't be measured in gold.\n\nAs the celebration continues into the night, you find yourself thinking about the hobgoblin's final words. What was it trying to bring through? What 'door' was it opening? And... what did it mean by 'delayed'?\n\nQuestions for another day. Tonight, you are a hero. Tonight, the village is safe.\n\nBut somewhere in the dark places of the world, something stirs. Something hungry. Something patient.\n\nThe adventure is over.\n\nOr perhaps it's only beginning.",
+      "npcs_structured": [],
+      "choices": [
+        {
+          "text": "Rest at the Rusty Dragon and plan your next move",
+          "next_checkpoint": "campaign_end",
+          "narration": "You've earned a rest. Whatever comes next, you'll face it when it comes. For now, there's a warm bed waiting and a grateful innkeeper who insists you'll never pay for a meal in her tavern again."
+        }
+      ],
+      "items_available": [
+        "50 Gold Pieces",
+        "Hero's Medal"
+      ],
+      "enemies": [],
+      "scene_url": "/static/images/generated/scenes/ce280cf4793c.png"
+    },
+    "campaign_end": {
+      "name": "The End",
+      "description": "The adventure concludes.",
+      "entrance_narration": "Congratulations, hero. You have completed 'The Goblin's Gambit.'\n\nThe villagers of Millbrook are safe, the goblin threat has been ended, and a darker evil has been pushed back\u2014at least for now. Your name will be spoken with gratitude in this village for generations.\n\nBut every ending is also a beginning. The hobgoblin's ritual, the entity it tried to summon, the 'door' it spoke of with its dying breath... these mysteries remain unsolved. Perhaps one day, you'll face them.\n\nUntil then, rest well. You've earned it.\n\n--- THE END ---\n\nThank you for playing!",
+      "npcs_structured": [],
+      "choices": [],
+      "items_available": [],
+      "enemies": []
+    }
+  }
+}

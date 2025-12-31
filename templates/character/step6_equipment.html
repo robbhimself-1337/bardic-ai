@@ -1,0 +1,103 @@
+{% extends "character/base_wizard.html" %}
+
+{% block title %}Step 6: Starting Equipment{% endblock %}
+
+{% block extra_css %}
+<style>
+    .step-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .step-header h2 {
+        color: #d4af37;
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    .equipment-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .equipment-intro {
+        text-align: center;
+        color: #c0b090;
+        margin-bottom: 30px;
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+    .equipment-intro strong {
+        color: #d4af37;
+    }
+    .equipment-section {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #8b7355;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 25px;
+    }
+    .equipment-section-title {
+        font-size: 1.5em;
+        color: #d4af37;
+        font-weight: bold;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #d4af37;
+        padding-bottom: 10px;
+    }
+    .equipment-list {
+        list-style: none;
+        padding: 0;
+    }
+    .equipment-item {
+        padding: 10px 0;
+        color: #f0e6d2;
+        font-size: 1.05em;
+        display: flex;
+        align-items: center;
+    }
+    .equipment-item:before {
+        content: "⚔";
+        color: #d4af37;
+        font-size: 1.2em;
+        margin-right: 12px;
+    }
+    .background-equipment .equipment-item:before {
+        content: "🎒";
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="step-header">
+    <h2>Your Starting Equipment</h2>
+</div>
+
+<div class="equipment-container">
+    <div class="equipment-intro">
+        Based on your class (<strong>{{ char_class }}</strong>) and background (<strong>{{ background }}</strong>), you begin your adventure with the following equipment:
+    </div>
+
+    <div class="equipment-section">
+        <div class="equipment-section-title">Class Equipment</div>
+        <ul class="equipment-list">
+            {% for item in class_equipment %}
+            <li class="equipment-item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="equipment-section background-equipment">
+        <div class="equipment-section-title">Background Equipment</div>
+        <ul class="equipment-list">
+            {% for item in background_equipment %}
+            <li class="equipment-item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<form method="POST" id="equipmentForm">
+    <div class="navigation">
+        <a href="/character/step5" class="btn btn-secondary">← Back</a>
+        <button type="submit" class="btn btn-primary">Next: Choose Skills →</button>
+    </div>
+</form>
+{% endblock %}

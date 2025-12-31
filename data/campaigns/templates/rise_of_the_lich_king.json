@@ -1,0 +1,154 @@
+{
+  "id": "rise_of_the_lich_king",
+  "title": "Rise of the Lich King: Chapter 1 - The Undead Tide",
+  "description": "An ancient evil stirs in the north. Dead rise from their graves, and whispers speak of a lich king gathering power. This is but the beginning of an epic saga that will determine the fate of the realm. (CHAPTER 1 of ongoing campaign)",
+  "category": "epic",
+  "estimated_duration": "ongoing",
+  "difficulty": "advanced",
+  "starting_checkpoint": "chapter1_prologue",
+  "checkpoints": {
+    "chapter1_prologue": {
+      "description": "CHAPTER 1: THE UNDEAD TIDE - Strange reports reach the Council of Mages. In the northern territories, the dead no longer rest. Graveyards empty overnight. Entire villages vanish. Something terrible is awakening.",
+      "npcs": ["Archmage Silvanus", "Council of Mages", "Messenger from the North"],
+      "items_available": ["Council Writ", "Emergency Supplies", "Mage's Warning Letter"],
+      "enemies": [],
+      "next_checkpoints": ["investigate_council_reports", "gather_starting_party"],
+      "auto_quests": [
+        {
+          "name": "Investigate the Undead Attacks",
+          "description": "Travel to the northern territories and discover the source of the undead plague."
+        },
+        {
+          "name": "Survive the Darkness",
+          "description": "Something far worse than normal undead is at work. Uncover the truth."
+        }
+      ]
+    },
+    "investigate_council_reports": {
+      "description": "The Council's archives contain reports dating back centuries about a lich who once threatened to conquer the world. The wizard Azarak was defeated and sealed away. The seal may be breaking.",
+      "npcs": ["Lorekeeper Theris", "Historian Mira"],
+      "items_available": ["Ancient Lich King Prophecy", "Map of Old Battlefields", "Tome of Sealing Magic"],
+      "enemies": [],
+      "next_checkpoints": ["gather_starting_party"]
+    },
+    "gather_starting_party": {
+      "description": "You assemble a party of skilled adventurers. This is just the beginning of a long journey. Choose your companions wisely - you'll face horrors beyond imagination.",
+      "npcs": ["Available Companions - Various Classes"],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["journey_to_north"]
+    },
+    "journey_to_north": {
+      "description": "The road north grows darker with each mile. Farms lie abandoned. Corpses of travelers dot the roadside. As you approach the first village, you see it: a horde of undead shambling through the streets.",
+      "npcs": ["Terrified Refugees"],
+      "items_available": ["Refugee's Tale", "Holy Water", "Silver Weapons"],
+      "enemies": ["Zombie Horde", "Skeletal Warriors"],
+      "next_checkpoints": ["first_village_ruins", "refugee_camp"]
+    },
+    "refugee_camp": {
+      "description": "Survivors have fled to a fortified camp. They speak of an armored figure leading the undead - a death knight in service to the Lich King. The attacks are coordinated, not random.",
+      "npcs": ["Camp Leader Bronwyn", "Wounded Soldiers", "Priest Marcus"],
+      "items_available": ["Survival Supplies", "Information about Death Knight"],
+      "enemies": [],
+      "next_checkpoints": ["first_village_ruins", "plan_counterattack"]
+    },
+    "first_village_ruins": {
+      "description": "The village is a slaughterhouse. Undead patrol the streets. In the village square stands a death knight, dark energy radiating from his cursed blade. He sees you and grins beneath his helm.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": ["Death Knight Commander", "Wight Warriors", "Zombie Mob"],
+      "next_checkpoints": ["investigate_necromancy_site", "chase_death_knight"]
+    },
+    "investigate_necromancy_site": {
+      "description": "Behind the village, you discover a necromantic ritual site. Runes of power glow with sickly green light. This is how the lich is raising armies. But destroying one site won't be enough - this is happening across the entire north.",
+      "npcs": [],
+      "items_available": ["Necromantic Ritual Notes", "Soul Gem Fragment", "Cursed Amulet"],
+      "enemies": ["Necromancer", "Ghouls"],
+      "next_checkpoints": ["discover_network_of_sites"]
+    },
+    "chase_death_knight": {
+      "description": "You pursue the death knight through the forest. He leads you to an ancient crypt - one of many nexus points for the lich's power. 'My master will rise,' he intones. 'And your world will kneel.'",
+      "npcs": ["Death Knight Commander"],
+      "items_available": [],
+      "enemies": ["Death Knight Commander (Mini-Boss)"],
+      "next_checkpoints": ["ancient_crypt_entrance"]
+    },
+    "discover_network_of_sites": {
+      "description": "The ritual sites form a massive arcane network across the northlands. Each site feeds power to a central location: the Tomb of Azarak. The Lich King is using this energy to break his ancient seal.",
+      "npcs": [],
+      "items_available": ["Network Map", "Azarak's Tomb Location"],
+      "enemies": [],
+      "next_checkpoints": ["report_to_council", "attempt_site_disruption"]
+    },
+    "report_to_council": {
+      "description": "You return to the Council with dire news. Archmage Silvanus confirms your fears - if Azarak breaks free fully, he will have the power of a god. The Council mobilizes armies, but they need time you may not have.",
+      "npcs": ["Archmage Silvanus", "Military Commander General Thorne", "Council of Mages"],
+      "items_available": ["Army Reinforcements Promise", "Legendary Weapon Leads", "Seal Restoration Research"],
+      "enemies": [],
+      "next_checkpoints": ["gather_legendary_artifacts", "attempt_site_disruption"]
+    },
+    "attempt_site_disruption": {
+      "description": "You begin systematically destroying ritual sites. Each one weakened slows Azarak's return. But the lich's forces respond with fury - waves of undead hunt you across the northlands.",
+      "npcs": [],
+      "items_available": ["Disruption Tools", "Maps to More Sites"],
+      "enemies": ["Undead Hordes", "Wraiths", "Bone Devils"],
+      "next_checkpoints": ["ambush_by_lich_forces", "discover_weak_point"]
+    },
+    "ancient_crypt_entrance": {
+      "description": "The crypt's entrance is sealed with powerful magic. Undead guardians protect it. This is one of the major nexus points - destroying it will significantly weaken Azarak's network.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": ["Crypt Guardian (Mummy Lord)", "Wights", "Shadows"],
+      "next_checkpoints": ["crypt_inner_sanctum"]
+    },
+    "crypt_inner_sanctum": {
+      "description": "Deep in the crypt, you find a lich's phylactery vessel - not Azarak's, but one of his servants'. Destroying it will eliminate one of the lich king's lieutenants and disrupt the ritual network.",
+      "npcs": ["Lesser Lich (Mini-Boss)"],
+      "items_available": ["Lesser Phylactery", "Powerful Necromantic Items", "Azarak's Plans (Partial)"],
+      "enemies": ["Lesser Lich", "Death Knights", "Undead Horde"],
+      "next_checkpoints": ["chapter1_climax"]
+    },
+    "gather_legendary_artifacts": {
+      "description": "The Council directs you to seek legendary artifacts that were used to seal Azarak originally. The Sunblade, the Shield of Dawn, and the Crown of Light. They are scattered across the realm.",
+      "npcs": ["Artifact Historians"],
+      "items_available": ["Artifact Locations", "Ancient Sealing Ritual Instructions"],
+      "enemies": [],
+      "next_checkpoints": ["seek_sunblade", "seek_shield_of_dawn"]
+    },
+    "seek_sunblade": {
+      "description": "The Sunblade lies in the Temple of Eternal Dawn, now overrun by Azarak's forces. Retrieving it will be dangerous but essential for the final confrontation.",
+      "npcs": ["Corrupted Temple Guardians"],
+      "items_available": ["Sunblade (Legendary Weapon)", "Dawn Priest's Blessing"],
+      "enemies": ["Vampire Lord", "Shadow Demons", "Undead Knights"],
+      "next_checkpoints": ["gather_legendary_artifacts"]
+    },
+    "seek_shield_of_dawn": {
+      "description": "The Shield of Dawn was taken to the Dwarven Stronghold of Karak-Khaz for safekeeping. But the stronghold has gone silent. Undead may have already claimed it.",
+      "npcs": ["Dwarf Zombie King", "Ghost of Shield Bearer"],
+      "items_available": ["Shield of Dawn (Legendary Armor)", "Dwarven Rune Knowledge"],
+      "enemies": ["Dwarf Zombie Horde", "Undead Dwarven King (Mini-Boss)"],
+      "next_checkpoints": ["gather_legendary_artifacts"]
+    },
+    "chapter1_climax": {
+      "description": "You've disrupted enough ritual sites and weakened Azarak's network. But you're too late to prevent his partial awakening. A massive undead army marches on the capital. You must lead the defense and buy time for the final seal.",
+      "npcs": ["General Thorne", "Archmage Silvanus", "Your Allies"],
+      "items_available": [],
+      "enemies": ["Undead Army", "Death Knights", "Bone Dragons"],
+      "next_checkpoints": ["battle_for_capital"]
+    },
+    "battle_for_capital": {
+      "description": "CHAPTER 1 FINALE: The Battle for the Capital. Thousands of undead crash against the city walls. Death knights command siege engines. In the sky, bone dragons wheel and dive. You fight at the front lines, your legendary weapons turning the tide.",
+      "npcs": ["King's Army", "Mage Corps", "Your Companions"],
+      "items_available": [],
+      "enemies": ["Endless Undead", "Death Knight Generals", "Bone Dragon"],
+      "next_checkpoints": ["chapter1_epilogue"]
+    },
+    "chapter1_epilogue": {
+      "description": "CHAPTER 1 COMPLETE: The capital stands, but barely. Azarak's army is pushed back, but not defeated. The Lich King himself has not yet appeared - he waits in his tomb, gathering power. You've won a battle, but the war has just begun. CHAPTER 2 will reveal Azarak's true plans...",
+      "npcs": ["Archmage Silvanus", "King", "Survivors"],
+      "items_available": ["Chapter 1 Rewards", "Title: Defender of the Realm", "Experience and Legendary Loot"],
+      "enemies": [],
+      "next_checkpoints": []
+    }
+  }
+}

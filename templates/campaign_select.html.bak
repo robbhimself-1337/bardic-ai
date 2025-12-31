@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Campaign - Bardic AI</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+        .campaigns {
+            display: grid;
+            gap: 20px;
+        }
+        .campaign-card {
+            padding: 25px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .campaign-card:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .campaign-title {
+            font-size: 1.8em;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .campaign-desc {
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+        .no-campaigns {
+            text-align: center;
+            padding: 40px;
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your Campaign</h1>
+
+        <div class="campaigns">
+            {% if campaigns %}
+                {% for campaign in campaigns %}
+                <div class="campaign-card" onclick="window.location.href='/start_campaign/{{ campaign.id }}'">
+                    <div class="campaign-title">{{ campaign.title }}</div>
+                    <div class="campaign-desc">{{ campaign.description }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-campaigns">
+                    <p>No campaigns available. Check data/campaigns/templates/ directory.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

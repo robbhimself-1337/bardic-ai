@@ -6,10 +6,21 @@
   "checkpoints": {
     "tavern_start": {
       "description": "The Rusty Dragon Tavern - A cozy establishment filled with the smell of ale and roasted meat. The innkeeper, Ameiko, looks worried as she approaches you with urgent news about missing villagers.",
-      "npcs": ["Ameiko the Innkeeper", "Old Man Tobias", "Guard Captain Marcus"],
-      "items_available": ["Healing Potion", "Rope (50ft)", "Torch"],
+      "npcs": [
+        "Ameiko the Innkeeper",
+        "Old Man Tobias",
+        "Guard Captain Marcus"
+      ],
+      "items_available": [
+        "Healing Potion",
+        "Rope (50ft)",
+        "Torch"
+      ],
       "enemies": [],
-      "next_checkpoints": ["forest_path", "town_investigation"],
+      "next_checkpoints": [
+        "forest_path",
+        "town_investigation"
+      ],
       "auto_quests": [
         {
           "name": "Rescue the Villagers",
@@ -19,80 +30,178 @@
     },
     "town_investigation": {
       "description": "The village streets are quiet. You investigate the kidnapping scene near the eastern gate. Goblin tracks lead into the forest, and you find a torn piece of cloth with the village blacksmith's emblem.",
-      "npcs": ["Village Blacksmith's Wife", "Town Guard"],
-      "items_available": ["Tracking Kit", "Map Fragment"],
+      "npcs": [
+        "Village Blacksmith's Wife",
+        "Town Guard"
+      ],
+      "items_available": [
+        "Tracking Kit",
+        "Map Fragment"
+      ],
       "enemies": [],
-      "next_checkpoints": ["forest_path"]
+      "next_checkpoints": [
+        "forest_path"
+      ]
     },
     "forest_path": {
       "description": "The Whispering Woods - Ancient trees loom overhead as you follow the goblin tracks deeper into the forest. You hear strange chittering sounds ahead and spot movement in the bushes.",
       "npcs": [],
-      "items_available": ["Wild Berries", "Sturdy Branch"],
-      "enemies": ["Goblin Scout", "Goblin Scout"],
-      "next_checkpoints": ["cave_entrance", "hidden_grove"]
+      "items_available": [
+        "Wild Berries",
+        "Sturdy Branch"
+      ],
+      "enemies": [
+        "Goblin Scout",
+        "Goblin Scout"
+      ],
+      "next_checkpoints": [
+        "cave_entrance",
+        "hidden_grove"
+      ]
     },
     "hidden_grove": {
       "description": "A peaceful grove with a small shrine to the forest deity. An old hermit emerges from meditation, offering cryptic advice about the goblin chief's weakness to fire.",
-      "npcs": ["Forest Hermit Eldrin"],
-      "items_available": ["Blessed Water", "Fire Oil Flask"],
+      "npcs": [
+        "Forest Hermit Eldrin"
+      ],
+      "items_available": [
+        "Blessed Water",
+        "Fire Oil Flask"
+      ],
       "enemies": [],
-      "next_checkpoints": ["cave_entrance"]
+      "next_checkpoints": [
+        "cave_entrance"
+      ]
     },
     "cave_entrance": {
       "description": "The cave entrance yawns before you like a monstrous maw. Crude goblin totems flank the entrance, and you can smell the acrid stench of goblin cooking fires from within. Two goblin guards stand watch, looking bored.",
       "npcs": [],
-      "items_available": ["Goblin Spear", "Shield"],
-      "enemies": ["Goblin Guard", "Goblin Guard"],
-      "next_checkpoints": ["cave_tunnels", "sneak_entrance"]
+      "items_available": [
+        "Goblin Spear",
+        "Shield"
+      ],
+      "enemies": [
+        "Goblin Guard",
+        "Goblin Guard"
+      ],
+      "next_checkpoints": [
+        "cave_tunnels",
+        "sneak_entrance"
+      ]
     },
     "sneak_entrance": {
       "description": "You discover a narrow side passage partially hidden by vines. It's tight but passable, leading deeper into the cave system while avoiding the main guards.",
       "npcs": [],
-      "items_available": ["Rusty Dagger"],
+      "items_available": [
+        "Rusty Dagger"
+      ],
       "enemies": [],
-      "next_checkpoints": ["prisoner_chamber", "treasure_vault"]
+      "next_checkpoints": [
+        "prisoner_chamber",
+        "treasure_vault"
+      ]
     },
     "cave_tunnels": {
       "description": "Winding tunnels carved from stone, lit by flickering torches. You hear the echo of goblin voices and the clanking of chains. Multiple passages branch off in different directions.",
       "npcs": [],
-      "items_available": ["Torch", "Iron Key"],
-      "enemies": ["Goblin Warrior", "Cave Bat Swarm"],
-      "next_checkpoints": ["prisoner_chamber", "goblin_throne_room"]
+      "items_available": [
+        "Torch",
+        "Iron Key"
+      ],
+      "enemies": [
+        "Goblin Warrior",
+        "Cave Bat Swarm"
+      ],
+      "next_checkpoints": [
+        "prisoner_chamber",
+        "goblin_throne_room"
+      ]
     },
     "prisoner_chamber": {
       "description": "A dank cell where three frightened villagers are chained to the wall. A single goblin jailer sleeps in the corner, keys dangling from his belt. The prisoners' eyes widen with hope as they see you.",
-      "npcs": ["Blacksmith Tom", "Farmer Sara", "Young Boy Tim"],
-      "items_available": ["Cell Keys", "Rusty Sword"],
-      "enemies": ["Goblin Jailer"],
-      "next_checkpoints": ["cave_tunnels", "escape_route", "goblin_throne_room"]
+      "npcs": [
+        "Blacksmith Tom",
+        "Farmer Sara",
+        "Young Boy Tim"
+      ],
+      "items_available": [
+        "Cell Keys",
+        "Rusty Sword"
+      ],
+      "enemies": [
+        "Goblin Jailer"
+      ],
+      "next_checkpoints": [
+        "cave_tunnels",
+        "escape_route",
+        "goblin_throne_room"
+      ]
     },
     "escape_route": {
       "description": "A narrow escape passage the villagers know about. It leads back toward the forest, but you hear goblin war drums from deeper in the cave - the chief knows you're here.",
       "npcs": [],
       "items_available": [],
-      "enemies": ["Goblin Pursuer", "Goblin Pursuer"],
-      "next_checkpoints": ["forest_path", "goblin_throne_room"]
+      "enemies": [
+        "Goblin Pursuer",
+        "Goblin Pursuer"
+      ],
+      "next_checkpoints": [
+        "forest_path",
+        "goblin_throne_room"
+      ]
     },
     "goblin_throne_room": {
       "description": "The throne room of Grax the Cruel, goblin chieftain. Piles of stolen treasure surround a crude throne made of bones and scrap metal. Grax himself is a large, scarred goblin wearing mismatched armor, flanked by his elite guards. He grins wickedly as you enter.",
-      "npcs": ["Grax the Cruel (Goblin Chief)"],
-      "items_available": ["Goblin Chief's Crown", "Ancient Amulet", "Sack of Gold Coins"],
-      "enemies": ["Grax the Cruel", "Elite Goblin Guard", "Elite Goblin Guard", "Goblin Shaman"],
-      "next_checkpoints": ["treasure_vault", "victory"]
+      "npcs": [
+        "Grax the Cruel (Goblin Chief)"
+      ],
+      "items_available": [
+        "Goblin Chief's Crown",
+        "Ancient Amulet",
+        "Sack of Gold Coins"
+      ],
+      "enemies": [
+        "Grax the Cruel",
+        "Elite Goblin Guard",
+        "Elite Goblin Guard",
+        "Goblin Shaman"
+      ],
+      "next_checkpoints": [
+        "treasure_vault",
+        "victory"
+      ]
     },
     "treasure_vault": {
       "description": "Hidden behind the throne is a small vault containing the goblins' accumulated plunder. Ancient coins, jewelry, and magical trinkets lie scattered about. You also find the village's tax collection that was stolen last month.",
       "npcs": [],
-      "items_available": ["Magic Sword +1", "Ring of Protection", "Bag of 500 Gold", "Village Tax Money", "Scroll of Fireball"],
+      "items_available": [
+        "Magic Sword +1",
+        "Ring of Protection",
+        "Bag of 500 Gold",
+        "Village Tax Money",
+        "Scroll of Fireball"
+      ],
       "enemies": [],
-      "next_checkpoints": ["victory"]
+      "next_checkpoints": [
+        "victory"
+      ]
     },
     "victory": {
       "description": "You emerge from the cave victorious! The villagers are safe, the treasure is recovered, and the goblin threat is ended. The village celebrates your heroism with a grand feast at the Rusty Dragon Tavern. Ameiko raises a toast in your honor!",
-      "npcs": ["Ameiko the Innkeeper", "Village Mayor", "Rescued Villagers"],
-      "items_available": ["Hero's Medal", "Deed to a Small House"],
+      "npcs": [
+        "Ameiko the Innkeeper",
+        "Village Mayor",
+        "Rescued Villagers"
+      ],
+      "items_available": [
+        "Hero's Medal",
+        "Deed to a Small House"
+      ],
       "enemies": [],
       "next_checkpoints": []
     }
-  }
+  },
+  "category": "one-shot",
+  "estimated_duration": "2 hours",
+  "difficulty": "beginner"
 }

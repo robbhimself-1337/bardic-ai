@@ -59,13 +59,19 @@ class Campaign:
         title: str,
         description: str,
         starting_checkpoint: str,
-        checkpoints: Dict[str, Checkpoint]
+        checkpoints: Dict[str, Checkpoint],
+        category: str = "short",
+        estimated_duration: str = "4-6 hours",
+        difficulty: str = "intermediate"
     ):
         self.campaign_id = campaign_id
         self.title = title
         self.description = description
         self.starting_checkpoint = starting_checkpoint
         self.checkpoints = checkpoints
+        self.category = category
+        self.estimated_duration = estimated_duration
+        self.difficulty = difficulty
 
     def get_checkpoint(self, checkpoint_id: str) -> Optional[Checkpoint]:
         """Get checkpoint by ID."""
@@ -131,7 +137,10 @@ class Campaign:
             title=data["title"],
             description=data["description"],
             starting_checkpoint=data["starting_checkpoint"],
-            checkpoints=checkpoints
+            checkpoints=checkpoints,
+            category=data.get("category", "short"),
+            estimated_duration=data.get("estimated_duration", "4-6 hours"),
+            difficulty=data.get("difficulty", "intermediate")
         )
 
     @classmethod
@@ -155,7 +164,10 @@ class Campaign:
                         campaigns.append({
                             "id": data.get("id", ""),
                             "title": data.get("title", ""),
-                            "description": data.get("description", "")
+                            "description": data.get("description", ""),
+                            "category": data.get("category", "short"),
+                            "estimated_duration": data.get("estimated_duration", "4-6 hours"),
+                            "difficulty": data.get("difficulty", "intermediate")
                         })
                 except Exception:
                     continue

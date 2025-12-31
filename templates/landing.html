@@ -7,74 +7,111 @@
     <style>
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f0f0f0;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            color: #f0e6d2;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23000" opacity="0.1" width="100" height="100"/><path d="M0 50 Q 25 45, 50 50 T 100 50" stroke="%23d4af37" stroke-width="0.5" fill="none" opacity="0.3"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
         }
         .container {
             text-align: center;
             max-width: 600px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 50px;
+            background: rgba(44, 24, 16, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.1);
+            border: 3px solid #d4af37;
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, #d4af37 0%, #8b7355 50%, #d4af37 100%);
+            border-radius: 15px;
+            z-index: -1;
         }
         h1 {
-            font-size: 3em;
+            font-size: 3.5em;
             margin-bottom: 10px;
-            color: #ffd700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #d4af37;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            letter-spacing: 2px;
         }
         .subtitle {
-            font-size: 1.2em;
-            color: #b0b0b0;
+            font-size: 1.3em;
+            color: #c0b090;
             margin-bottom: 40px;
+            font-style: italic;
         }
         .button {
             display: inline-block;
             padding: 15px 40px;
             margin: 10px;
             font-size: 1.2em;
-            color: #fff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50px;
+            color: #2c1810;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            border: 2px solid #8b7355;
+            border-radius: 8px;
             text-decoration: none;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            font-weight: bold;
         }
         .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
         }
         .button-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+            background: linear-gradient(135deg, #8b7355 0%, #a0826d 100%);
+            color: #f0e6d2;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.4);
         }
         .button-secondary:hover {
-            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
+            box-shadow: 0 6px 25px rgba(139, 115, 85, 0.6);
+            background: linear-gradient(135deg, #a0826d 0%, #8b7355 100%);
         }
         .features {
             margin-top: 40px;
             text-align: left;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid #8b7355;
         }
         .feature {
             margin: 15px 0;
-            padding-left: 30px;
+            padding-left: 35px;
             position: relative;
+            color: #c0b090;
+            line-height: 1.6;
         }
         .feature:before {
             content: "⚔️";
             position: absolute;
             left: 0;
+            font-size: 1.3em;
         }
     </style>
 </head>

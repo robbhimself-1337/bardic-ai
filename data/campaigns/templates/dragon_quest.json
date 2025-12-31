@@ -1,0 +1,182 @@
+{
+  "id": "dragon_quest",
+  "title": "Shadow of the Crimson Drake",
+  "description": "A young red dragon has claimed the Scorched Mountains as its lair, terrorizing nearby kingdoms. Assemble allies, gather legendary weapons, and confront the drake before its power becomes unstoppable.",
+  "category": "medium",
+  "estimated_duration": "15 hours",
+  "difficulty": "intermediate",
+  "starting_checkpoint": "throne_room_summons",
+  "checkpoints": {
+    "throne_room_summons": {
+      "description": "King Aldric summons you to the throne room with urgent news. The red dragon Scorch has been raiding villages and amassing treasure. The king offers a legendary reward to whoever can slay the beast.",
+      "npcs": ["King Aldric", "Royal Advisor Soren", "Knight Commander Thea"],
+      "items_available": ["Royal Writ", "Map to Dragon's Lair", "Pouch of 200 Gold"],
+      "enemies": [],
+      "next_checkpoints": ["capital_city", "seek_dragon_expert"],
+      "auto_quests": [
+        {
+          "name": "Slay the Crimson Drake",
+          "description": "Journey to the Scorched Mountains and defeat the dragon Scorch."
+        },
+        {
+          "name": "Gather Allies",
+          "description": "Recruit skilled companions for the dragon hunt."
+        }
+      ]
+    },
+    "capital_city": {
+      "description": "The bustling capital city offers opportunities to gather supplies, recruit allies, and learn about dragon-slaying tactics. The city's great library contains ancient knowledge.",
+      "npcs": ["Weapons Master Krug", "Mage Lysandra", "Priest Abelard"],
+      "items_available": ["Dragon-slaying Ballista Bolts", "Fire Resistance Potion", "Shield of the Drake Warden"],
+      "enemies": [],
+      "next_checkpoints": ["great_library", "recruit_ranger", "recruit_cleric", "journey_to_mountains"]
+    },
+    "great_library": {
+      "description": "Ancient tomes reveal dragon weaknesses and the location of legendary dragon-bane weapons. You learn that Scorch's lair was once home to an ancient gold dragon.",
+      "npcs": ["Master Librarian Eldwin"],
+      "items_available": ["Dragon Lore Tome", "Map to Dragonbane Blade", "Scroll of Protection from Fire"],
+      "enemies": [],
+      "next_checkpoints": ["capital_city", "seek_dragonbane_blade"]
+    },
+    "seek_dragon_expert": {
+      "description": "The hermit Valos, a former dragon rider, lives in the Northern Wastes. He knows dragons better than anyone alive and may have crucial advice.",
+      "npcs": ["Hermit Valos"],
+      "items_available": ["Dragon Scale Armor", "Valos's Journal"],
+      "enemies": ["Ice Wolves"],
+      "next_checkpoints": ["capital_city"]
+    },
+    "seek_dragonbane_blade": {
+      "description": "The legendary Dragonbane Blade lies hidden in the Temple of the First Slayer, a dangerous ruin filled with traps and guardians. This weapon is key to defeating Scorch.",
+      "npcs": ["Ghost of First Dragon Slayer"],
+      "items_available": ["Dragonbane Blade (Legendary Weapon)", "Ancient Dragon Slayer's Armor"],
+      "enemies": ["Stone Golem", "Guardian Construct", "Mimic"],
+      "next_checkpoints": ["capital_city"]
+    },
+    "recruit_ranger": {
+      "description": "Aria Swiftarrow, a legendary ranger, agrees to join your quest. Her arrows never miss, and she knows the mountain paths.",
+      "npcs": ["Aria Swiftarrow (Companion)"],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["capital_city"]
+    },
+    "recruit_cleric": {
+      "description": "Brother Tomas, a war cleric, offers his healing magic and combat prowess. He has faced dragons before and lived to tell the tale.",
+      "npcs": ["Brother Tomas (Companion)"],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["capital_city"]
+    },
+    "journey_to_mountains": {
+      "description": "The journey to the Scorched Mountains takes weeks. Along the way, you encounter bandits, wild beasts, and signs of the dragon's destruction - burned villages and terrified refugees.",
+      "npcs": ["Refugees", "Bandit Leader Grath"],
+      "items_available": ["Camp Supplies", "Survivor's Map Updates"],
+      "enemies": ["Bandits", "Dire Wolves", "Wyvern"],
+      "next_checkpoints": ["mountain_base_camp"]
+    },
+    "mountain_base_camp": {
+      "description": "You establish a base camp at the foot of the mountains. Scout the area, prepare your gear, and plan your approach to the dragon's lair. Kobold scouts watch from the rocks.",
+      "npcs": ["Camp Followers", "Mercenary Captain"],
+      "items_available": ["Climbing Gear", "Extra Potions", "Signal Flares"],
+      "enemies": ["Kobold Scouts"],
+      "next_checkpoints": ["mountain_pass", "kobold_encampment", "ancient_dwarven_road"]
+    },
+    "kobold_encampment": {
+      "description": "A tribe of kobolds serves the dragon. You can fight through them, sneak past, or convince them to abandon their master. They guard a secondary entrance to the lair.",
+      "npcs": ["Kobold Chief Skrix"],
+      "items_available": ["Kobold Map of Lair", "Dragon Egg (can be used as bargaining chip)"],
+      "enemies": ["Kobold Warriors", "Kobold Sorcerer"],
+      "next_checkpoints": ["dragon_lair_back_entrance", "mountain_pass"]
+    },
+    "mountain_pass": {
+      "description": "The main path to the dragon's lair winds through treacherous mountain passes. Rockslides, thin air, and flying monsters make the journey perilous.",
+      "npcs": [],
+      "items_available": ["Mountain Herbs"],
+      "enemies": ["Harpies", "Giant Eagle"],
+      "next_checkpoints": ["dragon_lair_main_entrance"]
+    },
+    "ancient_dwarven_road": {
+      "description": "An old dwarven mining road leads deep into the mountain. Ancient defenses still function, but the path may offer advantages against the dragon.",
+      "npcs": ["Dwarf Ghost Miners"],
+      "items_available": ["Dwarven Explosives", "Mining Pick (magical)", "Ancient Dwarf Ballista"],
+      "enemies": ["Ochre Jelly", "Earth Elemental"],
+      "next_checkpoints": ["dragon_lair_underground"]
+    },
+    "dragon_lair_main_entrance": {
+      "description": "The massive cave entrance reeks of sulfur and burned flesh. Dragon bones litter the approach - victims of Scorch's territorial nature. Heat waves shimmer in the air.",
+      "npcs": [],
+      "items_available": ["Dragon Bones (crafting material)"],
+      "enemies": ["Fire Elemental", "Magma Mephit Swarm"],
+      "next_checkpoints": ["treasure_hoard_chamber", "dragon_throne_room"]
+    },
+    "dragon_lair_back_entrance": {
+      "description": "The kobold-guarded back entrance leads to the dragon's sleeping chamber. This route is dangerous but offers the element of surprise.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["dragon_sleeping_chamber"]
+    },
+    "dragon_lair_underground": {
+      "description": "The dwarven tunnels emerge beneath the dragon's hoard. You can hear the beast above, counting its treasure. Ancient dwarven siege weapons line the walls.",
+      "npcs": [],
+      "items_available": ["Dwarven Siege Crossbow"],
+      "enemies": [],
+      "next_checkpoints": ["treasure_hoard_chamber"]
+    },
+    "treasure_hoard_chamber": {
+      "description": "Mountains of gold, gems, and magical items fill this vast cavern. The dragon's hoard is legendary. Taking treasure will alert Scorch, but powerful items may aid in the coming battle.",
+      "npcs": [],
+      "items_available": ["Ring of Fire Resistance", "Flametongue Sword", "Thousands in Gold and Gems", "Crown of the Last King"],
+      "enemies": [],
+      "next_checkpoints": ["dragon_throne_room", "dragon_sleeping_chamber"]
+    },
+    "dragon_sleeping_chamber": {
+      "description": "Scorch sleeps fitfully atop a bed of coins and bones. You could attempt to strike while the dragon sleeps, but any sound will wake this light sleeper.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["dragon_boss_fight"]
+    },
+    "dragon_throne_room": {
+      "description": "The dragon's primary lair - a massive cavern with a lava pool at its center. Scorch perches on a rock throne, eyes gleaming with malevolent intelligence. 'You dare enter my domain?'",
+      "npcs": [],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["dragon_boss_fight", "negotiate_with_dragon"]
+    },
+    "negotiate_with_dragon": {
+      "description": "Scorch is young and arrogant, but intelligent. With high charisma and the right leverage (dragon egg, knowledge of ancient gold dragon), you might negotiate an alternative to combat.",
+      "npcs": ["Scorch the Crimson Drake"],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["peaceful_resolution", "dragon_boss_fight"]
+    },
+    "dragon_boss_fight": {
+      "description": "BOSS FIGHT: Scorch the Crimson Drake unleashes his full fury! Fire breath, claw attacks, and wing buffets make this a legendary battle. Your allies and preparation will be tested.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": ["Scorch the Crimson Drake (Adult Red Dragon)"],
+      "next_checkpoints": ["victory", "defeat"]
+    },
+    "peaceful_resolution": {
+      "description": "Through cunning diplomacy and leveraging your knowledge, you convince Scorch to relocate to unpopulated mountains in exchange for tribute. The kingdom is saved without bloodshed.",
+      "npcs": ["Scorch the Crimson Drake", "King Aldric"],
+      "items_available": ["Dragon's Gift - Rare Items", "Dragon Pact Scroll"],
+      "enemies": [],
+      "next_checkpoints": ["victory"]
+    },
+    "defeat": {
+      "description": "The dragon's flames consume you. Your quest ends here in the Scorched Mountains. The kingdom falls to the drake's terror.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": []
+    },
+    "victory": {
+      "description": "The Crimson Drake is defeated! Whether through combat or cunning, you have saved the kingdom. King Aldric honors you with titles, land, and legendary rewards. Bards will sing of your deeds for generations!",
+      "npcs": ["King Aldric", "Cheering Crowds", "Your Companions"],
+      "items_available": ["Dragon Slayer's Crown", "Deed to Castle", "10,000 Gold Pieces", "Dragon Scale Trophy"],
+      "enemies": [],
+      "next_checkpoints": []
+    }
+  }
+}

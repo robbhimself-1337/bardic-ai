@@ -1,0 +1,136 @@
+{
+  "id": "haunted_mansion",
+  "title": "Curse of Ravenmoor Manor",
+  "description": "A chilling mystery awaits in the abandoned Ravenmoor Manor. Locals speak of restless spirits and a dark curse. Can you uncover the manor's secrets and break the curse before nightfall?",
+  "category": "short",
+  "estimated_duration": "4-6 hours",
+  "difficulty": "intermediate",
+  "starting_checkpoint": "village_arrival",
+  "checkpoints": {
+    "village_arrival": {
+      "description": "The fog-shrouded village of Ravenmoor huddles beneath storm clouds. Villagers speak in hushed tones about the abandoned manor on the hill, where strange lights have been seen in the windows at night.",
+      "npcs": ["Burgomaster Wilhelm", "Innkeeper Magda", "Old Priest Markus"],
+      "items_available": ["Holy Water", "Lantern", "Rope (100ft)"],
+      "enemies": [],
+      "next_checkpoints": ["manor_gates", "village_library"],
+      "auto_quests": [
+        {
+          "name": "Break the Curse",
+          "description": "Investigate Ravenmoor Manor and end the curse that haunts it."
+        }
+      ]
+    },
+    "village_library": {
+      "description": "The dusty village library contains old records about the Ravenmoor family. You discover that Lord Ravenmoor made a dark pact 50 years ago, and his daughter Eliza disappeared on her wedding night.",
+      "npcs": ["Librarian Agnes"],
+      "items_available": ["Ravenmoor Family History", "Map of Manor Grounds", "Silver Dagger"],
+      "enemies": [],
+      "next_checkpoints": ["manor_gates"]
+    },
+    "manor_gates": {
+      "description": "Twisted iron gates guard the entrance to the manor grounds. The gates creak open at your approach, as if expecting you. A gravel path winds through an overgrown garden toward the imposing mansion.",
+      "npcs": [],
+      "items_available": ["Rusty Key"],
+      "enemies": ["Shadow Wraith"],
+      "next_checkpoints": ["manor_entrance", "garden_mausoleum"]
+    },
+    "garden_mausoleum": {
+      "description": "A small mausoleum stands among dead rosebushes. The name 'Eliza Ravenmoor' is carved above the door, but the tomb appears to have been opened from the inside. Fresh claw marks scar the stone.",
+      "npcs": [],
+      "items_available": ["Eliza's Locket", "Burial Ledger"],
+      "enemies": ["Zombie", "Zombie"],
+      "next_checkpoints": ["manor_entrance"]
+    },
+    "manor_entrance": {
+      "description": "The grand entrance hall is thick with dust and cobwebs. A magnificent chandelier hangs precariously overhead. Portraits line the walls, their eyes seeming to follow your movement. A grand staircase leads upward.",
+      "npcs": [],
+      "items_available": ["Silver Candelabra", "Portrait of Eliza"],
+      "enemies": ["Animated Armor"],
+      "next_checkpoints": ["dining_hall", "grand_staircase", "servants_quarters"]
+    },
+    "dining_hall": {
+      "description": "A long table set for a feast that was never eaten. The food has long since rotted. Spectral servants move through the room, endlessly repeating their final tasks, unaware of your presence.",
+      "npcs": ["Ghost of Butler James"],
+      "items_available": ["Ancient Wine", "Silver Fork (ritual component)"],
+      "enemies": [],
+      "next_checkpoints": ["manor_entrance", "kitchen"]
+    },
+    "kitchen": {
+      "description": "The kitchen is a scene of chaos - overturned pots, shattered plates, and scorch marks on the walls. A hidden trapdoor leads down to the wine cellar.",
+      "npcs": [],
+      "items_available": ["Chef's Knife", "Healing Herbs"],
+      "enemies": ["Poltergeist"],
+      "next_checkpoints": ["wine_cellar", "dining_hall"]
+    },
+    "wine_cellar": {
+      "description": "The wine cellar extends deep beneath the manor. Among the ancient bottles, you find a hidden passage leading to a secret ritual chamber. The air grows cold.",
+      "npcs": [],
+      "items_available": ["Rare Wine (worth 500gp)", "Scroll of Protection from Evil"],
+      "enemies": ["Giant Rats"],
+      "next_checkpoints": ["ritual_chamber"]
+    },
+    "servants_quarters": {
+      "description": "Small, cramped rooms where the servants lived. Personal effects remain as if the occupants fled suddenly. A diary reveals that Lord Ravenmoor's pact involved sacrificing his daughter.",
+      "npcs": [],
+      "items_available": ["Servant's Diary", "Iron Key"],
+      "enemies": [],
+      "next_checkpoints": ["manor_entrance"]
+    },
+    "grand_staircase": {
+      "description": "The marble staircase groans under your weight. Phantom whispers echo through the halls. At the top, doors lead to the master bedroom, library, and tower.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": ["Specter"],
+      "next_checkpoints": ["master_bedroom", "manor_library", "tower_stairs"]
+    },
+    "master_bedroom": {
+      "description": "Lord Ravenmoor's bedroom is frozen in time. His skeleton lies in the bed, clutching a bloodstained letter. The letter is a confession about breaking his pact by trying to save his daughter.",
+      "npcs": ["Ghost of Lord Ravenmoor"],
+      "items_available": ["Confession Letter", "Lord's Signet Ring", "Gold Jewelry"],
+      "enemies": [],
+      "next_checkpoints": ["grand_staircase"]
+    },
+    "manor_library": {
+      "description": "Floor-to-ceiling bookshelves filled with occult tomes. A ritual circle is drawn on the floor, with instructions for breaking demonic pacts. You find the components list for the ritual.",
+      "npcs": [],
+      "items_available": ["Ritual Instructions", "Spellbook", "Scroll of Dispel Magic"],
+      "enemies": ["Living Books (Swarm)"],
+      "next_checkpoints": ["grand_staircase"]
+    },
+    "tower_stairs": {
+      "description": "A narrow spiral staircase winds up into the manor's highest tower. The temperature drops with each step. Spectral crying grows louder as you climb.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": ["Wraith"],
+      "next_checkpoints": ["tower_room"]
+    },
+    "tower_room": {
+      "description": "Eliza Ravenmoor's bridal chamber. She stands by the window in her wedding dress, now a vengeful spirit. Around her neck is a demonic amulet - the source of the curse. She attacks anyone who enters.",
+      "npcs": ["Eliza's Spirit (Boss)"],
+      "items_available": ["Cursed Amulet", "Wedding Ring", "Eliza's Diary"],
+      "enemies": ["Eliza (Banshee)"],
+      "next_checkpoints": ["ritual_chamber", "victory"]
+    },
+    "ritual_chamber": {
+      "description": "A hidden chamber beneath the manor where Lord Ravenmoor made his pact. The demon's sigil still glows faintly on the floor. This is where the curse can be broken if you have all the ritual components.",
+      "npcs": [],
+      "items_available": ["Demonic Contract"],
+      "enemies": ["Imp", "Imp", "Hell Hound"],
+      "next_checkpoints": ["perform_ritual"]
+    },
+    "perform_ritual": {
+      "description": "With the ritual components gathered (silver fork, Eliza's locket, cursed amulet, Lord's signet ring), you perform the ritual to break the demonic pact. The manor shakes as the curse is lifted.",
+      "npcs": [],
+      "items_available": [],
+      "enemies": [],
+      "next_checkpoints": ["victory"]
+    },
+    "victory": {
+      "description": "As the curse breaks, the spirits find peace. Eliza's ghost thanks you before fading into light. The manor's oppressive atmosphere lifts. The village of Ravenmoor is forever grateful, and the manor's treasures are yours to claim.",
+      "npcs": ["Burgomaster Wilhelm", "Village Mayor"],
+      "items_available": ["Ravenmoor Family Treasures", "Deed to Manor", "Bag of 1000 Gold"],
+      "enemies": [],
+      "next_checkpoints": []
+    }
+  }
+}

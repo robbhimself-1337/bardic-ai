@@ -10,12 +10,32 @@ from services import open5e_client
 import os
 import json
 import logging
+import re
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # For session management
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+# Custom Jinja2 filters
+@app.template_filter('strip_markdown')
+def strip_markdown_filter(text):
+    """Strip markdown headers and formatting from text."""
+    if not text:
+        return ""
+    # Remove markdown headers (## Header, ### Header, etc.)
+    text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
+    # Remove bold/italic markers
+    text = re.sub(r'\*\*\*(.+?)\*\*\*', r'\1', text)  # Bold+italic
+    text = re.sub(r'\*\*(.+?)\*\*', r'\1', text)  # Bold
+    text = re.sub(r'\*(.+?)\*', r'\1', text)  # Italic
+    text = re.sub(r'___(.+?)___', r'\1', text)  # Bold+italic alt
+    text = re.sub(r'__(.+?)__', r'\1', text)  # Bold alt
+    text = re.sub(r'_(.+?)_', r'\1', text)  # Italic alt
+    return text.strip()
+
 
 # Store active game sessions (in production, use Redis or database)
 active_games = {}

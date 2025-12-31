@@ -51,7 +51,7 @@
     }
     .race-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 20px;
         margin: 20px 0;
     }
@@ -59,9 +59,11 @@
         background: rgba(0, 0, 0, 0.3);
         border: 2px solid #8b7355;
         border-radius: 10px;
-        padding: 20px;
+        overflow: hidden;
         cursor: pointer;
         transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
     }
     .race-card:hover {
         border-color: #d4af37;
@@ -71,6 +73,23 @@
     .race-card.selected {
         border-color: #90ee90;
         background: rgba(144, 238, 144, 0.1);
+        box-shadow: 0 6px 25px rgba(144, 238, 144, 0.4);
+    }
+    .race-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+        border-bottom: 2px solid #8b7355;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b7355;
+        font-size: 3em;
+    }
+    .race-content {
+        padding: 20px;
+        flex: 1;
     }
     .race-name {
         font-size: 1.5em;
@@ -82,7 +101,7 @@
         color: #c0b090;
         margin-bottom: 15px;
         line-height: 1.6;
-        max-height: 100px;
+        max-height: 80px;
         overflow: hidden;
     }
     .race-traits {
@@ -117,20 +136,32 @@
 <div class="race-grid" id="raceGrid">
     {% for race in races %}
     <div class="race-card" data-race="{{ race.name }}" data-type="{% if race.name in ['Human', 'Elf', 'Dwarf', 'Halfling'] %}common{% else %}exotic{% endif %}" onclick="selectRace('{{ race.name }}')">
-        <div class="race-name">{{ race.name }}</div>
-        <div class="race-desc">{{ race.desc | truncate(150) }}</div>
-        <div class="race-traits">
-            <div class="trait-item">
-                <span class="trait-label">Speed:</span> {{ race.speed }} ft.
+        <img src="/static/images/races/{{ race.slug }}.jpg" alt="{{ race.name }}" class="race-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="race-image" style="display: none;">👤</div>
+        <div class="race-content">
+            <div class="race-name">{{ race.name }}</div>
+            <div class="race-desc">{{ race.desc | strip_markdown | truncate(150) }}</div>
+            <div class="race-traits">
+                <div class="trait-item">
+                    <span class="trait-label">Speed:</span>
+                    {% if race.speed is mapping %}
+                        {{ race.speed.walk }} ft.
+                    {% else %}
+                        {{ race.speed }} ft.
+                    {% endif %}
+                </div>
+                <div class="trait-item">
+                    <span class="trait-label">Size:</span> {{ race.size_raw if race.size_raw else race.size }}
+                </div>
+                {% if race.asi %}
+                <div class="trait-item">
+                    <span class="trait-label">Ability Bonus:</span>
+                    {% for bonus in race.asi %}
+                        +{{ bonus.value }} {{ bonus.attributes | join(', ') }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
-            <div class="trait-item">
-                <span class="trait-label">Size:</span> {{ race.size }}
-            </div>
-            {% if race.asi %}
-            <div class="trait-item">
-                <span class="trait-label">Ability Bonus:</span> {{ race.asi | join(', ') }}
-            </div>
-            {% endif %}
         </div>
     </div>
     {% endfor %}

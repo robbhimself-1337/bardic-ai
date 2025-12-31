@@ -7,69 +7,197 @@
     <style>
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f0f0f0;
+            background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+            color: #f0e6d2;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(44, 24, 16, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            border: 3px solid #d4af37;
         }
         h1 {
             text-align: center;
-            color: #ffd700;
+            color: #d4af37;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #c0b090;
             margin-bottom: 30px;
+            font-style: italic;
+        }
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .filter-label {
+            color: #d4af37;
+            font-weight: bold;
+        }
+        select {
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            color: #f0e6d2;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        select option {
+            background: #2c1810;
+            color: #f0e6d2;
         }
         .campaigns {
             display: grid;
-            gap: 20px;
+            gap: 25px;
         }
         .campaign-card {
             padding: 25px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            border: 2px solid #8b7355;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.3);
             cursor: pointer;
             transition: all 0.3s;
         }
         .campaign-card:hover {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+        .campaign-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         .campaign-title {
             font-size: 1.8em;
-            color: #ffd700;
-            margin-bottom: 10px;
+            color: #d4af37;
+            margin-bottom: 5px;
+            flex: 1;
+        }
+        .campaign-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .badge-category {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #2c1810;
+        }
+        .badge-duration {
+            background: rgba(139, 115, 85, 0.6);
+            color: #f0e6d2;
+            border: 1px solid #8b7355;
+        }
+        .badge-difficulty {
+            border: 1px solid;
+        }
+        .badge-difficulty.beginner {
+            background: rgba(144, 238, 144, 0.2);
+            border-color: #90ee90;
+            color: #90ee90;
+        }
+        .badge-difficulty.intermediate {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+        .badge-difficulty.advanced {
+            background: rgba(220, 20, 60, 0.2);
+            border-color: #dc143c;
+            color: #ff6b6b;
         }
         .campaign-desc {
-            color: #d0d0d0;
+            color: #c0b090;
             line-height: 1.6;
+            margin-top: 15px;
         }
         .no-campaigns {
             text-align: center;
-            padding: 40px;
-            color: #b0b0b0;
+            padding: 60px 40px;
+            color: #8b7355;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Select Your Campaign</h1>
+        <p class="subtitle">Choose your adventure and commitment level</p>
 
-        <div class="campaigns">
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Category:</span>
+                <select id="categoryFilter" onchange="filterCampaigns()">
+                    <option value="all">All</option>
+                    <option value="one-shot">One-Shot (2-3 hours)</option>
+                    <option value="short">Short (4-6 hours)</option>
+                    <option value="medium">Medium (10-20 hours)</option>
+                    <option value="epic">Epic (Ongoing)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Difficulty:</span>
+                <select id="difficultyFilter" onchange="filterCampaigns()">
+                    <option value="all">All</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Sort:</span>
+                <select id="sortBy" onchange="sortCampaigns()">
+                    <option value="title">Title</option>
+                    <option value="duration">Duration</option>
+                    <option value="difficulty">Difficulty</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="campaigns" id="campaignsList">
             {% if campaigns %}
                 {% for campaign in campaigns %}
-                <div class="campaign-card" onclick="window.location.href='/start_campaign/{{ campaign.id }}'">
-                    <div class="campaign-title">{{ campaign.title }}</div>
+                <div class="campaign-card"
+                     data-category="{{ campaign.category }}"
+                     data-difficulty="{{ campaign.difficulty }}"
+                     data-duration="{{ campaign.estimated_duration }}"
+                     onclick="window.location.href='/start_campaign/{{ campaign.id }}'">
+                    <div class="campaign-header">
+                        <div class="campaign-title">{{ campaign.title }}</div>
+                        <div class="campaign-badges">
+                            <span class="badge badge-category">{{ campaign.category | title }}</span>
+                            <span class="badge badge-duration">{{ campaign.estimated_duration }}</span>
+                            <span class="badge badge-difficulty {{ campaign.difficulty }}">{{ campaign.difficulty | title }}</span>
+                        </div>
+                    </div>
                     <div class="campaign-desc">{{ campaign.description }}</div>
                 </div>
                 {% endfor %}
@@ -80,5 +208,56 @@
             {% endif %}
         </div>
     </div>
+
+    <script>
+        function filterCampaigns() {
+            const category = document.getElementById('categoryFilter').value;
+            const difficulty = document.getElementById('difficultyFilter').value;
+            const cards = document.querySelectorAll('.campaign-card');
+
+            cards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const cardDifficulty = card.dataset.difficulty;
+
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesDifficulty = difficulty === 'all' || cardDifficulty === difficulty;
+
+                if (matchesCategory && matchesDifficulty) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function sortCampaigns() {
+            const sortBy = document.getElementById('sortBy').value;
+            const container = document.getElementById('campaignsList');
+            const cards = Array.from(document.querySelectorAll('.campaign-card'));
+
+            cards.sort((a, b) => {
+                if (sortBy === 'title') {
+                    return a.querySelector('.campaign-title').textContent.localeCompare(
+                        b.querySelector('.campaign-title').textContent
+                    );
+                } else if (sortBy === 'duration') {
+                    const durationOrder = {
+                        '2 hours': 1,
+                        '4-6 hours': 2,
+                        '15 hours': 3,
+                        'ongoing': 4
+                    };
+                    return durationOrder[a.dataset.duration] - durationOrder[b.dataset.duration];
+                } else if (sortBy === 'difficulty') {
+                    const difficultyOrder = { 'beginner': 1, 'intermediate': 2, 'advanced': 3 };
+                    return difficultyOrder[a.dataset.difficulty] - difficultyOrder[b.dataset.difficulty];
+                }
+                return 0;
+            });
+
+            // Re-append sorted cards
+            cards.forEach(card => container.appendChild(card));
+        }
+    </script>
 </body>
 </html>

@@ -71,7 +71,7 @@ class StateManager:
             location=location,
             story_progress=StoryProgress(),
             relationships={},
-            nodes_visited=[]
+            nodes_visited=[starting_chapter.starting_node]  # Mark starting node as visited
         )
 
         logger.info(f"✓ Initialized new game: {session_id}")

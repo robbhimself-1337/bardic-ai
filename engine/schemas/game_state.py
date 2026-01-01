@@ -103,6 +103,39 @@ class Character:
             mod += self.proficiency_bonus
         return mod
 
+    def to_dict(self) -> dict:
+        """
+        Convert Character to dict for template rendering.
+        Returns flat structure compatible with game.html template.
+        """
+        return {
+            'name': self.name,
+            'race': self.race,
+            'char_class': self.char_class,
+            'level': self.level,
+            'experience': self.experience,
+            # Flat HP for template compatibility
+            'hp': self.hp.current,
+            'max_hp': self.hp.max,
+            'armor_class': self.armor_class,
+            'speed': self.speed,
+            'proficiency_bonus': self.proficiency_bonus,
+            # Flat ability scores
+            'strength': self.ability_scores.str,
+            'dexterity': self.ability_scores.dex,
+            'constitution': self.ability_scores.con,
+            'intelligence': self.ability_scores.int,
+            'wisdom': self.ability_scores.wis,
+            'charisma': self.ability_scores.cha,
+            # Lists
+            'inventory': [item.item_id for item in self.inventory],
+            'skill_proficiencies': self.proficiencies.skills,
+            'conditions': self.conditions,
+            'class_features': self.class_features,
+            # Gold
+            'gold': self.gold.gp,
+        }
+
 
 @dataclass
 class Location:

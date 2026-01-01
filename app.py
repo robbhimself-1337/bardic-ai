@@ -6,7 +6,7 @@ from services.ollama_client import call_ollama
 from services.voice_input import transcribe_audio
 from services.voice_output import text_to_speech, text_to_speech_with_chunks, AUDIO_OUTPUT_DIR
 from services.dm_engine import DMEngine
-from services.image_generator import generate_intro_scene
+from services.image_generator import generate_intro_scene, generate_scene, get_dm_portrait, generate_npc_portrait
 from models.game_state import GameState, Character
 from models.campaign import Campaign
 from models.dnd5e_character import DnD5eCharacter
@@ -96,6 +96,116 @@ def initialize_cache():
 
 # Initialize cache on app startup
 initialize_cache()
+
+
+# ============================================================================
+# ENGINE INTEGRATION HELPERS
+# ============================================================================
+
+def detect_campaign_format(campaign_id: str) -> str:
+    """
+    Detect if campaign uses old or new format.
+
+    Returns:
+        'old' - Single JSON file format
+        'new' - Directory with multiple JSON files
+    """
+    import pathlib
+
+    # Check for new format: data/campaigns/{campaign_id}/ directory
+    new_format_dir = pathlib.Path(f"data/campaigns/{campaign_id}")
+    if new_format_dir.is_dir() and (new_format_dir / "campaign.json").exists():
+        return 'new'
+
+    # Check for old format: data/campaigns/{campaign_id}.json file
+    old_format_file = pathlib.Path(f"data/campaigns/{campaign_id}.json")
+    if old_format_file.exists():
+        return 'old'
+
+    # Default to old for backward compatibility
+    return 'old'
+
+
+def convert_to_engine_character(char_data: dict):
+    """
+    Convert character wizard data to new engine Character schema.
+
+    Args:
+        char_data: Character data from wizard (dict with name, race, class, abilities, etc.)
+
+    Returns:
+        engine.schemas.game_state.Character instance
+    """
+    from engine.schemas.game_state import (
+        Character, AbilityScores, HitPoints, Proficiencies, InventoryItem, Currency
+    )
+
+    # Extract ability scores
+    ability_scores = AbilityScores(
+        str=char_data.get('strength', 10),
+        dex=char_data.get('dexterity', 10),
+        con=char_data.get('constitution', 10),
+        int=char_data.get('intelligence', 10),
+        wis=char_data.get('wisdom', 10),
+        cha=char_data.get('charisma', 10)
+    )
+
+    # Extract HP
+    hp = HitPoints(
+        current=char_data.get('hp', 10),
+        max=char_data.get('max_hp', 10),
+        temp=0
+    )
+
+    # Extract proficiencies
+    proficiencies = Proficiencies(
+        skills=char_data.get('skill_proficiencies', []),
+        armor=char_data.get('armor_proficiencies', []),
+        weapons=char_data.get('weapon_proficiencies', []),
+        tools=char_data.get('tool_proficiencies', []),
+        saving_throws=char_data.get('saving_throw_proficiencies', [])
+    )
+
+    # Convert inventory
+    inventory = []
+    for item in char_data.get('inventory', []):
+        if isinstance(item, str):
+            inventory.append(InventoryItem(item_id=item, quantity=1))
+        elif isinstance(item, dict):
+            inventory.append(InventoryItem(
+                item_id=item.get('name', 'unknown'),
+                quantity=item.get('quantity', 1),
+                equipped=item.get('equipped', False)
+            ))
+
+    # Extract currency
+    gold = Currency(
+        gp=char_data.get('gold', 0),
+        cp=0,
+        sp=0,
+        pp=0
+    )
+
+    # Create Character
+    character = Character(
+        name=char_data.get('name', 'Unknown'),
+        race=char_data.get('race', 'Human'),
+        char_class=char_data.get('character_class', 'Fighter'),
+        level=char_data.get('level', 1),
+        experience=char_data.get('experience', 0),
+        ability_scores=ability_scores,
+        hp=hp,
+        armor_class=char_data.get('armor_class', 10),
+        speed=char_data.get('speed', 30),
+        proficiency_bonus=2,  # Level 1 starts with +2
+        proficiencies=proficiencies,
+        inventory=inventory,
+        gold=gold,
+        class_features=char_data.get('class_features', []),
+        conditions=[]
+    )
+
+    return character
 
 
 @app.route('/')
@@ -202,52 +312,208 @@ def start_campaign(campaign_id):
         with open(character_file, 'r') as f:
             char_data = json.load(f)
 
-        # Load campaign
-        campaign = Campaign.load_campaign(campaign_id)
+        # Detect campaign format
+        campaign_format = detect_campaign_format(campaign_id)
+        logger.info(f"Campaign {campaign_id} format: {campaign_format}")
 
-        # Create character for game (using simplified Character model for now)
-        character = Character(
-            name=char_data.get('name', character_name),
-            char_class=char_data.get('character_class', 'Fighter')
-        )
-
-        # Create game state
-        game_state = GameState(
-            character=character,
-            campaign_id=campaign_id,
-            current_checkpoint=campaign.starting_checkpoint
-        )
-
-        # Add starting quests
-        checkpoint = campaign.get_checkpoint(campaign.starting_checkpoint)
-        if checkpoint and checkpoint.auto_quests:
-            for quest in checkpoint.auto_quests:
-                game_state.add_quest(quest["name"], quest["description"])
-
-        # Create DM Engine
-        dm_engine = DMEngine(game_state, campaign)
-
-        # Store in session and active games
+        # Initialize session ID
         session_id = os.urandom(16).hex()
         session['game_session_id'] = session_id
-        active_games[session_id] = {
-            'game_state': game_state,
-            'campaign': campaign,
-            'dm_engine': dm_engine,
-            'character_data': char_data  # Store full character data for reference
-        }
 
-        logger.info(f"Started campaign {campaign_id} with character {character_name}")
+        if campaign_format == 'new':
+            # ===== NEW ENGINE =====
+            from engine import load_full_campaign, StateManager, NewDMEngine
 
-        # Check if campaign has intro scenes
-        if campaign.intro_scenes and len(campaign.intro_scenes) > 0:
+            # Load campaign using new loaders
+            campaign_dir = f"data/campaigns/{campaign_id}"
+            campaign, nodes, npcs, encounters = load_full_campaign(campaign_dir)
+
+            # Convert character to new engine format
+            engine_character = convert_to_engine_character(char_data)
+
+            # Create StateManager
+            state_manager = StateManager(campaign, nodes, npcs, encounters, engine_character)
+
+            # Initialize new game
+            game_state = state_manager.initialize_new_game(session_id)
+
+            # Create NewDMEngine
+            dm_engine = NewDMEngine(state_manager, call_ollama)
+
+            # Store in active games with v2 flag
+            active_games[session_id] = {
+                'engine_version': 'v2',
+                'state_manager': state_manager,
+                'dm_engine': dm_engine,
+                'character_data': char_data,
+                'campaign': campaign
+            }
+
+            logger.info(f"Started NEW ENGINE campaign {campaign_id} with character {character_name}")
+
+            # Redirect to preparation page for image generation
+            return redirect(url_for('preparing_campaign', campaign_id=campaign_id))
+
+        else:
+            # ===== OLD ENGINE (backward compatibility) =====
+            # Load campaign using old Campaign class
+            campaign = Campaign.load_campaign(campaign_id)
+
+            # Create character for game (using simplified Character model)
+            character = Character(
+                name=char_data.get('name', character_name),
+                char_class=char_data.get('character_class', 'Fighter')
+            )
+
+            # Create game state
+            game_state = GameState(
+                character=character,
+                campaign_id=campaign_id,
+                current_checkpoint=campaign.starting_checkpoint
+            )
+
+            # Add starting quests
+            checkpoint = campaign.get_checkpoint(campaign.starting_checkpoint)
+            if checkpoint and checkpoint.auto_quests:
+                for quest in checkpoint.auto_quests:
+                    game_state.add_quest(quest["name"], quest["description"])
+
+            # Create old DM Engine
+            dm_engine = DMEngine(game_state, campaign)
+
+            # Store in active games with old format (no version flag)
+            active_games[session_id] = {
+                'game_state': game_state,
+                'campaign': campaign,
+                'dm_engine': dm_engine,
+                'character_data': char_data
+            }
+
+            logger.info(f"Started OLD ENGINE campaign {campaign_id} with character {character_name}")
+
+        # Check if campaign has intro scenes (old format only)
+        if campaign_format == 'old' and campaign.intro_scenes and len(campaign.intro_scenes) > 0:
             return redirect(url_for('game_intro'))
         else:
             return redirect(url_for('game'))
 
     except Exception as e:
         logger.error(f"Error starting campaign: {e}")
+        import traceback
+        traceback.print_exc()
         return f"Error starting campaign: {str(e)}", 500
+
+
+@app.route('/preparing_campaign/<campaign_id>')
+def preparing_campaign(campaign_id):
+    """Show loading page while campaign assets are generated."""
+    session_id = session.get('game_session_id')
+    if not session_id or session_id not in active_games:
+        return redirect(url_for('index'))
+
+    game_data = active_games[session_id]
+    campaign = game_data.get('campaign')
+    
+    return render_template(
+        'preparing_campaign.html',
+        campaign_id=campaign_id,
+        campaign_title=campaign.title if campaign else campaign_id
+    )
+
+
+@app.route('/api/prepare_campaign/<campaign_id>', methods=['POST'])
+def api_prepare_campaign(campaign_id):
+    """
+    API endpoint to generate all campaign images.
+    Returns Server-Sent Events with progress updates.
+    """
+    from flask import Response
+    
+    session_id = session.get('game_session_id')
+    if not session_id or session_id not in active_games:
+        return jsonify({'error': 'No active game session'}), 400
+
+    game_data = active_games[session_id]
+    
+    if game_data.get('engine_version') != 'v2':
+        # Old engine doesn't need preparation
+        return jsonify({'complete': True})
+
+    def generate_progress():
+        """Generator that yields SSE progress updates."""
+        try:
+            state_manager = game_data['state_manager']
+            nodes = state_manager.nodes
+            npcs_registry = state_manager.npcs
+            
+            # Count total items to generate
+            scene_prompts = []
+            npc_prompts = []
+            
+            for node_id, node in nodes.items():
+                if node.description.image_prompt and node.description.image_prompt.scene:
+                    scene_prompts.append((node_id, node.description.image_prompt.scene))
+            
+            # NPCRegistry stores npcs in .npcs dict
+            for npc_id, npc in npcs_registry.npcs.items():
+                if hasattr(npc, 'appearance') and npc.appearance and npc.appearance.portrait_prompt:
+                    npc_prompts.append((npc_id, npc.name, npc.appearance.portrait_prompt))
+            
+            total = len(scene_prompts) + len(npc_prompts)
+            current = 0
+            
+            if total == 0:
+                yield f"data: {json.dumps({'status': 'No images to generate', 'progress': 100, 'complete': True})}\n\n"
+                return
+            
+            yield f"data: {json.dumps({'status': f'Found {len(scene_prompts)} scenes and {len(npc_prompts)} NPCs to prepare...', 'progress': 0})}\n\n"
+            
+            # Generate scene images
+            for node_id, prompt in scene_prompts:
+                current += 1
+                progress = (current / total) * 100
+                
+                yield f"data: {json.dumps({'status': f'Generating scene: {node_id}...', 'progress': progress})}\n\n"
+                
+                # This will skip if already cached (based on prompt hash)
+                result = generate_scene(node_id, prompt)
+                
+                if result:
+                    logger.info(f"Scene ready for {node_id}: {result}")
+                else:
+                    logger.warning(f"Failed to generate scene for {node_id}")
+            
+            # Generate NPC portraits
+            for npc_id, npc_name, prompt in npc_prompts:
+                current += 1
+                progress = (current / total) * 100
+                
+                yield f"data: {json.dumps({'status': f'Generating portrait: {npc_name}...', 'progress': progress})}\n\n"
+                
+                # This will skip if already cached
+                result = generate_npc_portrait(npc_name, prompt)
+                
+                if result:
+                    logger.info(f"Portrait ready for {npc_name}: {result}")
+                else:
+                    logger.warning(f"Failed to generate portrait for {npc_name}")
+            
+            yield f"data: {json.dumps({'status': 'All assets ready!', 'progress': 100, 'complete': True})}\n\n"
+            
+        except Exception as e:
+            logger.error(f"Error preparing campaign: {e}")
+            import traceback
+            traceback.print_exc()
+            yield f"data: {json.dumps({'error': str(e)})}\n\n"
+
+    return Response(
+        generate_progress(),
+        mimetype='text/event-stream',
+        headers={
+            'Cache-Control': 'no-cache',
+            'X-Accel-Buffering': 'no'
+        }
+    )
 
 
 @app.route('/game')
@@ -258,10 +524,50 @@ def game():
         return redirect(url_for('index'))
 
     game_data = active_games[session_id]
-    dm_engine = game_data['dm_engine']
 
-    # Enter the current checkpoint to get initial state
-    checkpoint_info = dm_engine.enter_checkpoint()
+    # Handle both engine versions
+    if game_data.get('engine_version') == 'v2':
+        # ===== NEW ENGINE =====
+        state_manager = game_data['state_manager']
+        node = state_manager.get_current_node()
+
+        # Get scene image (should be cached from preparation step)
+        scene_image = None
+        if node.description.image_prompt and node.description.image_prompt.scene:
+            # generate_scene will return cached image if it exists
+            scene_image = generate_scene(node.node_id, node.description.image_prompt.scene)
+
+        # Build checkpoint info from node
+        checkpoint_info = {
+            'narration': node.description.long or node.description.short,
+            'location': node.name,
+            'checkpoint_id': node.node_id,
+            'choices': [],  # New engine doesn't use choices
+            'npcs': [
+                {
+                    'name': state_manager.npcs.get(npc_presence.npc_id).name,
+                    'role': npc_presence.role
+                }
+                for npc_presence in node.npcs_present
+                if state_manager.npcs.get(npc_presence.npc_id)
+            ],
+            'scene_image': scene_image,
+            'dm_portrait': get_dm_portrait(),
+            'display_mode': 'scene'
+        }
+
+        # Get character
+        character = state_manager.game_state.character
+
+    else:
+        # ===== OLD ENGINE =====
+        dm_engine = game_data['dm_engine']
+
+        # Enter the current checkpoint to get initial state
+        checkpoint_info = dm_engine.enter_checkpoint()
+
+        # Get character
+        character = game_data['game_state'].character
 
     # Generate TTS for initial narration (with error handling)
     audio_url = None
@@ -288,7 +594,6 @@ def game():
     checkpoint_info['subtitle_chunks'] = subtitle_chunks
 
     # Convert character to dict for JSON serialization in template
-    character = game_data['game_state'].character
     character_dict = character.to_dict() if hasattr(character, 'to_dict') else character
 
     return render_template(
@@ -440,17 +745,56 @@ def game_custom_action():
         return jsonify({'error': 'No active game session'}), 400
 
     try:
-        dm_engine = active_games[session_id]['dm_engine']
+        game_data = active_games[session_id]
         data = request.get_json()
         action = data.get('action', '')
 
         if not action:
             return jsonify({'error': 'No action provided'}), 400
 
-        result = dm_engine.process_custom_action(action)
+        # Handle both engine versions
+        if game_data.get('engine_version') == 'v2':
+            # ===== NEW ENGINE =====
+            dm_engine = game_data['dm_engine']  # NewDMEngine
+            state_manager = game_data['state_manager']
+            dm_response = dm_engine.process_input(action)
 
+            # Resolve portrait to actual image URL
+            portrait_url = None
+            if dm_response.portrait_type == 'dm':
+                portrait_url = get_dm_portrait()
+            elif dm_response.portrait_type == 'npc':
+                # Look up NPC and get/generate portrait
+                npc = state_manager.npcs.get(dm_response.speaker)
+                if npc and npc.appearance and npc.appearance.portrait_prompt:
+                    # generate_npc_portrait will return cached image if exists
+                    portrait_url = generate_npc_portrait(npc.name, npc.appearance.portrait_prompt)
+                if not portrait_url:
+                    portrait_url = get_dm_portrait()  # Fallback
+            elif dm_response.portrait_type == 'scene':
+                # Get scene image for current node
+                node = state_manager.get_current_node()
+                if node and node.description.image_prompt and node.description.image_prompt.scene:
+                    portrait_url = generate_scene(node.node_id, node.description.image_prompt.scene)
+
+            # Convert DMResponse to dict for JSON
+            result = {
+                'narration': dm_response.narration,
+                'speaker': dm_response.speaker,
+                'npc_name': None if dm_response.speaker == 'dm' else dm_response.speaker,
+                'display_mode': dm_response.portrait_type,
+                'npc_portrait': portrait_url if dm_response.portrait_type == 'npc' else None,
+                'dm_portrait': portrait_url if dm_response.portrait_type == 'dm' else None,
+                'scene_image': portrait_url if dm_response.portrait_type == 'scene' else None,
+            }
+
+        else:
+            # ===== OLD ENGINE =====
+            dm_engine = game_data['dm_engine']  # Old DMEngine
+            result = dm_engine.process_custom_action(action)
+
+        # Generate TTS (same for both engines)
         if result.get('narration'):
-            # Use new function that returns both audio and text chunks for subtitle sync
             tts_result = text_to_speech_with_chunks(result['narration'])
             result['audio'] = tts_result['audio']
             result['subtitle_chunks'] = tts_result['chunks']
@@ -459,6 +803,8 @@ def game_custom_action():
 
     except Exception as e:
         logger.error(f"Error processing custom action: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 
@@ -489,20 +835,59 @@ def game_voice_action():
 
         # Process as custom action
         game_data = active_games[session_id]
-        dm_engine = game_data['dm_engine']
 
-        result = dm_engine.process_custom_action(transcription)
-        result['transcription'] = transcription
+        # Handle both engine versions
+        if game_data.get('engine_version') == 'v2':
+            # ===== NEW ENGINE =====
+            dm_engine = game_data['dm_engine']  # NewDMEngine
+            state_manager = game_data['state_manager']
+            dm_response = dm_engine.process_input(transcription)
 
-        # Generate TTS
+            # Resolve portrait to actual image URL
+            portrait_url = None
+            if dm_response.portrait_type == 'dm':
+                portrait_url = get_dm_portrait()
+            elif dm_response.portrait_type == 'npc':
+                # Look up NPC and get/generate portrait
+                npc = state_manager.npcs.get(dm_response.speaker)
+                if npc and npc.appearance and npc.appearance.portrait_prompt:
+                    portrait_url = generate_npc_portrait(npc.name, npc.appearance.portrait_prompt)
+                if not portrait_url:
+                    portrait_url = get_dm_portrait()  # Fallback
+            elif dm_response.portrait_type == 'scene':
+                node = state_manager.get_current_node()
+                if node and node.description.image_prompt and node.description.image_prompt.scene:
+                    portrait_url = generate_scene(node.node_id, node.description.image_prompt.scene)
+
+            # Convert DMResponse to dict for JSON
+            result = {
+                'narration': dm_response.narration,
+                'speaker': dm_response.speaker,
+                'npc_name': None if dm_response.speaker == 'dm' else dm_response.speaker,
+                'display_mode': dm_response.portrait_type,
+                'npc_portrait': portrait_url if dm_response.portrait_type == 'npc' else None,
+                'dm_portrait': portrait_url if dm_response.portrait_type == 'dm' else None,
+                'transcription': transcription
+            }
+
+        else:
+            # ===== OLD ENGINE =====
+            dm_engine = game_data['dm_engine']  # Old DMEngine
+            result = dm_engine.process_custom_action(transcription)
+            result['transcription'] = transcription
+
+        # Generate TTS (same for both engines)
         if result.get('narration'):
-            audio_file = text_to_speech(result['narration'])
-            if audio_file:
-                result['audio'] = audio_file if audio_file else None
+            tts_result = text_to_speech_with_chunks(result['narration'])
+            result['audio'] = tts_result['audio']
+            result['subtitle_chunks'] = tts_result['chunks']
 
         return jsonify(result)
+
     except Exception as e:
         logger.error(f"Voice input error: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
     finally:
         # Clean up temp file
@@ -622,42 +1007,93 @@ def game_character():
 
     try:
         game_data = active_games[session_id]
-        character = game_data['game_state'].character
-
-        # Get full character data if available
         char_data = game_data.get('character_data', {})
 
-        # Format for frontend
-        return jsonify({
-            'name': character.name,
-            'race': getattr(character, 'race', char_data.get('race', 'Human')),
-            'char_class': character.char_class,
-            'level': getattr(character, 'level', 1),
-            'experience': getattr(character, 'experience', 0),
-            'hp': {
-                'current': getattr(character, 'hp', 10),
-                'max': getattr(character, 'max_hp', 10)
-            },
-            'armor_class': getattr(character, 'armor_class', char_data.get('armor_class', 10)),
-            'speed': 30,
-            'ability_scores': {
-                'str': getattr(character, 'strength', char_data.get('strength', 10)),
-                'dex': getattr(character, 'dexterity', char_data.get('dexterity', 10)),
-                'con': getattr(character, 'constitution', char_data.get('constitution', 10)),
-                'int': getattr(character, 'intelligence', char_data.get('intelligence', 10)),
-                'wis': getattr(character, 'wisdom', char_data.get('wisdom', 10)),
-                'cha': getattr(character, 'charisma', char_data.get('charisma', 10))
-            },
-            'proficiency_bonus': 2,
-            'inventory': char_data.get('inventory', []),
-            'gold': {
-                'gp': getattr(character, 'gold', char_data.get('gold', 0)),
-                'total_in_gold': getattr(character, 'gold', char_data.get('gold', 0))
-            },
-            'conditions': [],
-            'skill_proficiencies': char_data.get('skill_proficiencies', []),
-            'background': char_data.get('background', '')
-        })
+        if game_data.get('engine_version') == 'v2':
+            # ===== NEW ENGINE =====
+            state_manager = game_data['state_manager']
+            character = state_manager.game_state.character
+
+            # Map new Character schema to response format
+            return jsonify({
+                'name': character.name,
+                'race': character.race,
+                'char_class': character.char_class,
+                'level': character.level,
+                'experience': character.experience,
+                'hp': {
+                    'current': character.hp.current,
+                    'max': character.hp.max
+                },
+                'armor_class': character.armor_class,
+                'speed': character.speed,
+                'ability_scores': {
+                    'str': character.ability_scores.str,
+                    'dex': character.ability_scores.dex,
+                    'con': character.ability_scores.con,
+                    'int': character.ability_scores.int,
+                    'wis': character.ability_scores.wis,
+                    'cha': character.ability_scores.cha
+                },
+                'proficiency_bonus': character.proficiency_bonus,
+                'inventory': [
+                    {
+                        'name': item.name,
+                        'quantity': item.quantity,
+                        'weight': item.weight,
+                        'description': item.description
+                    }
+                    for item in character.inventory
+                ],
+                'gold': {
+                    'gp': character.currency.gp,
+                    'total_in_gold': (
+                        character.currency.pp * 10 +
+                        character.currency.gp +
+                        character.currency.ep * 0.5 +
+                        character.currency.sp * 0.1 +
+                        character.currency.cp * 0.01
+                    )
+                },
+                'conditions': character.conditions,
+                'skill_proficiencies': character.proficiencies.skills,
+                'background': character.background
+            })
+        else:
+            # ===== OLD ENGINE (backward compatibility) =====
+            character = game_data['game_state'].character
+
+            # Format for frontend
+            return jsonify({
+                'name': character.name,
+                'race': getattr(character, 'race', char_data.get('race', 'Human')),
+                'char_class': character.char_class,
+                'level': getattr(character, 'level', 1),
+                'experience': getattr(character, 'experience', 0),
+                'hp': {
+                    'current': getattr(character, 'hp', 10),
+                    'max': getattr(character, 'max_hp', 10)
+                },
+                'armor_class': getattr(character, 'armor_class', char_data.get('armor_class', 10)),
+                'speed': 30,
+                'ability_scores': {
+                    'str': getattr(character, 'strength', char_data.get('strength', 10)),
+                    'dex': getattr(character, 'dexterity', char_data.get('dexterity', 10)),
+                    'con': getattr(character, 'constitution', char_data.get('constitution', 10)),
+                    'int': getattr(character, 'intelligence', char_data.get('intelligence', 10)),
+                    'wis': getattr(character, 'wisdom', char_data.get('wisdom', 10)),
+                    'cha': getattr(character, 'charisma', char_data.get('charisma', 10))
+                },
+                'proficiency_bonus': 2,
+                'inventory': char_data.get('inventory', []),
+                'gold': {
+                    'gp': getattr(character, 'gold', char_data.get('gold', 0)),
+                    'total_in_gold': getattr(character, 'gold', char_data.get('gold', 0))
+                },
+                'conditions': [],
+                'skill_proficiencies': char_data.get('skill_proficiencies', []),
+                'background': char_data.get('background', '')
+            })
 
     except Exception as e:
         logger.error(f"Error getting character data: {e}")

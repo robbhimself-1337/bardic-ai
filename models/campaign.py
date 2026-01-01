@@ -288,31 +288,87 @@ class Campaign:
     @classmethod
     def list_available_campaigns(cls) -> List[Dict[str, str]]:
         """
-        List all available campaign templates.
-        Returns list of dicts with id, title, description.
+        List all available campaigns from both old and new formats.
+        
+        Scans:
+        - data/campaigns/templates/*.json (old format templates)
+        - data/campaigns/*/campaign.json (new format directories)
+        - data/campaigns/*.json (old format root level)
+        
+        Returns list of dicts with id, title, description, format.
         """
-        templates_dir = "data/campaigns/templates"
         campaigns = []
+        campaigns_dir = "data/campaigns"
+        templates_dir = "data/campaigns/templates"
 
-        if not os.path.exists(templates_dir):
-            return campaigns
+        # 1. Scan templates directory (old format)
+        if os.path.exists(templates_dir):
+            for filename in os.listdir(templates_dir):
+                if filename.endswith('.json'):
+                    filepath = os.path.join(templates_dir, filename)
+                    try:
+                        with open(filepath, 'r') as f:
+                            data = json.load(f)
+                            campaigns.append({
+                                "id": data.get("id", ""),
+                                "title": data.get("title", ""),
+                                "description": data.get("description", ""),
+                                "category": data.get("category", "short"),
+                                "estimated_duration": data.get("estimated_duration", "4-6 hours"),
+                                "difficulty": data.get("difficulty", "intermediate"),
+                                "format": "old"
+                            })
+                    except Exception:
+                        continue
 
-        for filename in os.listdir(templates_dir):
-            if filename.endswith('.json'):
-                filepath = os.path.join(templates_dir, filename)
-                try:
-                    with open(filepath, 'r') as f:
-                        data = json.load(f)
-                        campaigns.append({
-                            "id": data.get("id", ""),
-                            "title": data.get("title", ""),
-                            "description": data.get("description", ""),
-                            "category": data.get("category", "short"),
-                            "estimated_duration": data.get("estimated_duration", "4-6 hours"),
-                            "difficulty": data.get("difficulty", "intermediate")
-                        })
-                except Exception:
+        # 2. Scan for new format campaigns (directories with campaign.json)
+        if os.path.exists(campaigns_dir):
+            for item in os.listdir(campaigns_dir):
+                item_path = os.path.join(campaigns_dir, item)
+                campaign_json = os.path.join(item_path, "campaign.json")
+                
+                # Skip non-directories and special folders
+                if not os.path.isdir(item_path) or item in ['templates', 'saves']:
                     continue
+                    
+                if os.path.exists(campaign_json):
+                    try:
+                        with open(campaign_json, 'r') as f:
+                            data = json.load(f)
+                            campaigns.append({
+                                "id": data.get("campaign_id", item),
+                                "title": data.get("title", item),
+                                "description": data.get("description", ""),
+                                "category": data.get("category", "short"),
+                                "estimated_duration": data.get("estimated_duration", "4-6 hours"),
+                                "difficulty": data.get("difficulty", "intermediate"),
+                                "format": "new"
+                            })
+                    except Exception:
+                        continue
+
+        # 3. Scan root campaigns directory for .json files (old format, not in templates)
+        if os.path.exists(campaigns_dir):
+            for filename in os.listdir(campaigns_dir):
+                if filename.endswith('.json'):
+                    filepath = os.path.join(campaigns_dir, filename)
+                    try:
+                        with open(filepath, 'r') as f:
+                            data = json.load(f)
+                            campaign_id = data.get("id", "")
+                            # Don't add duplicates
+                            if not any(c["id"] == campaign_id for c in campaigns):
+                                campaigns.append({
+                                    "id": campaign_id,
+                                    "title": data.get("title", ""),
+                                    "description": data.get("description", ""),
+                                    "category": data.get("category", "short"),
+                                    "estimated_duration": data.get("estimated_duration", "4-6 hours"),
+                                    "difficulty": data.get("difficulty", "intermediate"),
+                                    "format": "old"
+                                })
+                    except Exception:
+                        continue
 
         return campaigns
 

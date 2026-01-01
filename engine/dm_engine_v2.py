@@ -176,14 +176,53 @@ class NewDMEngine:
         if any(kw in input_lower for kw in combat_keywords):
             return PlayerIntentType.COMBAT
         
-        # System keywords
-        system_keywords = ['save', 'load', 'inventory', 'character', 'stats', 'help']
-        if any(kw in input_lower for kw in system_keywords):
+        # Check if player is addressing an NPC (greeting, talking to) - BEFORE system check
+        node = self.state_manager.get_current_node()
+        if node:
+            for npc_presence in node.npcs_present:
+                npc = self.state_manager.npcs.get(npc_presence.npc_id)
+                if npc:
+                    # Check full name or first name
+                    npc_name_lower = npc.name.lower()
+                    first_name = npc_name_lower.split()[0]
+                    if npc_name_lower in input_lower or first_name in input_lower:
+                        # Player mentioned an NPC by name - treat as dialogue
+                        return PlayerIntentType.DIALOGUE
+        
+        # System keywords - be more specific to avoid false positives
+        # These should be standalone commands, not conversational phrases
+        system_phrases = [
+            'save game', 'save progress', 'load game', 'show inventory', 
+            'my inventory', 'check inventory', 'character sheet', 'my stats',
+            'show stats', 'show help', 'help me', 'what can i do'
+        ]
+        # Also match single-word commands when they're the entire input
+        system_single_words = ['save', 'load', 'inventory', 'stats', 'help']
+        
+        if any(phrase in input_lower for phrase in system_phrases):
+            return PlayerIntentType.SYSTEM
+        if input_lower.strip() in system_single_words:
             return PlayerIntentType.SYSTEM
         
         # Default: if there's a current speaker, assume dialogue
         if self.state_manager.game_state.conversation.current_speaker:
             return PlayerIntentType.DIALOGUE
+        
+        # If NPCs are present and input looks conversational, treat as dialogue
+        # This handles cases like "Can I help?" when talking to NPCs
+        if node and node.npcs_present:
+            # Check if this looks like speech/conversation rather than physical action
+            action_verbs = [
+                'look', 'search', 'examine', 'inspect', 'check', 'open', 'close',
+                'take', 'grab', 'pick up', 'drop', 'throw', 'push', 'pull',
+                'climb', 'jump', 'run', 'walk', 'sneak', 'hide', 'wait',
+                'sit', 'stand', 'lie', 'crouch', 'drink', 'eat', 'use'
+            ]
+            # If input doesn't start with an action verb, it's probably speech
+            first_word = input_lower.split()[0] if input_lower.split() else ""
+            if first_word not in action_verbs:
+                # Conversational input with NPCs present = dialogue
+                return PlayerIntentType.DIALOGUE
         
         # Otherwise, it's a general action
         return PlayerIntentType.ACTION
@@ -207,14 +246,24 @@ class NewDMEngine:
                     return exit_data.target_node
         
         elif intent_type == PlayerIntentType.DIALOGUE:
-            # Check NPCs present
+            # Check NPCs present - first try to match by name
             for npc_presence in node.npcs_present:
                 npc = self.state_manager.npcs.get(npc_presence.npc_id)
-                if npc and npc.name.lower() in input_lower:
-                    return npc_presence.npc_id
+                if npc:
+                    # Check full name or first name
+                    npc_name_lower = npc.name.lower()
+                    first_name = npc_name_lower.split()[0]
+                    if npc_name_lower in input_lower or first_name in input_lower:
+                        return npc_presence.npc_id
             
-            # Default to current speaker
-            return self.state_manager.game_state.conversation.current_speaker
+            # If no name mentioned, check for current speaker
+            current = self.state_manager.game_state.conversation.current_speaker
+            if current:
+                return current
+            
+            # Otherwise, default to first NPC present (usually the primary one)
+            if node.npcs_present:
+                return node.npcs_present[0].npc_id
         
         return None
     
@@ -290,23 +339,35 @@ class NewDMEngine:
     
     def _build_dialogue_instructions(self, intent: PlayerIntent, current_speaker: Optional[str]) -> List[str]:
         """Build instructions for dialogue responses."""
-        instructions = ["INSTRUCTION: The player is speaking in character."]
+        instructions = ["INSTRUCTION: The player is speaking to an NPC."]
         
-        if current_speaker:
-            npc = self.state_manager.npcs.get(current_speaker)
-            if npc:
-                instructions.append(f"Respond as {npc.name}.")
+        # Determine which NPC to respond as
+        target_npc = None
+        if intent.target:
+            target_npc = self.state_manager.npcs.get(intent.target)
+        elif current_speaker:
+            target_npc = self.state_manager.npcs.get(current_speaker)
+        
+        if target_npc:
+            instructions.append(f"Respond as [{target_npc.name}] (use this exact tag at the start).")
+            instructions.append(f"Stay in character as {target_npc.name}.")
+            
+            # Add personality guidance
+            if target_npc.personality.traits:
+                instructions.append(f"Personality: {', '.join(target_npc.personality.traits)}")
+            if target_npc.voice.style:
+                instructions.append(f"Voice style: {target_npc.voice.style}")
                 
-                # Add relevant knowledge if topic seems related
-                for topic_id, knowledge in npc.knowledge.items():
-                    if knowledge.knows and not knowledge.shared:
-                        # Check if player might be asking about this
-                        if any(word in intent.cleaned_input.lower() 
-                               for word in topic_id.split('_')):
-                            instructions.append(
-                                f"The player might be asking about {topic_id}. "
-                                f"{npc.name} knows: {knowledge.information[:100]}..."
-                            )
+            # Add relevant knowledge if topic seems related
+            for topic_id, knowledge in target_npc.knowledge.items():
+                if knowledge.knows and not knowledge.shared:
+                    # Check if player might be asking about this
+                    if any(word in intent.cleaned_input.lower() 
+                           for word in topic_id.split('_')):
+                        instructions.append(
+                            f"The player might be asking about {topic_id}. "
+                            f"{target_npc.name} knows: {knowledge.information[:100]}..."
+                        )
         else:
             instructions.append("No active conversation. Have an NPC present approach or use [DM] narration.")
         

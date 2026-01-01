@@ -1,0 +1,182 @@
+{
+  "encounters": {
+    "goblin_scout": {
+      "encounter_id": "goblin_scout",
+      "name": "Goblin Scout Ambush",
+      "description": "A pair of goblin scouts lurk at the forest edge, watching for intruders to their territory.",
+
+      "difficulty": "easy",
+
+      "enemies": [
+        {
+          "enemy_id": "scout_1",
+          "monster_id": "goblin",
+          "name": "Goblin Scout",
+          "count": 1,
+          "hp_modifier": 0,
+          "custom_equipment": ["shortbow", "scimitar", "leather_armor"]
+        },
+        {
+          "enemy_id": "scout_2",
+          "monster_id": "goblin",
+          "name": "Goblin Scout",
+          "count": 1,
+          "hp_modifier": 0,
+          "custom_equipment": ["shortbow", "scimitar", "leather_armor"]
+        }
+      ],
+
+      "environment": {
+        "description": "The forest edge provides both cover and concealment. Dense undergrowth and tree trunks can be used as partial cover. The goblins have the advantage of knowing the terrain.",
+        "terrain": "difficult",
+        "lighting": "dim",
+        "cover_available": true,
+        "special_features": ["dense undergrowth (difficult terrain)", "large tree trunks (half cover)", "low-hanging branches (may obstruct ranged attacks)"]
+      },
+
+      "surprise_player_dc": 13,
+      "surprise_enemy_dc": 12,
+
+      "intro_narration": "A sharp whistle cuts through the forest air - a warning signal! Two small figures dart from behind trees, their yellow eyes gleaming with malice. Goblins! They raise crude shortbows, cackling in their harsh tongue. 'Pinkskin come to forest! We stick you good!' one shrieks. They clearly weren't expecting armed resistance, but they're too committed to their ambush to back down now.",
+
+      "victory_narration": "The last goblin falls with a pathetic whimper, its companions already fleeing or lying still. You catch your breath, heart pounding. These were just scouts - if the intelligence you've gathered is correct, many more goblins await deeper in the forest. But you've proven you can handle them in a fight. You search the bodies and find a crude map scratched on bark, showing a trail marked with goblin symbols leading deeper into Mosswood.",
+
+      "defeat_narration": "Darkness closes in as goblin arrows find their marks. The last thing you hear is their cruel laughter and the sound of reinforcements coming through the brush. You've failed, and the children's fate is sealed...",
+
+      "flee_narration": "You break away from the fight, crashing through the undergrowth as goblin arrows whistle past your ears. Behind you, the goblins hoot and holler, but they don't pursue far from their post. You've escaped, but you've also alerted them to your presence. The element of surprise is lost, and you'll need to be more careful going forward.",
+
+      "rewards": {
+        "xp": 100,
+        "gold": "1d6 sp",
+        "items": ["goblin_map_fragment", "crude_shortbow", "goblin_ears_trophy"],
+        "sets_flags": ["fought_goblins", "alerted_goblin_scouts"]
+      },
+
+      "enemy_tactics": "Goblins prefer to stay at range, using their shortbows from behind cover. They use their Nimble Escape feature to Disengage and reposition after shooting. If cornered or if an enemy closes to melee, they'll reluctantly draw their scimitars but look for any opportunity to break away. They focus fire on whoever looks weakest or most wounded.",
+
+      "morale_break": 0.5
+    },
+
+    "goblin_ambush_revenge": {
+      "encounter_id": "goblin_ambush_revenge",
+      "name": "Goblin Revenge Party",
+      "description": "A group of angry goblins seeks revenge for their fallen scouts.",
+
+      "difficulty": "medium",
+
+      "enemies": [
+        {
+          "enemy_id": "warrior_1",
+          "monster_id": "goblin",
+          "name": "Goblin Warrior",
+          "count": 3,
+          "hp_modifier": 2,
+          "custom_equipment": ["scimitar", "javelin", "leather_armor", "shield"]
+        },
+        {
+          "enemy_id": "leader",
+          "monster_id": "goblin",
+          "name": "Goblin Leader",
+          "count": 1,
+          "hp_modifier": 5,
+          "custom_equipment": ["scimitar", "shortbow", "chain_shirt"]
+        }
+      ],
+
+      "environment": {
+        "description": "This fight occurs deeper in the forest where the goblins have prepared an ambush site. Crude spike traps are hidden in the undergrowth, and the goblins know exactly where they are.",
+        "terrain": "hazardous",
+        "lighting": "dim",
+        "cover_available": true,
+        "special_features": ["hidden spike traps (DC 13 Perception to spot, DC 12 Dex save or 1d6 piercing damage)", "prepared positions (goblins have advantage on first attack)", "escape routes known to goblins"]
+      },
+
+      "surprise_player_dc": 15,
+      "surprise_enemy_dc": 10,
+
+      "intro_narration": "You hear angry goblin chatter ahead, growing louder. Suddenly, a harsh voice shouts in broken Common: 'You kill our kin! Now you die!' Four goblins burst from concealment - three warriors and what appears to be their leader, distinguished by a crude feathered headdress. They've been tracking you, and now they want blood.",
+
+      "victory_narration": "The goblin leader falls last, defiance in his eyes to the end. The other goblins scatter into the forest without their leader's presence to bolster them. You've broken their morale and proven yourself a serious threat. The path ahead is clearer, though you know more dangers surely await.",
+
+      "defeat_narration": "The goblins overwhelm you with superior numbers and cunning tactics. As consciousness fades, you realize you've underestimated these creatures. The children will not be saved this day...",
+
+      "flee_narration": "You manage to break away from the ambush, though not without injury. The goblins pursue for a time, their angry shrieks echoing through the forest, but eventually give up the chase. You'll need to find a safe place to rest and tend your wounds before continuing.",
+
+      "rewards": {
+        "xp": 200,
+        "gold": "2d6 sp + 1d4 gp",
+        "items": ["goblin_leader_headdress", "better_map_fragment", "healing_potion"],
+        "sets_flags": ["defeated_goblin_revenge_party", "goblins_know_player_dangerous"]
+      },
+
+      "enemy_tactics": "The leader commands the warriors, using tactical positioning. Warriors try to flank and use their javelins before closing to melee. The leader hangs back, shooting arrows and shouting commands. If the leader falls, the warriors' morale breaks immediately. Goblins try to maneuver enemies into the hidden spike traps.",
+
+      "morale_break": 0.25
+    },
+
+    "cave_entrance_guards": {
+      "encounter_id": "cave_entrance_guards",
+      "name": "Cave Entrance Guards",
+      "description": "Goblins standing watch at the entrance to their lair, the last obstacle before you can begin the rescue.",
+
+      "difficulty": "medium",
+
+      "enemies": [
+        {
+          "enemy_id": "guard_1",
+          "monster_id": "goblin",
+          "name": "Goblin Guard",
+          "count": 2,
+          "hp_modifier": 3,
+          "custom_equipment": ["spear", "shield", "leather_armor"]
+        },
+        {
+          "enemy_id": "archer",
+          "monster_id": "goblin",
+          "name": "Goblin Archer",
+          "count": 1,
+          "hp_modifier": 0,
+          "custom_equipment": ["shortbow", "dagger"]
+        },
+        {
+          "enemy_id": "worg",
+          "monster_id": "worg",
+          "name": "Guard Worg",
+          "count": 1,
+          "hp_modifier": 0,
+          "custom_equipment": []
+        }
+      ],
+
+      "environment": {
+        "description": "The cave entrance is behind a waterfall as Tobias described. Rocky terrain surrounds the entrance, and the constant spray from the waterfall creates a misty, slippery environment. The goblins have fortified the entrance with crude barricades.",
+        "terrain": "difficult",
+        "lighting": "dim",
+        "cover_available": true,
+        "special_features": ["slippery rocks (DC 10 Acrobatics or move at half speed)", "waterfall spray (disadvantage on Perception checks relying on hearing)", "crude barricades (half cover for goblins)", "narrow cave entrance (only one creature at a time can enter)"]
+      },
+
+      "surprise_player_dc": 14,
+      "surprise_enemy_dc": 12,
+
+      "intro_narration": "Through the mist of the waterfall, you spot the cave entrance Tobias described. But it's not unguarded. Two goblin spearmen flank the entrance behind crude wooden barricades, while an archer perches on a rock above. Worst of all, a massive worg - a evil wolf-like creature - lounges at the cave mouth, its intelligent eyes scanning the forest. The guards haven't spotted you yet, but the worg's nose is twitching. You have moments to decide your approach.",
+
+      "victory_narration": "The last guard falls, and the worg lies still, its threat ended. The cave entrance is yours. From within, you can hear faint sounds - voices, movement, the crying of children. This is it. The rescue mission truly begins now. You step through the waterfall's spray and into the darkness beyond.",
+
+      "defeat_narration": "The worg's jaws close around you as goblin spears find their marks. You fought valiantly, but the entrance was too well defended. As darkness takes you, your last thought is of the children you've failed to save...",
+
+      "flee_narration": "You retreat from the well-defended entrance, the worg's howls alerting the entire cave system to your presence. You'll need a new plan - perhaps a stealth approach, or finding another entrance, or returning better prepared. The direct assault has failed.",
+
+      "rewards": {
+        "xp": 300,
+        "gold": "3d6 sp",
+        "items": ["worg_pelt", "goblin_guard_insignia", "cave_entrance_key"],
+        "sets_flags": ["defeated_cave_guards", "cave_entrance_cleared", "alerted_cave_goblins"]
+      },
+
+      "enemy_tactics": "The guards blow a horn to alert the cave when combat starts. The worg charges the strongest-looking enemy while guards support with spears from behind barricades. The archer focuses on spellcasters or anyone trying to flank. They fight to the death - fleeing means abandoning their lair and chieftain's wrath. The narrow entrance means you can't overwhelm them with numbers.",
+
+      "morale_break": 0.0
+    }
+  }
+}

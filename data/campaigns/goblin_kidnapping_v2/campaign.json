@@ -1,0 +1,55 @@
+{
+  "campaign_id": "goblin_kidnapping_v2",
+  "title": "The Goblin Kidnapping",
+  "description": "A mysterious series of kidnappings plagues the town of Sandpoint. Goblins have been snatching travelers from the roads, and now even local children have gone missing. The trail leads to the dangerous Thistletop caves. Can you rescue the captives before it's too late?",
+  "author": "Bardic AI",
+  "version": "2.0",
+
+  "recommended_level_min": 1,
+  "recommended_level_max": 3,
+  "estimated_duration": "2-3 sessions",
+
+  "setting": {
+    "world": "Golarion",
+    "region": "Varisia",
+    "starting_location": "Sandpoint - Rusty Dragon Tavern"
+  },
+
+  "chapters": [
+    {
+      "chapter_id": "chapter_1",
+      "title": "A Desperate Plea",
+      "summary": "You arrive at the Rusty Dragon Tavern in Sandpoint to find the town gripped by fear. Innkeeper Ameiko Kaijitsu begs for your help - children have been taken by goblins. You must gather information, prepare supplies, and locate the goblin hideout before more innocents are lost.",
+      "chapter_number": 1,
+      "nodes": [
+        "rusty_dragon_main",
+        "rusty_dragon_bar",
+        "town_square",
+        "guard_post",
+        "tobias_cottage_exterior",
+        "tobias_cottage_interior",
+        "forest_edge"
+      ],
+      "starting_node": "rusty_dragon_main",
+      "completion_conditions": {
+        "required_flags": [
+          "has_quest",
+          "knows_cave_location"
+        ],
+        "recommended_flags": [
+          "has_supplies",
+          "knows_forest_dangers",
+          "talked_to_marcus"
+        ],
+        "required_quests_complete": []
+      },
+      "intro_narration": "The road to Sandpoint winds through rolling farmland and pine forests. As you crest the final hill, the coastal town spreads before you - a cluster of buildings nestled between the bay and the forest's edge. But something is wrong. The streets are quiet, shutters are drawn, and worried faces peer from windows. The cheerful warmth you expected from the famous Rusty Dragon Tavern feels muted, replaced by an atmosphere of fear and suspicion.",
+      "outro_narration": "With Old Man Tobias's directions clutched in hand and the weight of the town's hopes on your shoulders, you turn toward the forest. The cave entrance lies somewhere in those dark woods, and time is running out for the captives. The real adventure is about to begin."
+    }
+  ],
+
+  "npcs_file": "npcs.json",
+  "encounters_file": "encounters.json",
+  "items_file": "items.json",
+  "nodes_file": "chapter_1_nodes.json"
+}

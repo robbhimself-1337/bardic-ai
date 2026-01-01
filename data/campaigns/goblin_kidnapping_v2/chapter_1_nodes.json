@@ -1,0 +1,755 @@
+{
+  "nodes": {
+    "rusty_dragon_main": {
+      "node_id": "rusty_dragon_main",
+      "name": "Rusty Dragon Tavern - Main Hall",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "The warm main hall of Sandpoint's most famous tavern",
+        "long": "The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices. The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake, now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.",
+        "image_prompt": {
+          "scene": "Medieval fantasy tavern interior, wooden tables and chairs, large fireplace, carved dragon decoration on wall, worried patrons, warm lighting from candles and fire, half-elf woman innkeeper",
+          "style": "fantasy, detailed, atmospheric, D&D art style, warm colors",
+          "negative": "modern, bright, cheerful, crowded"
+        }
+      },
+
+      "npcs_present": [
+        {
+          "npc_id": "ameiko",
+          "role": "quest_giver",
+          "required": true,
+          "topics": ["kidnappings", "victims", "goblins", "reward", "old_man_tobias"],
+          "initial_disposition_modifier": 10
+        }
+      ],
+
+      "items_available": [],
+      "items_findable": [],
+
+      "significant_actions": {
+        "accept_quest": {
+          "action_id": "accept_quest",
+          "trigger_description": "Player agrees to help rescue the kidnapped children",
+          "requires_flags": [],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["has_quest", "knows_about_kidnapping", "talked_to_ameiko"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": "rescue_children",
+          "completes_objective": null,
+          "updates_relationships": {
+            "ameiko": {"disposition": 20, "trust": 15}
+          },
+          "grants_xp": 25,
+          "success_prompt": "Ameiko's eyes fill with tears of gratitude as you accept the quest. She grabs your hands and thanks you profusely, her voice breaking with emotion. The other patrons look at you with newfound hope.",
+          "failure_prompt": null
+        },
+        "learn_about_tobias": {
+          "action_id": "learn_about_tobias",
+          "trigger_description": "Player asks Ameiko about where to find information",
+          "requires_flags": ["has_quest"],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["knows_tobias_location"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": "rescue_children.find_information",
+          "updates_relationships": {},
+          "grants_xp": 10,
+          "success_prompt": "Ameiko tells you about Old Man Tobias who lives north of town and witnessed the kidnapping.",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [],
+
+      "exits": {
+        "to_bar": {
+          "target_node": "rusty_dragon_bar",
+          "description": "Head to the bar to purchase supplies",
+          "direction": "interior",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You move toward the polished wooden bar where bottles and supplies are neatly arranged."
+        },
+        "to_town_square": {
+          "target_node": "town_square",
+          "description": "Leave the tavern and head into town",
+          "direction": "outside",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": {
+            "condition": "!has_quest",
+            "warning_npc": "ameiko",
+            "warning_prompt": "Ameiko calls out - Please, won't you help us? Those children need a hero!"
+          },
+          "transition_prompt": "You push through the heavy oak door and step out into the streets of Sandpoint."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["crackling fireplace", "hushed worried conversations", "clinking dishes", "nervous footsteps"],
+        "smells": ["wood smoke", "curry and spices", "ale", "anxiety"],
+        "mood": "worried but hopeful"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "As you enter the Rusty Dragon, all eyes turn toward you - the stranger who might be their salvation. Ameiko approaches immediately, wringing her hands. 'Please,' she says, 'I don't know if you've heard, but children have been taken. Goblins. We need help desperately. Will you listen?'",
+        "auto_approach_npc": "ameiko",
+        "trigger_encounter": null,
+        "set_flags": ["entered_rusty_dragon"]
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You return to the Rusty Dragon. Ameiko looks up hopefully as you enter.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "rusty_dragon_bar": {
+      "node_id": "rusty_dragon_bar",
+      "name": "Rusty Dragon Tavern - Bar",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "The well-stocked bar area of the tavern",
+        "long": "The polished wooden bar gleams in the firelight, lined with bottles of spirits and ale. Behind it, shelves hold not just drinks but also travel supplies - rope, torches, dried rations. Ameiko keeps these on hand for adventurers and travelers passing through. A small chalkboard lists prices, and a lockbox sits ready for transactions. The smell of dried meat and preserved goods mingles with the aroma of alcohol.",
+        "image_prompt": {
+          "scene": "Fantasy tavern bar, polished wood, bottles of ale and wine, adventuring supplies on shelves, torches, rope, rations, warm lighting",
+          "style": "fantasy, detailed, merchant shop, D&D art style",
+          "negative": "modern, empty, dark"
+        }
+      },
+
+      "npcs_present": [
+        {
+          "npc_id": "ameiko",
+          "role": "merchant",
+          "required": false,
+          "topics": ["supplies", "prices"],
+          "initial_disposition_modifier": 0
+        }
+      ],
+
+      "items_available": [
+        {
+          "item_id": "rations",
+          "cost": "5 sp",
+          "quantity": 20
+        },
+        {
+          "item_id": "torch",
+          "cost": "1 cp",
+          "quantity": 30
+        },
+        {
+          "item_id": "rope_50ft",
+          "cost": "1 gp",
+          "quantity": 5
+        },
+        {
+          "item_id": "waterskin",
+          "cost": "2 sp",
+          "quantity": 10
+        },
+        {
+          "item_id": "bedroll",
+          "cost": "1 gp",
+          "quantity": 5
+        },
+        {
+          "item_id": "healing_potion",
+          "cost": "50 gp",
+          "quantity": 2
+        }
+      ],
+
+      "items_findable": [],
+
+      "significant_actions": {
+        "buy_supplies": {
+          "action_id": "buy_supplies",
+          "trigger_description": "Player purchases rations, torches, or rope",
+          "requires_flags": [],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["has_supplies"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": null,
+          "updates_relationships": {
+            "ameiko": {"disposition": 5, "trust": 5}
+          },
+          "grants_xp": 10,
+          "success_prompt": "Ameiko packages your supplies carefully. 'Be safe out there,' she says quietly.",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [],
+
+      "exits": {
+        "to_main_hall": {
+          "target_node": "rusty_dragon_main",
+          "description": "Return to the main hall",
+          "direction": "interior",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You step back into the main hall of the tavern."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["bottles clinking", "coins counting", "items being wrapped"],
+        "smells": ["dried herbs", "leather", "wood oil"],
+        "mood": "businesslike"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "You approach the bar. Ameiko nods toward the supplies. 'Help yourself to whatever you need. I can give you a fair price - or a discount if you're heading out to help those children.'",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "The bar is stocked with travel supplies, ready for purchase.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "town_square": {
+      "node_id": "town_square",
+      "name": "Sandpoint Town Square",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "The central square of Sandpoint, unusually quiet",
+        "long": "Sandpoint's town square is normally a bustling hub of activity, but today it feels hollow. A few merchants tend their stalls with lackluster energy, and mothers keep their children close. The old stone well at the center stands silent - no children playing around it as there usually would be. To the north, you can see the guard post. To the south, the Rusty Dragon's sign creaks in the wind. East leads toward residential areas, and west toward the docks. The atmosphere is tense, watchful.",
+        "image_prompt": {
+          "scene": "Medieval fantasy town square, cobblestone streets, merchant stalls, old stone well, nervous townsfolk, cloudy sky, tense atmosphere",
+          "style": "fantasy, detailed, outdoor scene, D&D art style, overcast lighting",
+          "negative": "modern, cheerful, crowded, sunny"
+        }
+      },
+
+      "npcs_present": [],
+
+      "items_available": [],
+      "items_findable": [],
+
+      "significant_actions": {},
+
+      "encounters": [],
+
+      "exits": {
+        "to_rusty_dragon": {
+          "target_node": "rusty_dragon_main",
+          "description": "Return to the Rusty Dragon Tavern",
+          "direction": "south",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You head south toward the familiar warmth of the Rusty Dragon."
+        },
+        "to_guard_post": {
+          "target_node": "guard_post",
+          "description": "Head north to the guard post",
+          "direction": "north",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You walk north through the quiet streets toward the guard post."
+        },
+        "to_tobias_cottage": {
+          "target_node": "tobias_cottage_exterior",
+          "description": "Head north out of town toward Old Man Tobias's cottage",
+          "direction": "north",
+          "always_available": true,
+          "requires_flags": ["knows_tobias_location"],
+          "requires_items": [],
+          "blocked_message": "You're not sure where to go next. Perhaps you should gather more information first.",
+          "soft_gate": {
+            "condition": "!has_supplies",
+            "warning_npc": null,
+            "warning_prompt": "The DM warns: You're heading into the wilderness without supplies. Are you sure you want to proceed unprepared?"
+          },
+          "transition_prompt": "You leave the town behind, following the road north toward the forest edge where Tobias's cottage stands."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["nervous murmuring", "wind through empty streets", "distant hammering", "creaking signs"],
+        "smells": ["sea breeze", "baked bread", "fear"],
+        "mood": "tense and fearful"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "The town square stretches before you, eerily quiet for midday. You can feel the fear hanging over Sandpoint like a shroud. The guard post is visible to the north, and you can return to the Rusty Dragon to the south.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You stand in the town square once more, considering your next move.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "guard_post": {
+      "node_id": "guard_post",
+      "name": "Sandpoint Guard Post",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "A fortified stone building serving as headquarters for the town guard",
+        "long": "The guard post is a sturdy stone structure with narrow windows and a heavy oak door. Guards in chainmail stand at attention outside, though their eyes betray exhaustion and worry. Inside, you can see Captain Marcus Thorne bent over a map table, his scarred face illuminated by candlelight. Weapon racks line the walls, and a notice board shows recent reports - many concerning missing persons. The atmosphere is professional but strained, like a bowstring pulled too tight.",
+        "image_prompt": {
+          "scene": "Medieval fantasy guard post, stone building, guards in chainmail, weapon racks, map table, candles, notice board, tense atmosphere",
+          "style": "fantasy, detailed, military building, D&D art style, dim interior lighting",
+          "negative": "modern, relaxed, bright"
+        }
+      },
+
+      "npcs_present": [
+        {
+          "npc_id": "marcus",
+          "role": "information",
+          "required": false,
+          "topics": ["forest_dangers", "goblin_tactics", "guard_situation", "equipment_advice", "tobias_location"],
+          "initial_disposition_modifier": 0
+        }
+      ],
+
+      "items_available": [],
+      "items_findable": [],
+
+      "significant_actions": {
+        "talk_to_marcus": {
+          "action_id": "talk_to_marcus",
+          "trigger_description": "Player speaks with Captain Marcus about the situation",
+          "requires_flags": [],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["talked_to_marcus"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": null,
+          "updates_relationships": {
+            "marcus": {"disposition": 10, "trust": 10}
+          },
+          "grants_xp": 15,
+          "success_prompt": "Marcus sizes you up with a professional eye, then nods with grudging respect. 'You might actually have a chance. Let me tell you what you're up against.'",
+          "failure_prompt": null
+        },
+        "learn_forest_dangers": {
+          "action_id": "learn_forest_dangers",
+          "trigger_description": "Player asks Marcus about the forest and goblin tactics",
+          "requires_flags": ["talked_to_marcus"],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["knows_forest_dangers"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": "rescue_children.gather_intel",
+          "updates_relationships": {
+            "marcus": {"disposition": 5, "trust": 5}
+          },
+          "grants_xp": 20,
+          "success_prompt": "Marcus shares tactical information about fighting goblins and navigating Mosswood Forest. You feel better prepared for what's ahead.",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [],
+
+      "exits": {
+        "to_town_square": {
+          "target_node": "town_square",
+          "description": "Return to the town square",
+          "direction": "south",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You leave the guard post and head back toward the town square."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["guards marching", "armor clinking", "map rustling", "stern commands"],
+        "smells": ["oil and leather", "weapon polish", "smoke from candles"],
+        "mood": "disciplined but worried"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "You enter the guard post. Captain Marcus looks up from his maps, his scarred face expressionless. 'Adventurer,' he says, his voice gruff. 'Come to help, or just passing through?'",
+        "auto_approach_npc": "marcus",
+        "trigger_encounter": null,
+        "set_flags": ["entered_guard_post"]
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You return to the guard post. Marcus acknowledges you with a nod.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "tobias_cottage_exterior": {
+      "node_id": "tobias_cottage_exterior",
+      "name": "Old Man Tobias's Cottage - Exterior",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "A weathered cottage at the edge of the forest",
+        "long": "The cottage sits alone where the town's farmland gives way to the dark tree line of Mosswood Forest. It's a small, sturdy structure with a thatched roof and stone chimney from which thin smoke rises. The wood is weathered gray with age, but the cottage is well-maintained - shutters straight, garden tended, firewood stacked neatly under an overhang. An elderly man sits on the porch in a rocking chair, watching the forest with alert eyes. A ginger cat sleeps at his feet. Behind the cottage, the forest looms dark and uninviting.",
+        "image_prompt": {
+          "scene": "Small weathered cottage at forest edge, thatched roof, stone chimney with smoke, elderly man on porch, rocking chair, cat, dark forest behind, rural fantasy setting",
+          "style": "fantasy, detailed, atmospheric, D&D art style, late afternoon lighting",
+          "negative": "modern, urban, bright, cheerful"
+        }
+      },
+
+      "npcs_present": [
+        {
+          "npc_id": "tobias",
+          "role": "information",
+          "required": true,
+          "topics": ["goblin_sighting", "cave_location", "forest_lore"],
+          "initial_disposition_modifier": -10
+        }
+      ],
+
+      "items_available": [],
+      "items_findable": [],
+
+      "significant_actions": {
+        "approach_tobias": {
+          "action_id": "approach_tobias",
+          "trigger_description": "Player approaches the old hermit",
+          "requires_flags": [],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["met_tobias"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": null,
+          "updates_relationships": {
+            "tobias": {"disposition": 5, "trust": 0}
+          },
+          "grants_xp": 10,
+          "success_prompt": "The old man's eyes narrow as you approach. 'Who's there?' he calls out, his voice scratchy but alert. The cat's eyes open, watching you.",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [],
+
+      "exits": {
+        "to_cottage_interior": {
+          "target_node": "tobias_cottage_interior",
+          "description": "Accept Tobias's invitation to come inside",
+          "direction": "interior",
+          "always_available": false,
+          "requires_flags": ["met_tobias"],
+          "requires_items": [],
+          "blocked_message": "You should speak with Tobias first.",
+          "soft_gate": null,
+          "transition_prompt": "Tobias gestures toward his door. 'Come inside then. No sense talking out here in the cold.'"
+        },
+        "to_town_square": {
+          "target_node": "town_square",
+          "description": "Head back to town",
+          "direction": "south",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": {
+            "condition": "!knows_cave_location && met_tobias",
+            "warning_npc": "tobias",
+            "warning_prompt": "Tobias calls out: You leaving already? I thought you wanted to know about them goblins. Come back if you change your mind."
+          },
+          "transition_prompt": "You turn away from the cottage and head back toward town."
+        },
+        "to_forest_edge": {
+          "target_node": "forest_edge",
+          "description": "Head toward the forest",
+          "direction": "north",
+          "always_available": true,
+          "requires_flags": ["knows_cave_location"],
+          "requires_items": [],
+          "blocked_message": "You don't know where to go in the forest yet. You should talk to Tobias first.",
+          "soft_gate": {
+            "condition": "!has_supplies || !knows_forest_dangers",
+            "warning_npc": "tobias",
+            "warning_prompt": "Tobias shouts after you: Hold on there! You going into Mosswood unprepared? That's a good way to get yourself killed! Make sure you got supplies and know what you're facing!"
+          },
+          "transition_prompt": "With Tobias's directions in mind, you set off toward the dark tree line of Mosswood Forest."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["wind through trees", "rocking chair creaking", "distant bird calls", "cat purring"],
+        "smells": ["wood smoke", "pine", "earth", "old man's pipe tobacco"],
+        "mood": "isolated and watchful"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "You arrive at the cottage just as the sun begins to lower in the sky. The old man on the porch stands slowly, leaning on a walking stick. 'I seen you coming from a ways off,' he says, his voice carrying suspicion. 'You're from the town. What brings you all the way out here?'",
+        "auto_approach_npc": "tobias",
+        "trigger_encounter": null,
+        "set_flags": []
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You return to Tobias's cottage. The old man watches you approach from his porch.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "tobias_cottage_interior": {
+      "node_id": "tobias_cottage_interior",
+      "name": "Old Man Tobias's Cottage - Interior",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "The cozy, cluttered interior of a hermit's home",
+        "long": "The cottage interior is small but surprisingly cozy. A fire crackles in the stone fireplace, and herbs hang drying from the rafters. The main room serves as kitchen, workshop, and living area all at once. A simple table holds two chairs - one clearly unused in years. Shelves line the walls with jars of preserved food, woodworking tools, and small carved figures. On the mantle, a faded portrait shows a younger Tobias with a smiling woman - his late wife, presumably. Everything is neat despite the clutter. The cat has followed you in and watches from atop a shelf.",
+        "image_prompt": {
+          "scene": "Rustic cottage interior, stone fireplace with fire, herbs hanging from rafters, simple furniture, shelves with jars and tools, portrait on mantle, cozy lighting, cat on shelf",
+          "style": "fantasy, detailed, warm interior, D&D art style, firelight",
+          "negative": "modern, spacious, messy, dark"
+        }
+      },
+
+      "npcs_present": [
+        {
+          "npc_id": "tobias",
+          "role": "information",
+          "required": true,
+          "topics": ["cave_location", "goblin_sighting", "forest_lore", "wife"],
+          "initial_disposition_modifier": 10
+        }
+      ],
+
+      "items_available": [],
+      "items_findable": ["healing_herbs"],
+
+      "significant_actions": {
+        "earn_tobias_trust": {
+          "action_id": "earn_tobias_trust",
+          "trigger_description": "Player shows respect and listens to Tobias's story",
+          "requires_flags": ["met_tobias"],
+          "requires_items": [],
+          "requires_relationship": {"tobias": 10},
+          "sets_flags": ["tobias_trusts_player"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": null,
+          "updates_relationships": {
+            "tobias": {"disposition": 15, "trust": 20}
+          },
+          "grants_xp": 25,
+          "success_prompt": "Tobias's weathered face softens. 'You're different from most folk who come through here. You actually listen. Alright, I'll tell you what I saw.'",
+          "failure_prompt": null
+        },
+        "learn_cave_location": {
+          "action_id": "learn_cave_location",
+          "trigger_description": "Tobias shares the location of the goblin cave",
+          "requires_flags": ["tobias_trusts_player"],
+          "requires_items": [],
+          "requires_relationship": {"tobias": 5},
+          "sets_flags": ["knows_cave_location"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": "rescue_children.find_cave",
+          "updates_relationships": {
+            "tobias": {"disposition": 10, "trust": 10}
+          },
+          "grants_xp": 50,
+          "success_prompt": "Tobias provides detailed directions to the hidden cave behind the waterfall. 'You be careful now,' he says seriously. 'Those children need you alive, not dead.'",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [],
+
+      "exits": {
+        "to_cottage_exterior": {
+          "target_node": "tobias_cottage_exterior",
+          "description": "Step back outside",
+          "direction": "outside",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You thank Tobias and step back out into the fading daylight."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["fire crackling", "cat purring", "old clock ticking", "wind outside"],
+        "smells": ["wood smoke", "dried herbs", "old books", "tea"],
+        "mood": "warm and nostalgic"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "Tobias ushers you inside with surprising hospitality. 'Sit, sit,' he says, gesturing to a chair. 'Can I get you some tea? Not often I have company anymore.' His eyes drift to the portrait on the mantle for a moment before focusing back on you.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": ["inside_tobias_cottage"]
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You enter the cottage again. Tobias greets you warmly, clearly pleased to have company.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    },
+
+    "forest_edge": {
+      "node_id": "forest_edge",
+      "name": "Mosswood Forest - Edge",
+      "chapter_id": "chapter_1",
+
+      "description": {
+        "short": "The dark boundary where farmland meets the wild forest",
+        "long": "The transformation is stark and sudden. Behind you, the open fields and safety of civilization. Before you, the dense, shadowy expanse of Mosswood Forest. Ancient pines tower overhead, their canopy blocking much of the daylight. The undergrowth is thick with ferns and brambles. Animal trails wind into the darkness, and somewhere in the distance you hear the call of a crow. The air is cooler here, damp with the smell of moss and decay. This is the threshold - beyond here, the wilderness rules, and goblins wait in the shadows.",
+        "image_prompt": {
+          "scene": "Edge of dark fantasy forest, massive pine trees, dense undergrowth, shadowy depths, clearing with forest trail, ominous atmosphere, late afternoon light",
+          "style": "fantasy, detailed, atmospheric, D&D art style, dramatic lighting with shadows",
+          "negative": "bright, cheerful, safe, modern"
+        }
+      },
+
+      "npcs_present": [],
+
+      "items_available": [],
+      "items_findable": ["sturdy_branch", "forest_herbs"],
+
+      "significant_actions": {
+        "prepare_for_journey": {
+          "action_id": "prepare_for_journey",
+          "trigger_description": "Player checks equipment and prepares to enter the forest",
+          "requires_flags": ["knows_cave_location"],
+          "requires_items": [],
+          "requires_relationship": null,
+          "sets_flags": ["ready_for_chapter_2"],
+          "clears_flags": [],
+          "grants_items": [],
+          "removes_items": [],
+          "grants_quest": null,
+          "completes_objective": "rescue_children.reach_forest",
+          "updates_relationships": {},
+          "grants_xp": 30,
+          "success_prompt": "You take a deep breath, check your gear, and steel yourself for what lies ahead. The forest awaits, and somewhere in its depths, innocent lives hang in the balance.",
+          "failure_prompt": null
+        }
+      },
+
+      "encounters": [
+        {
+          "encounter_id": "goblin_scout",
+          "trigger": "random",
+          "chance": 0.4,
+          "once_only": true,
+          "requires_flags": []
+        }
+      ],
+
+      "exits": {
+        "to_tobias_cottage": {
+          "target_node": "tobias_cottage_exterior",
+          "description": "Return to Tobias's cottage",
+          "direction": "south",
+          "always_available": true,
+          "requires_flags": [],
+          "requires_items": [],
+          "blocked_message": "",
+          "soft_gate": null,
+          "transition_prompt": "You turn back toward the safety of Tobias's cottage, the forest at your back."
+        },
+        "into_forest": {
+          "target_node": "chapter_2_start",
+          "description": "Enter Mosswood Forest and begin your journey to the cave",
+          "direction": "north",
+          "always_available": false,
+          "requires_flags": ["knows_cave_location", "ready_for_chapter_2"],
+          "requires_items": [],
+          "blocked_message": "You should prepare yourself before venturing deeper into these woods.",
+          "soft_gate": {
+            "condition": "!has_supplies",
+            "warning_npc": null,
+            "warning_prompt": "The DM warns: Venturing into the forest without supplies is dangerous. Are you certain you want to continue?"
+          },
+          "transition_prompt": "With resolve in your heart, you step past the threshold and into the shadows of Mosswood Forest. Chapter 1 ends here - your true adventure is just beginning."
+        }
+      },
+
+      "ambient": {
+        "sounds": ["wind through pine needles", "distant crow calls", "rustling undergrowth", "snapping twigs", "ominous silence"],
+        "smells": ["pine", "moss", "damp earth", "decay", "wild animals"],
+        "mood": "ominous and foreboding"
+      },
+
+      "on_enter_first": {
+        "narration_prompt": "You stand at the edge of Mosswood Forest, where civilization ends and the wild begins. The darkness between the trees seems to watch you, waiting. This is your last chance to turn back, to prepare, to reconsider. But somewhere in that darkness, children are crying for rescue.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": ["reached_forest_edge"]
+      },
+
+      "on_enter_subsequent": {
+        "narration_prompt": "You return to the forest edge, the dark tree line looming before you.",
+        "auto_approach_npc": null,
+        "trigger_encounter": null,
+        "set_flags": []
+      }
+    }
+  }
+}

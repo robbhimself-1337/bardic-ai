@@ -1,0 +1,339 @@
+{
+  "npcs": {
+    "ameiko": {
+      "npc_id": "ameiko",
+      "name": "Ameiko Kaijitsu",
+      "race": "half-elf",
+      "gender": "female",
+      "age": "young",
+
+      "appearance": {
+        "short": "A beautiful half-elf woman with long black hair and striking amber eyes",
+        "detailed": "Ameiko is a beautiful half-elf in her mid-twenties with long raven-black hair that she keeps tied back while working. Her amber eyes show wisdom beyond her years, though they're currently shadowed with worry. She wears a practical work dress with an apron, but moves with the grace of someone who once lived a very different life. The stress of recent events shows in the tightness around her eyes and the way her hands tremble slightly when she thinks no one is watching.",
+        "portrait_prompt": "Beautiful half-elf woman, long black hair, amber eyes, worried expression, tavern keeper, fantasy portrait, D&D art style, detailed face, dramatic lighting",
+        "portrait_url": null
+      },
+
+      "personality": {
+        "traits": ["caring", "resilient", "protective", "determined"],
+        "ideals": ["Community - Everyone deserves safety and a warm meal", "Responsibility - As innkeeper, the town's wellbeing weighs on her"],
+        "bonds": ["The Rusty Dragon is her life's work", "The children of Sandpoint are like family to her"],
+        "flaws": ["Takes too much responsibility for things beyond her control", "Struggles to ask for help even when desperate"]
+      },
+
+      "voice": {
+        "style": "warm but strained",
+        "speech_patterns": ["speaks quickly when worried", "maternal and caring", "apologizes when asking for help"],
+        "catchphrases": ["Please, you have to help them", "The children... they're so young", "I can't just stand by and do nothing"],
+        "voice_sample_file": null
+      },
+
+      "role": "quest_giver",
+      "occupation": "Innkeeper and Owner of the Rusty Dragon Tavern",
+      "faction": null,
+
+      "knowledge": {
+        "kidnappings": {
+          "topic_id": "kidnappings",
+          "knows": true,
+          "information": "Three children were taken two nights ago - the Miller's twins, Emma and Ethan, and young Sarah from the general store. They were playing near the edge of town when witnesses saw small figures drag them into the woods. Travelers have also gone missing on the roads. The guards found goblin tracks but are too afraid to venture deep into the forest.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "victims": {
+          "topic_id": "victims",
+          "knows": true,
+          "information": "I know their parents. They're devastated. The Miller hasn't slept since his twins were taken. Sarah's mother sits at my bar every night, praying for any news. These are good people, hardworking families. Those children deserve better than this.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "goblins": {
+          "topic_id": "goblins",
+          "knows": true,
+          "information": "The guards found goblin tracks leading north into the Mosswood Forest. Old Man Tobias lives out that way in a cottage near the forest edge - he claims he saw them. He's a hermit, but he's no liar. If anyone knows where those creatures went, it's him.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "reward": {
+          "topic_id": "reward",
+          "knows": true,
+          "information": "I can't offer much, but the families have pooled together 100 gold pieces for whoever brings their children home safely. And you'll have free room and board here at the Dragon for life. More importantly, you'll have the gratitude of an entire town.",
+          "share_condition": "if_asked",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "old_man_tobias": {
+          "topic_id": "old_man_tobias",
+          "knows": true,
+          "information": "Tobias is a bit odd - he chose to live alone in that cottage years ago after his wife passed. But he's got sharp eyes and knows those woods better than anyone. His cottage is about a mile north of here, past the town square and guard post. You can't miss it - it's the only building out that way with smoke coming from the chimney.",
+          "share_condition": "if_asked",
+          "trust_threshold": 0,
+          "shared": false
+        }
+      },
+
+      "dialogue": {
+        "greeting_first": "Welcome to the Rusty Dragon! Oh, forgive me - I'm not myself today. Please, sit down. Can I get you something? Actually... you look like someone who might be able to help.",
+        "greeting_friendly": "Thank the gods you're here! Have you learned anything? Please tell me there's hope.",
+        "greeting_unfriendly": "Oh. It's you. I suppose you're still here.",
+        "greeting_hostile": "I don't have time for this. There are children out there who need saving.",
+
+        "farewell_friendly": "Be careful out there. Come back safely - and please, bring those children home.",
+        "farewell_neutral": "Safe travels. I pray you succeed.",
+        "farewell_unfriendly": "Just go.",
+
+        "custom": {
+          "quest_given": "Thank you! Thank you so much. I knew you would help. Find Old Man Tobias - he lives north of town. He saw where they went. Please hurry!",
+          "quest_accepted": "You're our only hope. Those families are counting on you. I'm counting on you.",
+          "quest_declined": "I... I understand. This is dangerous work. I just hope someone will help them soon."
+        }
+      },
+
+      "base_disposition": 50,
+      "relationship_config": {
+        "hostile": {"min_value": -100, "max_value": -50, "behavior_description": "Too distraught to deal with antagonism"},
+        "unfriendly": {"min_value": -50, "max_value": -20, "behavior_description": "Disappointed, curt responses"},
+        "neutral": {"min_value": -20, "max_value": 20, "behavior_description": "Professional but worried"},
+        "friendly": {"min_value": 20, "max_value": 60, "behavior_description": "Grateful and hopeful"},
+        "devoted": {"min_value": 60, "max_value": 100, "behavior_description": "Sees you as a hero and true friend"}
+      },
+
+      "trade": {
+        "can_trade": true,
+        "inventory": ["rations", "ale", "wine", "simple_meal"],
+        "buys_items": false,
+        "price_modifier": 0.9,
+        "friendly_discount": 0.2,
+        "hostile_markup": 0.0
+      },
+
+      "can_fight": false,
+      "monster_stat_block": null,
+      "is_essential": true
+    },
+
+    "marcus": {
+      "npc_id": "marcus",
+      "name": "Guard Captain Marcus Thorne",
+      "race": "human",
+      "gender": "male",
+      "age": "middle-aged",
+
+      "appearance": {
+        "short": "A grizzled human guard captain with a scarred face and tired eyes",
+        "detailed": "Marcus is a weathered man in his late forties, his face marked by old battle scars and new worry lines. His chainmail is well-maintained but shows years of use. Short-cropped gray hair and a neatly trimmed beard frame a face that's seen too much violence. His eyes are alert but hold a haunted quality - the look of a man who knows he's failed to protect those under his care. He stands straight despite his obvious exhaustion, a soldier to his core.",
+        "portrait_prompt": "Grizzled human guard captain, scarred face, gray hair and beard, chainmail armor, tired eyes, stern expression, fantasy portrait, D&D art style, detailed face, dramatic lighting",
+        "portrait_url": null
+      },
+
+      "personality": {
+        "traits": ["dutiful", "pragmatic", "haunted", "protective"],
+        "ideals": ["Duty - A guard's job is to protect the innocent", "Realism - Sometimes harsh truths must be faced"],
+        "bonds": ["His guards look to him for leadership", "The town's safety is his responsibility"],
+        "flaws": ["Guilt over the kidnappings weighs heavily", "Reluctant to send his men into danger without proper support"]
+      },
+
+      "voice": {
+        "style": "gruff",
+        "speech_patterns": ["military directness", "tactical thinking", "speaks in short sentences when stressed"],
+        "catchphrases": ["Those woods are a death trap", "I won't send my men to die", "We do what we can with what we have"],
+        "voice_sample_file": null
+      },
+
+      "role": "information",
+      "occupation": "Captain of the Sandpoint Guard",
+      "faction": "Sandpoint Town Guard",
+
+      "knowledge": {
+        "forest_dangers": {
+          "topic_id": "forest_dangers",
+          "knows": true,
+          "information": "Mosswood Forest is no joke. Dense undergrowth, poor visibility, and countless places for ambush. Goblins know those woods like the back of their hands. They'll hear you coming long before you see them. My advice? Move quietly, watch for traps, and don't travel alone. Goblins are cowards when faced with strength, but vicious in a pack.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "goblin_tactics": {
+          "topic_id": "goblin_tactics",
+          "knows": true,
+          "information": "Goblins fight dirty - ambushes, traps, hit and run attacks. They use their size to slip through spaces you can't fit. In a straight fight, they're weak, but they rarely fight fair. Fire scares them. So does a show of overwhelming force. If you can take out their leader or shaman, the rest will likely scatter.",
+          "share_condition": "if_asked",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "guard_situation": {
+          "topic_id": "guard_situation",
+          "knows": true,
+          "information": "I've got twelve men under my command. Half are barely trained militia. We can hold the town against raiders or handle a bar fight, but venturing into goblin territory? That's a suicide mission with the manpower I have. I sent two scouts three days ago. Neither came back. I won't lose more men without a real chance of success.",
+          "share_condition": "if_asked",
+          "trust_threshold": 10,
+          "shared": false
+        },
+        "equipment_advice": {
+          "topic_id": "equipment_advice",
+          "knows": true,
+          "information": "Stock up before you go. Rations, torches - those caves will be dark as a tomb. Rope can save your life. If you can afford it, grab a healing potion or two from the general store. Ameiko might give you a discount at the tavern if you're provisioning for a rescue mission.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "tobias_location": {
+          "topic_id": "tobias_location",
+          "knows": true,
+          "information": "Old Tobias? Lives in a cottage about a mile north, past the guard post. Hermit type, but he knows those woods. If he says he saw something, I believe him. Just... be patient with him. He's not used to company.",
+          "share_condition": "if_asked",
+          "trust_threshold": 0,
+          "shared": false
+        }
+      },
+
+      "dialogue": {
+        "greeting_first": "You're new here. Adventurer, by the look of you. Good timing - we could use the help. Name's Marcus Thorne, Captain of the Guard.",
+        "greeting_friendly": "Good to see you again. Ready to head out? I wish I could send men with you, but you understand.",
+        "greeting_unfriendly": "What do you want? I've got a town to protect.",
+        "greeting_hostile": "Get out of my sight.",
+
+        "farewell_friendly": "Watch your back out there. Those goblins are more dangerous than they look.",
+        "farewell_neutral": "Be careful.",
+        "farewell_unfriendly": "Don't waste my time again.",
+
+        "custom": {
+          "respect_earned": "You've got steel, I'll give you that. The town's lucky you showed up.",
+          "advice_given": "Listen, I've fought goblins before. Don't underestimate them just because they're small."
+        }
+      },
+
+      "base_disposition": 40,
+      "relationship_config": {
+        "hostile": {"min_value": -100, "max_value": -50, "behavior_description": "Dismissive and hostile"},
+        "unfriendly": {"min_value": -50, "max_value": -20, "behavior_description": "Curt and impatient"},
+        "neutral": {"min_value": -20, "max_value": 20, "behavior_description": "Professional, pragmatic"},
+        "friendly": {"min_value": 20, "max_value": 60, "behavior_description": "Respectful and helpful"},
+        "devoted": {"min_value": 60, "max_value": 100, "behavior_description": "Trusts you completely, shares tactical insights freely"}
+      },
+
+      "trade": {
+        "can_trade": false,
+        "inventory": [],
+        "buys_items": false,
+        "price_modifier": 1.0,
+        "friendly_discount": 0.0,
+        "hostile_markup": 0.0
+      },
+
+      "can_fight": true,
+      "monster_stat_block": "guard",
+      "is_essential": false
+    },
+
+    "tobias": {
+      "npc_id": "tobias",
+      "name": "Old Man Tobias Greenthorn",
+      "race": "human",
+      "gender": "male",
+      "age": "elderly",
+
+      "appearance": {
+        "short": "A frail elderly man with wild white hair and watchful eyes",
+        "detailed": "Tobias is a thin, wiry old man who looks like he might blow away in a strong wind, but his eyes are sharp and alert. His wild white hair and unkempt beard give him the appearance of a mad hermit, but his weathered hands are steady and his gaze is intelligent. He wears simple homespun clothing patched many times over. Despite living alone for years, he carries himself with quiet dignity. Age has bent his back but not broken his spirit.",
+        "portrait_prompt": "Elderly human hermit, wild white hair and beard, sharp watchful eyes, weathered face, simple clothing, cottage hermit, fantasy portrait, D&D art style, detailed face, dramatic lighting",
+        "portrait_url": null
+      },
+
+      "personality": {
+        "traits": ["observant", "reclusive", "kind-hearted beneath the gruff exterior", "lonely"],
+        "ideals": ["Solitude - People are complicated, nature is honest", "Memory - The past should not be forgotten"],
+        "bonds": ["His late wife's memory keeps him in this cottage", "Despite his isolation, he still cares about the town"],
+        "flaws": ["Suspicious of strangers at first", "Talks to himself and his cat", "Rambles when nervous"]
+      },
+
+      "voice": {
+        "style": "scratchy but warm",
+        "speech_patterns": ["rambles when comfortable", "suspicious questions at first", "softens quickly when treated with respect"],
+        "catchphrases": ["I seen things, I have", "Not many folk come out here anymore", "My Mabel, bless her soul, she always said..."],
+        "voice_sample_file": null
+      },
+
+      "role": "information",
+      "occupation": "Retired woodsman and hermit",
+      "faction": null,
+
+      "knowledge": {
+        "cave_location": {
+          "topic_id": "cave_location",
+          "knows": true,
+          "information": "I seen 'em, three nights back. Was out checking my traps when I heard the screaming - children's voices, gods help us. Followed quiet-like, keeping to the shadows. They went north into Mosswood, then east along the old game trail. There's a cave entrance hidden behind a waterfall, maybe two miles in. Big oak tree with a split trunk marks where you leave the trail. Can't miss it if you're looking. But you BE careful - there's more than just goblins in those woods.",
+          "share_condition": "if_asked",
+          "trust_threshold": 5,
+          "shared": false
+        },
+        "goblin_sighting": {
+          "topic_id": "goblin_sighting",
+          "knows": true,
+          "information": "I seen at least six of the little devils, maybe more. They was carrying bundles - burlap sacks, I think. The sounds... the crying... I'm an old man, but I wanted to help. But what could I do against a pack of goblins? I reported it to the guards next morning, but they haven't done nothing. Too scared, if you ask me.",
+          "share_condition": "always",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "forest_lore": {
+          "topic_id": "forest_lore",
+          "knows": true,
+          "information": "Lived here near thirty years. Used to be a woodsman in my younger days. Know every deer trail and creek in Mosswood. The forest ain't evil, but it ain't safe neither. Wolves, bears, the occasional troll if you go deep enough. And the goblins... they've been getting bolder. Used to be they'd only raid farms. Now they're taking people.",
+          "share_condition": "if_asked",
+          "trust_threshold": 0,
+          "shared": false
+        },
+        "wife": {
+          "topic_id": "wife",
+          "knows": true,
+          "information": "My Mabel passed eight years ago come winter. We built this cottage together, raised three children here before they went off to the cities. When she died, I couldn't bear to leave. Too many memories. Sometimes I still set a place for her at dinner... I know she's gone, but this was our home.",
+          "share_condition": "requires_trust",
+          "trust_threshold": 20,
+          "shared": false
+        }
+      },
+
+      "dialogue": {
+        "greeting_first": "Who's there? I don't get many visitors... State your business. I ain't buying nothing and I ain't interested in trouble.",
+        "greeting_friendly": "Ah, it's you again! Come in, come in. Don't mind the mess. Can I get you some tea?",
+        "greeting_unfriendly": "You again. What do you want this time?",
+        "greeting_hostile": "Get off my property!",
+
+        "farewell_friendly": "You be careful in those woods, you hear? And... thank you. For listening to an old man. For trying to save those children.",
+        "farewell_neutral": "Safe travels, then.",
+        "farewell_unfriendly": "About time you left.",
+
+        "custom": {
+          "warming_up": "I... I appreciate you taking time to talk. Not many folks do anymore. Maybe you're different.",
+          "information_shared": "There. That's all I know. I pray it helps you find them in time.",
+          "lonely": "It gets quiet out here. Sometimes I forget what it's like to have company."
+        }
+      },
+
+      "base_disposition": 30,
+      "relationship_config": {
+        "hostile": {"min_value": -100, "max_value": -50, "behavior_description": "Paranoid and defensive"},
+        "unfriendly": {"min_value": -50, "max_value": -20, "behavior_description": "Suspicious and curt"},
+        "neutral": {"min_value": -20, "max_value": 20, "behavior_description": "Cautious but willing to talk"},
+        "friendly": {"min_value": 20, "max_value": 60, "behavior_description": "Warm, rambles about the past, genuinely helpful"},
+        "devoted": {"min_value": 60, "max_value": 100, "behavior_description": "Treats you like family, offers shelter and wisdom freely"}
+      },
+
+      "trade": {
+        "can_trade": false,
+        "inventory": [],
+        "buys_items": false,
+        "price_modifier": 1.0,
+        "friendly_discount": 0.0,
+        "hostile_markup": 0.0
+      },
+
+      "can_fight": false,
+      "monster_stat_block": "commoner",
+      "is_essential": true
+    }
+  }
+}

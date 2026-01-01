@@ -499,6 +499,160 @@ def game_voice_action():
         os.unlink(tmp_path)
 
 
+@app.route('/game/roll_dice', methods=['POST'])
+def game_roll_dice():
+    """Execute a dice roll requested by the game (new UI component)."""
+    session_id = session.get('game_session_id')
+    if not session_id or session_id not in active_games:
+        return jsonify({'error': 'No active game session'}), 400
+
+    try:
+        data = request.get_json()
+        roll_type = data.get('type', 'ability_check')
+        skill_or_ability = data.get('skill') or data.get('ability', 'str')
+        dc = data.get('dc', 10)
+
+        # Get game data
+        game_data = active_games[session_id]
+        game_state = game_data['game_state']
+        character = game_state.character
+
+        # Import the new check engine
+        from engine import CheckEngine, SKILL_ABILITY_MAP
+        from engine.schemas.game_state import Character as EngineCharacter
+        from engine.schemas.game_state import AbilityScores, HitPoints, Proficiencies
+
+        # Convert old character format to new engine format
+        # TODO: Eventually migrate to using new engine's Character directly
+        engine_char = EngineCharacter(
+            name=character.name,
+            race=getattr(character, 'race', 'Human'),
+            char_class=character.char_class,
+            level=getattr(character, 'level', 1),
+            ability_scores=AbilityScores(
+                str=getattr(character, 'strength', 10),
+                dex=getattr(character, 'dexterity', 10),
+                con=getattr(character, 'constitution', 10),
+                int=getattr(character, 'intelligence', 10),
+                wis=getattr(character, 'wisdom', 10),
+                cha=getattr(character, 'charisma', 10)
+            ),
+            hp=HitPoints(
+                current=getattr(character, 'hp', 10),
+                max=getattr(character, 'max_hp', 10)
+            ),
+            proficiencies=Proficiencies(
+                skills=game_data.get('character_data', {}).get('skill_proficiencies', [])
+            )
+        )
+
+        # Create check engine with the character
+        check_engine = CheckEngine(engine_char)
+
+        # Execute the appropriate roll
+        result = None
+        if roll_type == 'ability_check' or roll_type == 'skill':
+            # Skill check
+            skill_name = skill_or_ability.lower().replace(' ', '-')
+            result = check_engine.skill_check(skill_name, dc)
+        elif roll_type == 'saving_throw' or roll_type == 'save':
+            # Saving throw
+            ability = skill_or_ability.lower()[:3]  # Get first 3 chars (str, dex, etc.)
+            result = check_engine.saving_throw(ability, dc)
+        elif roll_type == 'attack':
+            # Attack roll - for now just do a d20 roll
+            from engine import DiceRoller
+            roll = DiceRoller.roll('1d20')
+            result = type('obj', (object,), {
+                'success': roll.total >= dc,
+                'total': roll.total,
+                'roll': roll,
+                'modifier': 0,
+                'critical_success': roll.natural_20,
+                'critical_failure': roll.natural_1
+            })()
+        else:
+            # Default to ability check
+            result = check_engine.ability_check('str', dc)
+
+        # Format response for frontend
+        response = {
+            'success': True,
+            'type': roll_type,
+            'skill': skill_or_ability,
+            'ability': SKILL_ABILITY_MAP.get(skill_or_ability.lower().replace(' ', '-'), 'str') if roll_type in ['ability_check', 'skill'] else skill_or_ability,
+            'roll': result.roll.rolls[0] if result.roll.rolls else 10,
+            'modifier': result.modifier,
+            'total': result.total,
+            'dc': dc,
+            'success': result.success,
+            'critical': result.critical_success if hasattr(result, 'critical_success') else False,
+            'natural_20': result.roll.natural_20 if hasattr(result.roll, 'natural_20') else False,
+            'natural_1': result.roll.natural_1 if hasattr(result.roll, 'natural_1') else False
+        }
+
+        logger.info(f"Dice roll: {roll_type} - {skill_or_ability} = {result.total} vs DC {dc} ({'success' if result.success else 'failure'})")
+
+        return jsonify(response)
+
+    except Exception as e:
+        logger.error(f"Error rolling dice: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/game/character', methods=['GET'])
+def game_character():
+    """Get current character data for character sheet modal."""
+    session_id = session.get('game_session_id')
+    if not session_id or session_id not in active_games:
+        return jsonify({'error': 'No active game session'}), 400
+
+    try:
+        game_data = active_games[session_id]
+        character = game_data['game_state'].character
+
+        # Get full character data if available
+        char_data = game_data.get('character_data', {})
+
+        # Format for frontend
+        return jsonify({
+            'name': character.name,
+            'race': getattr(character, 'race', char_data.get('race', 'Human')),
+            'char_class': character.char_class,
+            'level': getattr(character, 'level', 1),
+            'experience': getattr(character, 'experience', 0),
+            'hp': {
+                'current': getattr(character, 'hp', 10),
+                'max': getattr(character, 'max_hp', 10)
+            },
+            'armor_class': getattr(character, 'armor_class', char_data.get('armor_class', 10)),
+            'speed': 30,
+            'ability_scores': {
+                'str': getattr(character, 'strength', char_data.get('strength', 10)),
+                'dex': getattr(character, 'dexterity', char_data.get('dexterity', 10)),
+                'con': getattr(character, 'constitution', char_data.get('constitution', 10)),
+                'int': getattr(character, 'intelligence', char_data.get('intelligence', 10)),
+                'wis': getattr(character, 'wisdom', char_data.get('wisdom', 10)),
+                'cha': getattr(character, 'charisma', char_data.get('charisma', 10))
+            },
+            'proficiency_bonus': 2,
+            'inventory': char_data.get('inventory', []),
+            'gold': {
+                'gp': getattr(character, 'gold', char_data.get('gold', 0)),
+                'total_in_gold': getattr(character, 'gold', char_data.get('gold', 0))
+            },
+            'conditions': [],
+            'skill_proficiencies': char_data.get('skill_proficiencies', []),
+            'background': char_data.get('background', '')
+        })
+
+    except Exception as e:
+        logger.error(f"Error getting character data: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/game/attack', methods=['POST'])
 def game_attack():
     """Attack an enemy in combat."""

@@ -409,6 +409,506 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
+
+        /* ===== NEW CINEMATIC UI COMPONENTS ===== */
+
+        /* Recording indicator - edge glow */
+        .game-container.recording {
+            box-shadow: inset 0 0 60px rgba(220, 20, 60, 0.4);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Recording indicator - floating mic */
+        .recording-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+            border-radius: 12px;
+            border: 2px solid #dc143c;
+            display: none;
+            z-index: 1000;
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        .recording-indicator.active {
+            display: block;
+        }
+
+        .recording-indicator .mic-icon {
+            color: #dc143c;
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .recording-indicator .waveform {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .recording-indicator .waveform span {
+            display: inline-block;
+            width: 3px;
+            height: 15px;
+            background: #dc143c;
+            margin: 0 2px;
+            animation: wave 1s infinite;
+        }
+
+        .recording-indicator .waveform span:nth-child(2) { animation-delay: 0.1s; }
+        .recording-indicator .waveform span:nth-child(3) { animation-delay: 0.2s; }
+        .recording-indicator .waveform span:nth-child(4) { animation-delay: 0.3s; }
+        .recording-indicator .waveform span:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 20, 60, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(220, 20, 60, 0.8); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        /* Roll prompt */
+        .roll-prompt {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 40px;
+            border-radius: 12px;
+            border: 3px solid #ffd700;
+            display: none;
+            z-index: 999;
+            text-align: center;
+            animation: pulse-subtle 2s infinite;
+        }
+
+        .roll-prompt.active {
+            display: block;
+        }
+
+        .roll-prompt .dice-icon {
+            font-size: 2em;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .roll-prompt .roll-type {
+            font-size: 1.2em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .roll-prompt .roll-instruction {
+            font-size: 0.9em;
+            color: #f0e6d2;
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* Dice roll animation overlay */
+        .dice-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .dice-overlay.active {
+            display: flex;
+        }
+
+        .dice-result-box {
+            background: rgba(20, 20, 20, 0.95);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            min-width: 400px;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+        }
+
+        .dice-result-box .roll-title {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .dice-result-box .dice-visual {
+            font-size: 5em;
+            margin: 20px 0;
+            animation: spin 0.5s ease-out;
+        }
+
+        .dice-result-box .roll-value {
+            font-size: 4em;
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+        }
+
+        .dice-result-box .roll-breakdown {
+            font-size: 1.2em;
+            color: #f0e6d2;
+            margin: 15px 0;
+        }
+
+        .dice-result-box .roll-total {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 20px 0;
+            border-top: 2px solid #8b7355;
+            border-bottom: 2px solid #8b7355;
+            padding: 15px 0;
+        }
+
+        .dice-result-box .roll-result {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px 30px;
+            border-radius: 8px;
+        }
+
+        .dice-result-box .roll-result.success {
+            color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .dice-result-box .roll-result.failure {
+            color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .dice-result-box .roll-result.critical {
+            animation: critical-flash 0.5s;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg) scale(0.5); opacity: 0; }
+            to { transform: rotate(720deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes critical-flash {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); box-shadow: 0 0 50px currentColor; }
+            50% { transform: scale(0.9); }
+            75% { transform: scale(1.1); }
+        }
+
+        /* Character sheet modal */
+        .character-sheet-modal {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            border-left: 3px solid #ffd700;
+            overflow-y: auto;
+            z-index: 1500;
+            transition: right 0.4s ease;
+            padding: 30px;
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .character-sheet-modal.active {
+            right: 0;
+        }
+
+        .character-sheet-modal .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #ffd700;
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .character-sheet-modal .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .character-sheet-modal h2 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .character-sheet-modal .character-name {
+            text-align: center;
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .character-sheet-modal .character-class {
+            text-align: center;
+            color: #c0b090;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .character-sheet-modal .stat-section {
+            background: rgba(139, 115, 85, 0.2);
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .character-sheet-modal .stat-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #8b7355;
+            padding-bottom: 8px;
+        }
+
+        .character-sheet-modal .hp-bar {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #8b7355;
+            border-radius: 5px;
+            height: 30px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .character-sheet-modal .hp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #88ff88);
+            transition: width 0.5s ease;
+        }
+
+        .character-sheet-modal .hp-bar-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .character-sheet-modal .ability-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .character-sheet-modal .ability-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .character-sheet-modal .ability-box .ability-name {
+            color: #c0b090;
+            font-size: 0.8em;
+            margin-bottom: 5px;
+        }
+
+        .character-sheet-modal .ability-box .ability-score {
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .character-sheet-modal .ability-box .ability-modifier {
+            color: #ffd700;
+            font-size: 1.2em;
+        }
+
+        .character-sheet-modal .inventory-list,
+        .character-sheet-modal .quest-list {
+            list-style: none;
+        }
+
+        .character-sheet-modal .inventory-list li,
+        .character-sheet-modal .quest-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #8b7355;
+            border-radius: 4px;
+        }
+
+        .character-sheet-modal .quest-list li.active {
+            border-left-color: #ffd700;
+        }
+
+        /* Combat HUD */
+        .combat-hud {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #dc143c;
+            border-radius: 12px;
+            padding: 15px;
+            min-width: 250px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .combat-hud.active {
+            display: block;
+        }
+
+        .combat-hud .combat-title {
+            color: #ffd700;
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #8b7355;
+            padding-bottom: 10px;
+        }
+
+        .combat-hud .combatant {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background: rgba(139, 115, 85, 0.2);
+            border-left: 3px solid #8b7355;
+        }
+
+        .combat-hud .combatant.current-turn {
+            border-left-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .combat-hud .combatant.current-turn::before {
+            content: "→ ";
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .combat-hud .combatant.dead {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        .combat-hud .combatant-name {
+            color: #f0e6d2;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .combat-hud .combatant-hp-bar {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #8b7355;
+            height: 15px;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .combat-hud .combatant-hp-fill {
+            height: 100%;
+            transition: width 0.5s ease, background 0.3s ease;
+        }
+
+        .combat-hud .combatant-hp-fill.high {
+            background: linear-gradient(90deg, #00ff00, #88ff88);
+        }
+
+        .combat-hud .combatant-hp-fill.medium {
+            background: linear-gradient(90deg, #ffaa00, #ffcc00);
+        }
+
+        .combat-hud .combatant-hp-fill.low {
+            background: linear-gradient(90deg, #ff0000, #ff6666);
+        }
+
+        /* Character sheet toggle button */
+        .char-sheet-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1400;
+            transition: all 0.3s;
+        }
+
+        .char-sheet-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .char-sheet-btn::before {
+            content: "⚔️";
+            font-size: 1.5em;
+        }
+
+        /* Keyboard hint overlay */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #8b7355;
+            font-size: 0.85em;
+            color: #c0b090;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            z-index: 900;
+        }
+
+        .keyboard-hint:hover {
+            opacity: 1;
+        }
+
+        .keyboard-hint .key {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #ffd700;
+            border-radius: 3px;
+            padding: 2px 6px;
+            margin: 0 3px;
+            font-family: monospace;
+            color: #ffd700;
+        }
     </style>
 </head>
 <body>
@@ -484,6 +984,158 @@
 
     <!-- Audio element for TTS -->
     <audio id="narratorAudio" controls></audio>
+
+    <!-- ===== NEW CINEMATIC UI COMPONENTS ===== -->
+
+    <!-- Recording Indicator (Push-to-Talk) -->
+    <div class="recording-indicator" id="recordingIndicator">
+        <span class="mic-icon">🎤</span>
+        <span>Recording</span>
+        <span class="waveform">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </div>
+
+    <!-- Roll Prompt (When dice roll is needed) -->
+    <div class="roll-prompt" id="rollPrompt">
+        <div class="dice-icon">🎲</div>
+        <div class="roll-type" id="rollType">PERCEPTION CHECK</div>
+        <div class="roll-instruction">Press <strong>[R]</strong> to roll</div>
+    </div>
+
+    <!-- Dice Roll Animation Overlay -->
+    <div class="dice-overlay" id="diceOverlay">
+        <div class="dice-result-box">
+            <div class="roll-title" id="diceRollTitle">PERCEPTION CHECK</div>
+            <div class="dice-visual" id="diceVisual">🎲</div>
+            <div class="roll-value" id="diceRollValue">15</div>
+            <div class="roll-breakdown" id="diceModifier">+ 3 (WIS)</div>
+            <div class="roll-total" id="diceTotal">18</div>
+            <div class="roll-breakdown">vs DC <span id="diceDC">15</span></div>
+            <div class="roll-result success" id="diceResult">✓ SUCCESS</div>
+        </div>
+    </div>
+
+    <!-- Character Sheet Modal -->
+    <div class="character-sheet-modal" id="characterSheet">
+        <button class="close-btn" onclick="toggleCharacterSheet()">&times;</button>
+        <h2>Character Sheet</h2>
+
+        <div class="character-name" id="sheetCharName">{{ character.name }}</div>
+        <div class="character-class" id="sheetCharClass">
+            Level {{ character.level or 1 }} {{ character.race }} {{ character.char_class }}
+        </div>
+
+        <!-- Core Stats -->
+        <div class="stat-section">
+            <h3>Core Stats</h3>
+            <div class="hp-bar">
+                <div class="hp-bar-fill" id="sheetHpFill" style="width: {{ (character.hp / character.max_hp * 100) if character.max_hp > 0 else 100 }}%;"></div>
+                <div class="hp-bar-text" id="sheetHpText">{{ character.hp }}/{{ character.max_hp }} HP</div>
+            </div>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between;">
+                <div><strong>AC:</strong> <span id="sheetAC">{{ character.armor_class or 10 }}</span></div>
+                <div><strong>Speed:</strong> <span id="sheetSpeed">{{ character.speed or 30 }}</span> ft</div>
+            </div>
+        </div>
+
+        <!-- Ability Scores -->
+        <div class="stat-section">
+            <h3>Ability Scores</h3>
+            <div class="ability-grid">
+                <div class="ability-box">
+                    <div class="ability-name">STR</div>
+                    <div class="ability-score" id="sheetStr">{{ character.ability_scores.str if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetStrMod">+0</div>
+                </div>
+                <div class="ability-box">
+                    <div class="ability-name">DEX</div>
+                    <div class="ability-score" id="sheetDex">{{ character.ability_scores.dex if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetDexMod">+0</div>
+                </div>
+                <div class="ability-box">
+                    <div class="ability-name">CON</div>
+                    <div class="ability-score" id="sheetCon">{{ character.ability_scores.con if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetConMod">+0</div>
+                </div>
+                <div class="ability-box">
+                    <div class="ability-name">INT</div>
+                    <div class="ability-score" id="sheetInt">{{ character.ability_scores.int if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetIntMod">+0</div>
+                </div>
+                <div class="ability-box">
+                    <div class="ability-name">WIS</div>
+                    <div class="ability-score" id="sheetWis">{{ character.ability_scores.wis if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetWisMod">+0</div>
+                </div>
+                <div class="ability-box">
+                    <div class="ability-name">CHA</div>
+                    <div class="ability-score" id="sheetCha">{{ character.ability_scores.cha if character.ability_scores else 10 }}</div>
+                    <div class="ability-modifier" id="sheetChaMod">+0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory -->
+        <div class="stat-section">
+            <h3>Inventory</h3>
+            <ul class="inventory-list" id="sheetInventory">
+                {% if character.inventory %}
+                    {% for item in character.inventory %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No items</li>
+                {% endif %}
+            </ul>
+            <div style="margin-top: 10px; color: #ffd700;">
+                <strong>Gold:</strong> <span id="sheetGold">{{ character.gold.gp if character.gold else 0 }}</span> gp
+            </div>
+        </div>
+
+        <!-- Active Quests -->
+        <div class="stat-section">
+            <h3>Active Quests</h3>
+            <ul class="quest-list" id="sheetQuests">
+                <li class="active">No active quests</li>
+            </ul>
+        </div>
+
+        <!-- Conditions -->
+        <div class="stat-section">
+            <h3>Conditions</h3>
+            <div id="sheetConditions" style="color: #c0b090;">
+                {% if character.conditions %}
+                    {{ character.conditions|join(', ') }}
+                {% else %}
+                    None
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Combat HUD -->
+    <div class="combat-hud" id="combatHud">
+        <div class="combat-title">⚔️ COMBAT - Round <span id="combatRound">1</span></div>
+        <div id="combatantList">
+            <!-- Combatants will be added dynamically -->
+        </div>
+    </div>
+
+    <!-- Character Sheet Toggle Button -->
+    <div class="char-sheet-btn" onclick="toggleCharacterSheet()" title="Character Sheet (C)"></div>
+
+    <!-- Keyboard Hints -->
+    <div class="keyboard-hint">
+        <span class="key">Space</span> Push-to-talk &nbsp;
+        <span class="key">R</span> Roll &nbsp;
+        <span class="key">C</span> Character &nbsp;
+        <span class="key">Esc</span> Close
+    </div>
 
     <script>
         let currentAudio = null;
@@ -1104,6 +1756,466 @@
             }
         }
 
+        // ============================================
+        // CINEMATIC UI COMPONENTS - NEW FUNCTIONALITY
+        // ============================================
+
+        // Push-to-Talk Voice Recording State
+        let isPushToTalkRecording = false;
+        let pushToTalkMediaRecorder = null;
+        let pushToTalkStream = null;
+        let spacebarPressed = false;
+
+        // Dice Roll System State
+        let pendingRoll = null;
+
+        // Character Sheet State
+        let isCharacterSheetOpen = false;
+
+        // Combat HUD State
+        let combatActive = false;
+
+        // ============================================
+        // PUSH-TO-TALK VOICE RECORDING (SPACEBAR)
+        // ============================================
+
+        function isTypingInInput() {
+            const activeElement = document.activeElement;
+            return activeElement && (
+                activeElement.tagName === 'INPUT' ||
+                activeElement.tagName === 'TEXTAREA' ||
+                activeElement.isContentEditable
+            );
+        }
+
+        async function startPushToTalkRecording() {
+            if (isPushToTalkRecording || isTypingInInput()) return;
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                pushToTalkStream = stream;
+                pushToTalkMediaRecorder = new MediaRecorder(stream);
+
+                const chunks = [];
+                pushToTalkMediaRecorder.ondataavailable = e => chunks.push(e.data);
+
+                pushToTalkMediaRecorder.onstop = async () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    await sendVoiceInput(blob);
+                    if (pushToTalkStream) {
+                        pushToTalkStream.getTracks().forEach(track => track.stop());
+                        pushToTalkStream = null;
+                    }
+                };
+
+                pushToTalkMediaRecorder.start();
+                isPushToTalkRecording = true;
+
+                // Show recording indicator
+                const indicator = document.getElementById('recordingIndicator');
+                const gameContainer = document.querySelector('.game-container');
+                indicator.style.display = 'flex';
+                gameContainer.classList.add('recording');
+
+            } catch (error) {
+                console.error('Microphone access denied:', error);
+                alert('Could not access microphone');
+            }
+        }
+
+        function stopPushToTalkRecording() {
+            if (!isPushToTalkRecording) return;
+
+            if (pushToTalkMediaRecorder && pushToTalkMediaRecorder.state !== 'inactive') {
+                pushToTalkMediaRecorder.stop();
+            }
+
+            isPushToTalkRecording = false;
+
+            // Hide recording indicator
+            const indicator = document.getElementById('recordingIndicator');
+            const gameContainer = document.querySelector('.game-container');
+            indicator.style.display = 'none';
+            gameContainer.classList.remove('recording');
+        }
+
+        // ============================================
+        // DICE ROLL SYSTEM
+        // ============================================
+
+        function promptForRoll(rollData) {
+            // rollData expected format:
+            // { type: "ability_check", skill: "Perception", ability: "wis", dc: 15 }
+            pendingRoll = rollData;
+
+            const rollPrompt = document.getElementById('rollPrompt');
+            const rollType = document.getElementById('rollType');
+
+            // Format the roll prompt text
+            let promptText = '';
+            if (rollData.type === 'ability_check') {
+                promptText = `${rollData.skill.toUpperCase()} CHECK`;
+            } else if (rollData.type === 'saving_throw') {
+                promptText = `${rollData.ability.toUpperCase()} SAVE`;
+            } else if (rollData.type === 'attack') {
+                promptText = 'ATTACK ROLL';
+            } else {
+                promptText = 'ROLL';
+            }
+
+            rollType.textContent = promptText;
+            rollPrompt.style.display = 'flex';
+        }
+
+        function hideRollPrompt() {
+            const rollPrompt = document.getElementById('rollPrompt');
+            rollPrompt.style.display = 'none';
+        }
+
+        async function executeRoll() {
+            if (!pendingRoll) return;
+
+            hideRollPrompt();
+
+            // Make request to backend to perform the roll
+            try {
+                const response = await fetch('/game/roll_dice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pendingRoll)
+                });
+
+                const result = await response.json();
+
+                // Show dice animation with result
+                await showDiceAnimation(result);
+
+                // Clear pending roll
+                pendingRoll = null;
+
+                // Update game state if backend returns new state
+                if (result.game_state) {
+                    updateGameUI(result.game_state);
+                }
+
+            } catch (error) {
+                console.error('Dice roll error:', error);
+                alert('Failed to roll dice');
+                pendingRoll = null;
+            }
+        }
+
+        function showDiceAnimation(result) {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('diceOverlay');
+                const title = document.getElementById('diceRollTitle');
+                const visual = document.getElementById('diceVisual');
+                const rollValue = document.getElementById('diceRollValue');
+                const modifier = document.getElementById('diceModifier');
+                const total = document.getElementById('diceTotal');
+                const dc = document.getElementById('diceDC');
+                const resultText = document.getElementById('diceResult');
+
+                // Set title
+                let titleText = '';
+                if (result.type === 'ability_check') {
+                    titleText = `${result.skill.toUpperCase()} CHECK`;
+                } else if (result.type === 'saving_throw') {
+                    titleText = `${result.ability.toUpperCase()} SAVE`;
+                } else if (result.type === 'attack') {
+                    titleText = 'ATTACK ROLL';
+                } else {
+                    titleText = 'ROLL';
+                }
+                title.textContent = titleText;
+
+                // Show overlay with spinning dice
+                overlay.style.display = 'flex';
+                visual.classList.add('spinning');
+
+                // After 1 second of spinning, show result
+                setTimeout(() => {
+                    visual.classList.remove('spinning');
+
+                    // Display roll details
+                    rollValue.textContent = result.roll || 10;
+
+                    if (result.modifier) {
+                        const sign = result.modifier >= 0 ? '+' : '';
+                        modifier.textContent = `${sign} ${result.modifier} (${result.ability ? result.ability.toUpperCase() : 'MOD'})`;
+                    } else {
+                        modifier.textContent = '';
+                    }
+
+                    total.textContent = result.total || result.roll;
+
+                    if (result.dc) {
+                        dc.textContent = result.dc;
+                    }
+
+                    // Show success/failure
+                    if (result.critical || result.natural_20) {
+                        resultText.textContent = '✨ CRITICAL SUCCESS!';
+                        resultText.className = 'roll-result critical';
+                        visual.classList.add('critical');
+                    } else if (result.natural_1) {
+                        resultText.textContent = '💀 CRITICAL FAILURE';
+                        resultText.className = 'roll-result critical-fail';
+                    } else if (result.success !== undefined) {
+                        if (result.success) {
+                            resultText.textContent = '✓ SUCCESS';
+                            resultText.className = 'roll-result success';
+                        } else {
+                            resultText.textContent = '✗ FAILURE';
+                            resultText.className = 'roll-result failure';
+                        }
+                    } else {
+                        resultText.textContent = '';
+                    }
+
+                    // Hide overlay after 3 seconds
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        visual.classList.remove('critical');
+                        resolve();
+                    }, 3000);
+                }, 1000);
+            });
+        }
+
+        // ============================================
+        // CHARACTER SHEET MODAL
+        // ============================================
+
+        function toggleCharacterSheet() {
+            const modal = document.getElementById('characterSheetModal');
+            isCharacterSheetOpen = !isCharacterSheetOpen;
+
+            if (isCharacterSheetOpen) {
+                modal.style.right = '0';
+            } else {
+                modal.style.right = '-450px';
+            }
+        }
+
+        function updateCharacterSheet(characterData) {
+            // Update character sheet with fresh data
+            // This would be called when receiving updates from backend
+
+            if (characterData.name) {
+                document.getElementById('charName').textContent = characterData.name;
+            }
+
+            if (characterData.race && characterData.char_class && characterData.level) {
+                document.getElementById('charSubtitle').textContent =
+                    `Level ${characterData.level} ${characterData.race} ${characterData.char_class}`;
+            }
+
+            // Update ability scores
+            if (characterData.ability_scores) {
+                const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+                abilities.forEach(ability => {
+                    const score = characterData.ability_scores[ability];
+                    const modifier = Math.floor((score - 10) / 2);
+                    const modText = modifier >= 0 ? `+${modifier}` : modifier;
+
+                    const elem = document.getElementById(`char${ability.toUpperCase()}`);
+                    if (elem) {
+                        elem.innerHTML = `<strong>${score}</strong><br><small>${modText}</small>`;
+                    }
+                });
+            }
+
+            // Update HP
+            if (characterData.hp) {
+                document.getElementById('charHPCurrent').textContent = characterData.hp.current;
+                document.getElementById('charHPMax').textContent = characterData.hp.max;
+
+                const hpBar = document.getElementById('charHPBar');
+                const hpPercent = (characterData.hp.current / characterData.hp.max * 100);
+                hpBar.style.width = hpPercent + '%';
+            }
+
+            // Update AC and Speed
+            if (characterData.armor_class) {
+                document.getElementById('charAC').textContent = characterData.armor_class;
+            }
+            if (characterData.speed) {
+                document.getElementById('charSpeed').textContent = `${characterData.speed} ft`;
+            }
+
+            // Update inventory count
+            if (characterData.inventory) {
+                document.getElementById('charInventoryCount').textContent = characterData.inventory.length;
+            }
+
+            // Update gold
+            if (characterData.gold) {
+                const total = characterData.gold.total_in_gold || characterData.gold.gp || 0;
+                document.getElementById('charGold').textContent = `${total} gp`;
+            }
+
+            // Update conditions
+            if (characterData.conditions && characterData.conditions.length > 0) {
+                const conditionsList = document.getElementById('charConditionsList');
+                conditionsList.innerHTML = characterData.conditions.map(c =>
+                    `<span class="condition-tag">${c}</span>`
+                ).join(' ');
+            }
+        }
+
+        // ============================================
+        // COMBAT HUD
+        // ============================================
+
+        function showCombatHUD(combatData) {
+            const hud = document.getElementById('combatHUD');
+            combatActive = true;
+            hud.style.display = 'block';
+            updateCombatHUD(combatData);
+        }
+
+        function hideCombatHUD() {
+            const hud = document.getElementById('combatHUD');
+            combatActive = false;
+            hud.style.display = 'none';
+        }
+
+        function updateCombatHUD(combatData) {
+            if (!combatData) return;
+
+            const roundNum = document.getElementById('combatRound');
+            const turnOrderList = document.getElementById('combatTurnOrder');
+
+            // Update round number
+            if (combatData.round !== undefined) {
+                roundNum.textContent = combatData.round;
+            }
+
+            // Update turn order
+            if (combatData.combatants && combatData.turn_order) {
+                turnOrderList.innerHTML = '';
+
+                combatData.turn_order.forEach((combatantId, index) => {
+                    const combatant = combatData.combatants[combatantId];
+                    if (!combatant) return;
+
+                    const isCurrent = index === combatData.current_turn_index;
+                    const item = document.createElement('div');
+                    item.className = `turn-item ${isCurrent ? 'active' : ''}`;
+
+                    const hpPercent = (combatant.hp_current / combatant.hp_max * 100);
+
+                    item.innerHTML = `
+                        <div class="combatant-name">${combatant.name}</div>
+                        <div class="combatant-hp">
+                            <div class="hp-bar">
+                                <div class="hp-fill" style="width: ${hpPercent}%"></div>
+                            </div>
+                            <div class="hp-text">${combatant.hp_current}/${combatant.hp_max}</div>
+                        </div>
+                    `;
+
+                    turnOrderList.appendChild(item);
+                });
+            }
+        }
+
+        // ============================================
+        // KEYBOARD CONTROLS
+        // ============================================
+
+        function setupKeyboardControls() {
+            // Spacebar - Push to talk
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !isTypingInInput() && !spacebarPressed) {
+                    e.preventDefault();
+                    spacebarPressed = true;
+                    startPushToTalkRecording();
+                }
+
+                // R key - Execute pending dice roll
+                if (e.code === 'KeyR' && !isTypingInInput() && pendingRoll) {
+                    e.preventDefault();
+                    executeRoll();
+                }
+
+                // C key - Toggle character sheet
+                if (e.code === 'KeyC' && !isTypingInInput()) {
+                    e.preventDefault();
+                    toggleCharacterSheet();
+                }
+
+                // Escape - Close character sheet or hide keyboard hints
+                if (e.code === 'Escape') {
+                    if (isCharacterSheetOpen) {
+                        toggleCharacterSheet();
+                    }
+                    const hints = document.getElementById('keyboardHints');
+                    if (hints.style.display === 'block') {
+                        hints.style.display = 'none';
+                    }
+                }
+
+                // ? key - Toggle keyboard hints
+                if (e.key === '?' && !isTypingInInput()) {
+                    const hints = document.getElementById('keyboardHints');
+                    hints.style.display = hints.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.code === 'Space' && spacebarPressed) {
+                    e.preventDefault();
+                    spacebarPressed = false;
+                    stopPushToTalkRecording();
+                }
+            });
+
+            // Prevent spacebar from scrolling the page
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !isTypingInInput()) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // ============================================
+        // BACKEND INTEGRATION HELPERS
+        // ============================================
+
+        // Enhanced updateGameUI to handle new response formats
+        const originalUpdateGameUI = updateGameUI;
+        updateGameUI = function(data) {
+            // Call original function
+            if (originalUpdateGameUI) {
+                originalUpdateGameUI(data);
+            }
+
+            // Handle awaiting_roll prompt
+            if (data.awaiting_roll) {
+                promptForRoll(data.awaiting_roll);
+            }
+
+            // Handle combat state
+            if (data.combat) {
+                if (data.combat.active) {
+                    showCombatHUD(data.combat);
+                } else {
+                    hideCombatHUD();
+                }
+            }
+
+            // Update character sheet if it's open
+            if (isCharacterSheetOpen && data.character) {
+                updateCharacterSheet(data.character);
+            }
+        };
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
         // Initialize display mode on page load
         window.addEventListener('load', function() {
             const displayMode = "{{ display_mode or 'scene' }}";
@@ -1121,6 +2233,21 @@
             }, 100);
 
             setDisplayMode(displayMode, initialData);
+
+            // Initialize keyboard controls
+            setupKeyboardControls();
+
+            // Initialize character sheet with data from template
+            {% if character %}
+            const characterData = {{ character | tojson }};
+            updateCharacterSheet(characterData);
+            {% endif %}
+
+            // Initialize combat HUD if in combat
+            {% if combat and combat.active %}
+            const combatData = {{ combat | tojson }};
+            showCombatHUD(combatData);
+            {% endif %}
 
             // Auto-play initial audio with synced subtitles if available
             {% if audio_url %}

@@ -218,6 +218,80 @@ Do not use asterisks or action descriptions, just speak."""
         self.current_npc = None
         return self.enter_checkpoint()
 
+    def detect_roll_needed(self, player_input: str, narration: str) -> Optional[dict]:
+        """
+        Detect if player action requires a dice roll.
+        Returns awaiting_roll dict if a roll is needed, None otherwise.
+        """
+        player_lower = player_input.lower()
+        narration_lower = narration.lower()
+
+        # Keywords that indicate rolls might be needed
+        roll_indicators = {
+            'perception': {'type': 'ability_check', 'skill': 'Perception', 'ability': 'wis'},
+            'investigate': {'type': 'ability_check', 'skill': 'Investigation', 'ability': 'int'},
+            'search': {'type': 'ability_check', 'skill': 'Perception', 'ability': 'wis'},
+            'look for': {'type': 'ability_check', 'skill': 'Perception', 'ability': 'wis'},
+            'stealth': {'type': 'ability_check', 'skill': 'Stealth', 'ability': 'dex'},
+            'sneak': {'type': 'ability_check', 'skill': 'Stealth', 'ability': 'dex'},
+            'hide': {'type': 'ability_check', 'skill': 'Stealth', 'ability': 'dex'},
+            'persuade': {'type': 'ability_check', 'skill': 'Persuasion', 'ability': 'cha'},
+            'convince': {'type': 'ability_check', 'skill': 'Persuasion', 'ability': 'cha'},
+            'deceive': {'type': 'ability_check', 'skill': 'Deception', 'ability': 'cha'},
+            'lie': {'type': 'ability_check', 'skill': 'Deception', 'ability': 'cha'},
+            'intimidate': {'type': 'ability_check', 'skill': 'Intimidation', 'ability': 'cha'},
+            'threaten': {'type': 'ability_check', 'skill': 'Intimidation', 'ability': 'cha'},
+            'athletics': {'type': 'ability_check', 'skill': 'Athletics', 'ability': 'str'},
+            'climb': {'type': 'ability_check', 'skill': 'Athletics', 'ability': 'str'},
+            'jump': {'type': 'ability_check', 'skill': 'Athletics', 'ability': 'str'},
+            'acrobatics': {'type': 'ability_check', 'skill': 'Acrobatics', 'ability': 'dex'},
+            'insight': {'type': 'ability_check', 'skill': 'Insight', 'ability': 'wis'},
+            'sleight of hand': {'type': 'ability_check', 'skill': 'Sleight of Hand', 'ability': 'dex'},
+            'pick': {'type': 'ability_check', 'skill': 'Sleight of Hand', 'ability': 'dex'},
+            'arcana': {'type': 'ability_check', 'skill': 'Arcana', 'ability': 'int'},
+            'nature': {'type': 'ability_check', 'skill': 'Nature', 'ability': 'int'},
+            'survival': {'type': 'ability_check', 'skill': 'Survival', 'ability': 'wis'},
+            'track': {'type': 'ability_check', 'skill': 'Survival', 'ability': 'wis'},
+        }
+
+        # Check if any skill keyword appears in player input or narration
+        for keyword, roll_info in roll_indicators.items():
+            if keyword in player_lower or keyword in narration_lower:
+                # Determine DC based on complexity
+                dc = 12  # Default moderate DC
+                if 'difficult' in narration_lower or 'hard' in narration_lower:
+                    dc = 15
+                elif 'easy' in narration_lower or 'simple' in narration_lower:
+                    dc = 10
+                elif 'very hard' in narration_lower or 'nearly impossible' in narration_lower:
+                    dc = 18
+
+                logger.info(f"Detected roll needed: {roll_info['skill']} (DC {dc})")
+
+                return {
+                    'type': roll_info['type'],
+                    'skill': roll_info['skill'],
+                    'ability': roll_info['ability'],
+                    'dc': dc,
+                    'reason': f"to {keyword}"
+                }
+
+        # Check for "try to" or "attempt to" patterns
+        attempt_patterns = ['try to', 'attempt to', 'can i', 'could i']
+        for pattern in attempt_patterns:
+            if pattern in player_lower:
+                # Generic check, default to ability check
+                logger.info(f"Detected attempt pattern: {pattern}")
+                return {
+                    'type': 'ability_check',
+                    'skill': 'Perception',
+                    'ability': 'wis',
+                    'dc': 12,
+                    'reason': 'for this action'
+                }
+
+        return None
+
     def process_custom_action(self, player_input: str) -> dict:
         """
         Handle free-form player action. This is where Ollama is used.
@@ -459,7 +533,10 @@ Do not use asterisks or action descriptions, just speak."""
             npc_name = None
             logger.info(f"DM narrating")
 
-        return {
+        # Check if a dice roll is needed
+        awaiting_roll = self.detect_roll_needed(player_input, clean_narration)
+
+        result = {
             "narration": clean_narration,
             "npc_portrait": portrait if display_mode == "npc" else None,
             "dm_portrait": portrait if display_mode == "dm" else None,
@@ -471,6 +548,12 @@ Do not use asterisks or action descriptions, just speak."""
             "inventory": char.inventory,
             "combat_active": self.game_state.combat_active
         }
+
+        # Add awaiting_roll if a roll is needed
+        if awaiting_roll:
+            result["awaiting_roll"] = awaiting_roll
+
+        return result
 
     def start_combat(self, enemy_names: List[str]) -> dict:
         """

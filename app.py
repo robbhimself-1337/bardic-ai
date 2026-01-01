@@ -4,7 +4,7 @@ load_dotenv()  # Load environment variables from .env file
 
 from services.ollama_client import call_ollama
 from services.voice_input import transcribe_audio
-from services.voice_output import text_to_speech, AUDIO_OUTPUT_DIR
+from services.voice_output import text_to_speech, text_to_speech_with_chunks, AUDIO_OUTPUT_DIR
 from services.dm_engine import DMEngine
 from services.image_generator import generate_intro_scene
 from models.game_state import GameState, Character
@@ -265,17 +265,20 @@ def game():
 
     # Generate TTS for initial narration (with error handling)
     audio_url = None
+    subtitle_chunks = []
     if checkpoint_info.get('narration'):
         try:
-            audio_files = text_to_speech(checkpoint_info['narration'])
-            if audio_files:
+            tts_result = text_to_speech_with_chunks(checkpoint_info['narration'])
+            if tts_result['audio']:
                 # Pass raw filenames - frontend handles /audio/ prefix
-                audio_url = audio_files
+                audio_url = tts_result['audio']
+                subtitle_chunks = tts_result['chunks']
         except Exception as e:
             logger.error(f"TTS generation failed: {e}")
             # Continue without audio - don't crash the game
 
     checkpoint_info['audio_url'] = audio_url
+    checkpoint_info['subtitle_chunks'] = subtitle_chunks
 
     return render_template(
         'game.html',
@@ -436,8 +439,10 @@ def game_custom_action():
         result = dm_engine.process_custom_action(action)
 
         if result.get('narration'):
-            audio_file = text_to_speech(result['narration'])
-            result['audio'] = audio_file if audio_file else None
+            # Use new function that returns both audio and text chunks for subtitle sync
+            tts_result = text_to_speech_with_chunks(result['narration'])
+            result['audio'] = tts_result['audio']
+            result['subtitle_chunks'] = tts_result['chunks']
 
         return jsonify(result)
 

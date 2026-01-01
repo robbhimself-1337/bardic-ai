@@ -49,6 +49,11 @@
             height: 100%;
             object-fit: contain;
             transition: opacity 0.5s ease-in-out;
+            opacity: 0;  /* Start hidden for fade-in effect */
+        }
+
+        .main-image.visible {
+            opacity: 1;
         }
 
         .image-fade-out {
@@ -70,15 +75,17 @@
             z-index: 10;
         }
 
-        /* Subtitle Area - overlays bottom of image */
+        /* Subtitle Area - compact overlay at bottom of image */
         .subtitle-area {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 70%, transparent 100%);
-            padding: 40px;
-            min-height: 150px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.75);
+            padding: 16px 32px;
+            border-radius: 8px;
+            max-width: 80%;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -86,12 +93,17 @@
         }
 
         .subtitle-text {
-            font-size: 1.4em;
-            line-height: 1.6;
+            font-size: 1.3em;
+            line-height: 1.5;
             text-align: center;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-            max-width: 90%;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .subtitle-text.fade-out {
+            opacity: 0;
         }
 
         /* Control Panel - Minimal */
@@ -418,7 +430,11 @@
             <!-- Subtitle Area (overlays bottom of image) -->
             <div class="subtitle-area" id="subtitleArea">
                 <div class="subtitle-text" id="subtitleText">
-                    {{ narration or "Welcome to your adventure..." }}
+                    {% if subtitle_chunks and subtitle_chunks|length > 0 %}
+                        {{ subtitle_chunks[0] }}
+                    {% else %}
+                        {{ narration or "Welcome to your adventure..." }}
+                    {% endif %}
                 </div>
             </div>
 
@@ -508,11 +524,11 @@
         function fadeImageTransition(newSrc) {
             const mainImage = document.getElementById('mainImage');
 
-            mainImage.classList.add('image-fade-out');
+            mainImage.classList.remove('visible');
 
             setTimeout(() => {
                 mainImage.src = newSrc;
-                mainImage.classList.remove('image-fade-out');
+                mainImage.classList.add('visible');
             }, 500);
         }
 
@@ -520,6 +536,27 @@
         function updateSubtitle(text) {
             const subtitleText = document.getElementById('subtitleText');
             subtitleText.textContent = text;
+        }
+
+        // Helper functions for segment playback
+        function updateImage(src) {
+            if (src) {
+                fadeImageTransition(src);
+            }
+        }
+
+        function showNamePlate(name) {
+            const namePlate = document.getElementById('namePlate');
+            const speakerName = document.getElementById('speakerName');
+            if (name) {
+                speakerName.textContent = name;
+                namePlate.style.display = 'block';
+            }
+        }
+
+        function hideNamePlate() {
+            const namePlate = document.getElementById('namePlate');
+            namePlate.style.display = 'none';
         }
 
         // Update character stats
@@ -538,13 +575,19 @@
             }
         }
 
-        // Audio queue for multi-part narration
+        // Audio and subtitle queue for synced playback
         let audioQueue = [];
+        let subtitleQueue = [];
+        let segmentQueue = [];  // For portrait transitions
         let isPlayingQueue = false;
+        let currentSubtitleIndex = 0;
 
-        // Play audio narration (supports comma-separated multiple files)
-        function playNarration(audioInput) {
-            console.log('playNarration called with:', audioInput);
+        // Play narration with segments (handles portrait transitions)
+        function playNarrationWithSegments(audioInput, segments) {
+            console.log('playNarrationWithSegments called');
+            console.log('Audio:', audioInput);
+            console.log('Segments:', segments);
+            
             const audio = document.getElementById('narratorAudio');
 
             // Stop any current playback
@@ -552,42 +595,181 @@
                 currentAudio.pause();
             }
             audioQueue = [];
+            subtitleQueue = [];
+            segmentQueue = segments || [];
             isPlayingQueue = false;
 
-            // Handle different input formats
+            // Parse audio files
             let files = [];
-            
             if (audioInput.includes(',')) {
-                // Multiple files: "uuid1.wav,uuid2.wav,uuid3.wav"
                 files = audioInput.split(',').map(f => {
                     f = f.trim();
                     return f.startsWith('/audio/') ? f : `/audio/${f}`;
                 });
-                console.log('Multiple audio files detected:', files);
             } else if (audioInput.startsWith('/audio/')) {
-                // Single file with path: "/audio/uuid.wav"
                 files = [audioInput];
             } else {
-                // Single file without path: "uuid.wav"
                 files = [`/audio/${audioInput}`];
             }
+
+            // Map segments to audio chunks based on text length ratio
+            if (segmentQueue.length > 0 && files.length > 0) {
+                // Calculate total text length
+                const totalChars = segmentQueue.reduce((sum, seg) => sum + seg.text.length, 0);
+                
+                // Assign audio files to segments proportionally
+                let audioIndex = 0;
+                let charsProcessed = 0;
+                const charsPerAudio = totalChars / files.length;
+                
+                segmentQueue.forEach((seg, i) => {
+                    seg.audioStartIndex = audioIndex;
+                    charsProcessed += seg.text.length;
+                    // Move to next audio file when we've passed the threshold
+                    while (audioIndex < files.length - 1 && charsProcessed >= (audioIndex + 1) * charsPerAudio) {
+                        audioIndex++;
+                    }
+                    seg.audioEndIndex = Math.min(audioIndex, files.length - 1);
+                });
+                
+                console.log('Segments with audio mapping:', segmentQueue);
+            }
+
+            audioQueue = files;
             
-            console.log('Audio files to play:', files.length);
-            
-            if (files.length === 1) {
-                // Single file - play directly
+            if (files.length === 1 && segmentQueue.length <= 1) {
+                // Simple case: single audio, single segment
+                if (segmentQueue.length > 0) {
+                    showSegment(segmentQueue[0]);
+                }
                 audio.src = files[0];
                 audio.play().catch(e => console.log('Audio play failed:', e));
                 currentAudio = audio;
             } else {
-                // Multiple files - use queue
-                audioQueue = files;
-                playNextInQueue();
+                // Complex case: multiple audio files and/or segments
+                playSegmentedQueue();
             }
         }
 
-        // Play next audio in queue
-        function playNextInQueue() {
+        // Show a segment (update subtitle and portrait)
+        function showSegment(segment) {
+            console.log('Showing segment:', segment.speaker, segment.text.substring(0, 50));
+            
+            // Update subtitle
+            updateSubtitleWithFade(segment.text);
+            
+            // Update portrait and name plate
+            if (segment.display_mode === 'npc' && segment.portrait) {
+                updateImage(segment.portrait);
+                showNamePlate(segment.npc_name);
+            } else if (segment.display_mode === 'dm') {
+                // Could show DM portrait or scene image
+                if (segment.portrait) {
+                    updateImage(segment.portrait);
+                }
+                hideNamePlate();
+            }
+        }
+
+        // Play segmented queue with portrait transitions
+        let currentSegmentIndex = 0;
+        let currentAudioIndex = 0;
+        
+        function playSegmentedQueue() {
+            if (audioQueue.length === 0) {
+                isPlayingQueue = false;
+                return;
+            }
+
+            isPlayingQueue = true;
+            const audio = document.getElementById('narratorAudio');
+            
+            // Find which segment should be shown for this audio index
+            if (segmentQueue.length > 0) {
+                for (let i = currentSegmentIndex; i < segmentQueue.length; i++) {
+                    const seg = segmentQueue[i];
+                    if (seg.audioStartIndex !== undefined && 
+                        currentAudioIndex >= seg.audioStartIndex && 
+                        currentAudioIndex <= seg.audioEndIndex) {
+                        if (i !== currentSegmentIndex) {
+                            currentSegmentIndex = i;
+                            showSegment(seg);
+                        } else if (currentAudioIndex === 0) {
+                            // First audio, show first segment
+                            showSegment(seg);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            const nextUrl = audioQueue.shift();
+            audio.src = nextUrl;
+            audio.play().catch(e => console.log('Audio play failed:', e));
+            currentAudio = audio;
+
+            audio.onended = () => {
+                currentAudioIndex++;
+                if (audioQueue.length > 0) {
+                    playSegmentedQueue();
+                } else {
+                    isPlayingQueue = false;
+                    audio.onended = null;
+                    currentAudioIndex = 0;
+                    currentSegmentIndex = 0;
+                }
+            };
+        }
+
+        // Play audio with synced subtitles (simpler version without segments)
+        function playNarrationWithSubtitles(audioInput, subtitleChunks) {
+            console.log('playNarrationWithSubtitles called');
+            
+            const audio = document.getElementById('narratorAudio');
+
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+            audioQueue = [];
+            subtitleQueue = [];
+            isPlayingQueue = false;
+            currentSubtitleIndex = 0;
+
+            let files = [];
+            if (audioInput.includes(',')) {
+                files = audioInput.split(',').map(f => {
+                    f = f.trim();
+                    return f.startsWith('/audio/') ? f : `/audio/${f}`;
+                });
+            } else if (audioInput.startsWith('/audio/')) {
+                files = [audioInput];
+            } else {
+                files = [`/audio/${audioInput}`];
+            }
+
+            subtitleQueue = subtitleChunks || [];
+            
+            if (subtitleQueue.length !== files.length && subtitleQueue.length > 0) {
+                console.log('Subtitle/audio mismatch, showing full text');
+                updateSubtitle(subtitleQueue.join(' '));
+                subtitleQueue = [];
+            }
+
+            if (files.length === 1) {
+                if (subtitleQueue.length > 0) {
+                    updateSubtitleWithFade(subtitleQueue[0]);
+                }
+                audio.src = files[0];
+                audio.play().catch(e => console.log('Audio play failed:', e));
+                currentAudio = audio;
+            } else {
+                audioQueue = files;
+                playSyncedQueue();
+            }
+        }
+
+        // Play synced audio and subtitle queue
+        function playSyncedQueue() {
             if (audioQueue.length === 0) {
                 isPlayingQueue = false;
                 return;
@@ -596,20 +778,45 @@
             isPlayingQueue = true;
             const audio = document.getElementById('narratorAudio');
             const nextUrl = audioQueue.shift();
+            
+            if (subtitleQueue.length > 0) {
+                const nextSubtitle = subtitleQueue.shift();
+                updateSubtitleWithFade(nextSubtitle);
+            }
 
             audio.src = nextUrl;
             audio.play().catch(e => console.log('Audio play failed:', e));
             currentAudio = audio;
 
-            // When this audio ends, play the next one
             audio.onended = () => {
                 if (audioQueue.length > 0) {
-                    playNextInQueue();
+                    playSyncedQueue();
                 } else {
                     isPlayingQueue = false;
                     audio.onended = null;
                 }
             };
+        }
+
+        // Update subtitle with fade transition
+        function updateSubtitleWithFade(text) {
+            const subtitleText = document.getElementById('subtitleText');
+            subtitleText.classList.add('fade-out');
+            
+            setTimeout(() => {
+                subtitleText.textContent = text;
+                subtitleText.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // Legacy function for backwards compatibility
+        function playNarration(audioInput) {
+            playNarrationWithSubtitles(audioInput, null);
+        }
+
+        // Play next audio in queue (legacy)
+        function playNextInQueue() {
+            playSyncedQueue();
         }
 
         // Show/hide loading indicator
@@ -749,16 +956,18 @@
         // Enter conversation mode
         // Update game UI
         function updateGameUI(data) {
-            // Update narration
-            if (data.transition) {
-                updateSubtitle(data.transition);
-                setTimeout(() => {
-                    if (data.narration) {
-                        updateSubtitle(data.narration);
-                    }
-                }, 2000);
-            } else if (data.narration) {
-                updateSubtitle(data.narration);
+            // Update narration subtitle (only if no subtitle_chunks - those are handled by audio sync)
+            if (!data.subtitle_chunks || data.subtitle_chunks.length === 0) {
+                if (data.transition) {
+                    updateSubtitle(data.transition);
+                    setTimeout(() => {
+                        if (data.narration) {
+                            updateSubtitle(data.narration);
+                        }
+                    }, 2000);
+                } else if (data.narration) {
+                    updateSubtitle(data.narration);
+                }
             }
 
             // Update location
@@ -799,10 +1008,15 @@
                     return;
                 }
 
+                // Update UI with new display mode and portrait
                 updateGameUI(data);
 
                 if (data.audio) {
-                    playNarration(data.audio);
+                    if (data.subtitle_chunks && data.subtitle_chunks.length > 0) {
+                        playNarrationWithSubtitles(data.audio, data.subtitle_chunks);
+                    } else {
+                        playNarration(data.audio);
+                    }
                 }
             } catch (error) {
                 console.error('Error submitting action:', error);
@@ -900,12 +1114,23 @@
                 npc_name: "{{ npc_name or '' }}"
             };
 
+            // Fade in the image after a brief delay
+            const mainImage = document.getElementById('mainImage');
+            setTimeout(() => {
+                mainImage.classList.add('visible');
+            }, 100);
+
             setDisplayMode(displayMode, initialData);
 
-            // Auto-play initial audio if available
+            // Auto-play initial audio with synced subtitles if available
             {% if audio_url %}
             setTimeout(() => {
+                {% if subtitle_chunks %}
+                const subtitleChunks = {{ subtitle_chunks | tojson }};
+                playNarrationWithSubtitles("{{ audio_url }}", subtitleChunks);
+                {% else %}
                 playNarration("{{ audio_url }}");
+                {% endif %}
             }, 500);
             {% endif %}
         });

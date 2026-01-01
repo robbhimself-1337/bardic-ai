@@ -104,7 +104,8 @@ class GameState:
         combat_active: bool = False,
         enemies: Optional[List[Dict]] = None,
         narrative_summary: Optional[str] = None,
-        action_history: Optional[List[str]] = None
+        action_history: Optional[List[str]] = None,
+        current_speaker: Optional[str] = None  # Track who player is talking to
     ):
         self.character = character
         self.campaign_id = campaign_id
@@ -116,6 +117,7 @@ class GameState:
         self.enemies = enemies if enemies is not None else []
         self.narrative_summary = narrative_summary if narrative_summary is not None else ""
         self.action_history = action_history if action_history is not None else []
+        self.current_speaker = current_speaker  # None means DM/scene, string means NPC name
         self.created_at = datetime.now().isoformat()
         self.last_saved = datetime.now().isoformat()
 
@@ -216,6 +218,7 @@ class GameState:
             "enemies": self.enemies,
             "narrative_summary": self.narrative_summary,
             "action_history": self.action_history,
+            "current_speaker": self.current_speaker,
             "created_at": self.created_at,
             "last_saved": self.last_saved
         }
@@ -246,7 +249,8 @@ class GameState:
             combat_active=data.get("combat_active", False),
             enemies=data.get("enemies", []),
             narrative_summary=data.get("narrative_summary", ""),
-            action_history=data.get("action_history", [])
+            action_history=data.get("action_history", []),
+            current_speaker=data.get("current_speaker", None)
         )
 
         game_state.created_at = data.get("created_at", datetime.now().isoformat())

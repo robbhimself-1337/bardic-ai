@@ -64,7 +64,16 @@ def split_text_into_chunks(text: str, max_chars: int = MAX_CHARS) -> List[str]:
         chunks.append(remaining[:split_point].strip())
         remaining = remaining[split_point:].strip()
     
-    return chunks
+    # Clean up chunks - remove any that are just punctuation or whitespace
+    cleaned_chunks = []
+    for chunk in chunks:
+        # Remove stray quotation marks and clean up
+        chunk = chunk.strip()
+        # Skip chunks that are just punctuation/quotes
+        if chunk and not all(c in '"\'".,;:!?—-– ' for c in chunk):
+            cleaned_chunks.append(chunk)
+    
+    return cleaned_chunks if cleaned_chunks else chunks[:1]  # Return at least one chunk
 
 
 def text_to_speech(text: str, voice_sample: str = "voice_samples/dm_narrator.wav", speed: float = 1.0) -> Optional[str]:
@@ -117,6 +126,60 @@ def text_to_speech(text: str, voice_sample: str = "voice_samples/dm_narrator.wav
         
         # Return comma-separated list of filenames
         return ",".join(filenames)
+        
+    except Exception as e:
+        logger.error(f"Error generating speech: {str(e)}")
+        raise
+
+
+def text_to_speech_with_chunks(text: str, voice_sample: str = "voice_samples/dm_narrator.wav", speed: float = 1.0) -> dict:
+    """
+    Convert text to speech and return both audio files and text chunks for subtitle sync.
+    
+    Returns:
+        dict: {
+            'audio': 'file1.wav,file2.wav,...',
+            'chunks': ['text chunk 1', 'text chunk 2', ...]
+        }
+    """
+    try:
+        # Check if voice sample exists
+        if not os.path.exists(voice_sample):
+            logger.warning(f"Voice sample not found: {voice_sample}")
+            raise FileNotFoundError(f"Voice sample not found: {voice_sample}")
+
+        # Clean up text
+        text = text.strip()
+        if not text:
+            return {'audio': None, 'chunks': []}
+        
+        # Split into chunks if needed
+        chunks = split_text_into_chunks(text)
+        logger.info(f"Text split into {len(chunks)} chunk(s)")
+        
+        filenames = []
+        
+        for i, chunk in enumerate(chunks):
+            filename = f"{uuid.uuid4()}.wav"
+            output_path = os.path.join(AUDIO_OUTPUT_DIR, filename)
+            
+            logger.info(f"Generating chunk {i+1}/{len(chunks)}: {chunk[:50]}...")
+            
+            tts.tts_to_file(
+                text=chunk,
+                speaker_wav=voice_sample,
+                language="en",
+                file_path=output_path,
+                speed=speed
+            )
+            
+            filenames.append(filename)
+            logger.info(f"Chunk {i+1} saved to {output_path}")
+        
+        return {
+            'audio': ",".join(filenames),
+            'chunks': chunks
+        }
         
     except Exception as e:
         logger.error(f"Error generating speech: {str(e)}")

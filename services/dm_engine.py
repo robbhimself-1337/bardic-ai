@@ -221,14 +221,46 @@ Do not use asterisks or action descriptions, just speak."""
     def process_custom_action(self, player_input: str) -> dict:
         """
         Handle free-form player action. This is where Ollama is used.
-        Detects which NPC is speaking in the response and shows their portrait.
+        
+        Players can either:
+        - Speak directly to an NPC (in character): "Where is the forest?"
+        - Address the DM for actions (out of character): "Joe, I walk to the door"
         """
         checkpoint = self.campaign.get_checkpoint(self.game_state.current_checkpoint)
         char = self.game_state.character
+        
+        # Detect if player is addressing the DM directly (contains "Joe" or similar)
+        # Can appear anywhere: "Joe, I go", "Ok Joe, let's go", "Alright Joe I attack"
+        import re
+        dm_patterns = [
+            r'\bjoe\b',           # "joe" as a word
+            r'\bdm\b',            # "dm" as a word  
+            r'dungeon master',    # full phrase
+        ]
+        player_input_lower = player_input.lower().strip()
+        
+        is_dm_action = any(re.search(pattern, player_input_lower) for pattern in dm_patterns)
+        
+        if is_dm_action:
+            # Strip the DM address from the input
+            cleaned_input = player_input
+            for pattern in dm_patterns:
+                cleaned_input = re.sub(pattern, '', cleaned_input.lower()).strip()
+            # Also clean up common filler words left behind
+            cleaned_input = re.sub(r'^(ok|okay|alright|hey|so|well|um|uh)[,\s]*', '', cleaned_input).strip()
+            # Clean up any leftover commas/spaces at the start
+            cleaned_input = re.sub(r'^[,\s]+', '', cleaned_input).strip()
+            if cleaned_input:
+                player_input = cleaned_input
+            # Clear current speaker - this is a DM action, not NPC dialogue
+            self.game_state.current_speaker = None
+            logger.info(f"DM action detected: {player_input}")
+        
+        current_speaker = self.game_state.current_speaker
 
         # Build context with campaign story info
         context_parts = [
-            "You are a D&D Dungeon Master running a specific campaign.",
+            "You are a D&D Dungeon Master named Joe running a specific campaign.",
             "Stay on theme with the campaign story. Keep responses brief (2-3 sentences).",
             "",
             f"CAMPAIGN: {self.campaign.title}",
@@ -247,6 +279,16 @@ Do not use asterisks or action descriptions, just speak."""
                     topics_summary = "; ".join([f"{k}: {v[:80]}" for k, v in list(npc.dialogue_topics.items())[:3]])
                     npc_info += f" - knows about: {topics_summary}"
                 context_parts.append(npc_info)
+        
+        # Add current conversation context based on whether this is DM action or NPC dialogue
+        if is_dm_action:
+            context_parts.append("\nPLAYER IS ADDRESSING THE DM: This is an action/narration request, not NPC dialogue.")
+            context_parts.append("Respond as [DM] narrating the action. If player approaches an NPC, describe the approach and the NPC can speak.")
+        elif current_speaker:
+            context_parts.append(f"\nCURRENT CONVERSATION: Player is speaking IN CHARACTER to {current_speaker}")
+            context_parts.append(f"{current_speaker} should respond to this dialogue.")
+        else:
+            context_parts.append("\nPLAYER IS NOT IN CONVERSATION: Respond as [DM] or have an NPC initiate.")
         
         # Add available choices as story hooks
         if checkpoint.choices:
@@ -270,18 +312,53 @@ Do not use asterisks or action descriptions, just speak."""
             context_parts.append(f"INVENTORY: {', '.join(char.inventory[:5])}")
 
         context_parts.append("")
-        context_parts.append(f'PLAYER ACTION: "{player_input}"')
+        context_parts.append(f'PLAYER INPUT: "{player_input}"')
         context_parts.append("")
-        context_parts.append("CRITICAL - YOU MUST START YOUR RESPONSE WITH A SPEAKER TAG:")
-        context_parts.append("[DM] if narrating the scene or environment")
-        context_parts.append("[NPC_NAME] if an NPC is speaking, using their exact name")
+        context_parts.append("RESPONSE RULES:")
+        context_parts.append("1. Use ONE speaker tag at the start: [DM] or [NPC_NAME]")
+        context_parts.append("2. Only ONE person speaks per response")
+        if is_dm_action:
+            context_parts.append("3. This is a DM ACTION REQUEST - respond as [DM] narrating what happens")
+            context_parts.append("4. If the player approaches/talks to an NPC, narrate the approach and show the NPC responding")
+        elif current_speaker:
+            context_parts.append(f"3. Player is speaking to {current_speaker} - have them respond")
+        else:
+            context_parts.append("3. No active conversation - use [DM] or have an NPC initiate")
         context_parts.append("")
-        context_parts.append("Examples:")
-        context_parts.append('[Ameiko] "Welcome, traveler! What brings you here?"')
-        context_parts.append('[DM] The tavern falls silent as you enter.')
-        context_parts.append('[Guard Captain Marcus] "We need your help with the goblin problem."')
-        context_parts.append("")
-        context_parts.append("Now respond to the player action. Keep it brief (2-3 sentences). Always start with a speaker tag.")
+        context_parts.append("Keep responses brief (2-3 sentences). Always start with a speaker tag.")
+
+        # Check if player is trying to move to a new location
+        # Look for movement keywords and match against available choices
+        movement_keywords = ['go to', 'head to', 'travel to', 'walk to', 'leave for', 'make my way to', 'visit', 'head towards', 'go towards']
+        player_input_lower = player_input.lower()
+        
+        location_change = None
+        for choice in checkpoint.choices:
+            choice_text_lower = choice.text.lower()
+            # Check if any movement keyword + destination matches a choice
+            for keyword in movement_keywords:
+                if keyword in player_input_lower:
+                    # Extract what comes after the keyword
+                    destination = player_input_lower.split(keyword)[-1].strip()
+                    # Check if destination matches choice text or next checkpoint
+                    if (destination in choice_text_lower or 
+                        choice.next_checkpoint.replace('_', ' ') in destination or
+                        any(word in destination for word in choice_text_lower.split() if len(word) > 3)):
+                        location_change = choice
+                        logger.info(f"Detected location change: {choice.text} -> {choice.next_checkpoint}")
+                        break
+            if location_change:
+                break
+        
+        # If player is moving to a new location, handle it like a choice
+        if location_change:
+            self.game_state.add_action(f"Traveled: {player_input}")
+            transition = location_change.narration or f"You make your way to {location_change.next_checkpoint.replace('_', ' ')}..."
+            new_location = self.enter_checkpoint(location_change.next_checkpoint)
+            return {
+                "transition": transition,
+                **new_location
+            }
 
         prompt = "\n".join(context_parts)
 
@@ -291,61 +368,99 @@ Do not use asterisks or action descriptions, just speak."""
         # Record action
         self.game_state.add_action(player_input)
 
-        # Parse speaker tag from response
-        speaking_npc = None
+        # Parse response - expect ONE speaker tag at the start
+        import re
         narration = response.strip()
         
-        # Look for [Speaker] tag at the start
+        # Extract the speaker tag from the start
+        speaker_tag = None
+        clean_narration = narration
+        
         if narration.startswith('['):
             tag_end = narration.find(']')
             if tag_end > 0:
                 speaker_tag = narration[1:tag_end].strip()
-                narration = narration[tag_end + 1:].strip()
-                
-                logger.info(f"Speaker tag found: {speaker_tag}")
-                
-                # Check if it's an NPC
-                if speaker_tag.upper() != 'DM':
-                    logger.info(f"Looking for NPC match. NPCs available: {[npc.name for npc in checkpoint.npcs_structured]}")
-                    for npc in checkpoint.npcs_structured:
-                        logger.info(f"Comparing '{npc.name.lower()}' == '{speaker_tag.lower()}'")
-                        if npc.name.lower() == speaker_tag.lower():
-                            speaking_npc = npc
-                            logger.info(f"MATCH FOUND: {npc.name}")
-                            break
-                    # Fuzzy match - check if tag contains NPC name
-                    if not speaking_npc:
-                        for npc in checkpoint.npcs_structured:
-                            if npc.name.lower() in speaker_tag.lower() or speaker_tag.lower() in npc.name.lower():
-                                speaking_npc = npc
-                                logger.info(f"FUZZY MATCH FOUND: {npc.name}")
-                                break
-                    if not speaking_npc:
-                        logger.info(f"NO NPC MATCH for tag: {speaker_tag}")
+                clean_narration = narration[tag_end + 1:].strip()
+                logger.info(f"Speaker tag: {speaker_tag}")
         
-        # Fallback: if no tag found, check if NPC name appears early in response
-        # Fallback: if no tag found, check if NPC name appears early in response
-        if not speaking_npc:
-            narration_lower = narration.lower()
+        # Remove any additional tags that slipped through (LLM sometimes ignores instructions)
+        clean_narration = re.sub(r'\[[^\]]+\]', '', clean_narration).strip()
+        clean_narration = re.sub(r'  +', ' ', clean_narration)
+        
+        # Find the speaking NPC (if any)
+        speaking_npc = None
+        original_current_speaker = self.game_state.current_speaker
+        
+        # Bug fix: If LLM used [DM] tag but response starts with dialogue (quote) 
+        # and we have a current speaker, the LLM probably made a mistake
+        # Keep the current speaker in that case
+        if (speaker_tag and speaker_tag.upper() == 'DM' and 
+            clean_narration.startswith('"') and 
+            original_current_speaker and
+            not is_dm_action):
+            # LLM messed up - this looks like NPC dialogue, not DM narration
+            logger.info(f"Detected misattributed dialogue - keeping current speaker: {original_current_speaker}")
             for npc in checkpoint.npcs_structured:
-                if npc.name.lower() in narration_lower[:80]:
+                if npc.name == original_current_speaker:
                     speaking_npc = npc
-                    logger.info(f"Matched NPC '{npc.name}' via fallback (name in first 80 chars)")
+                    speaker_tag = npc.name
                     break
-
+        
+        # Normal NPC lookup if not already found via bug fix
+        if not speaking_npc and speaker_tag and speaker_tag.upper() != 'DM':
+            for npc in checkpoint.npcs_structured:
+                if npc.name.lower() == speaker_tag.lower():
+                    speaking_npc = npc
+                    break
+                # Fuzzy match
+                if npc.name.lower() in speaker_tag.lower() or speaker_tag.lower() in npc.name.lower():
+                    speaking_npc = npc
+                    break
+        
+        # If DM narration, check if an NPC is being introduced/speaking in the text
+        # This handles cases like: [DM] Marcus approaches. "What can I do for you?"
+        introduced_npc = None
+        if not speaking_npc and speaker_tag and speaker_tag.upper() == 'DM':
+            for npc in checkpoint.npcs_structured:
+                # Check if NPC name appears in the narration (they're being introduced)
+                if npc.name.lower() in clean_narration.lower():
+                    introduced_npc = npc
+                    logger.info(f"NPC introduced in DM narration: {npc.name}")
+                    break
+        
+        # Update current speaker tracking
+        if speaking_npc:
+            self.game_state.current_speaker = speaking_npc.name
+            logger.info(f"Updated current_speaker to: {speaking_npc.name}")
+        elif introduced_npc:
+            # NPC was introduced in DM narration - set them as current speaker for next turn
+            self.game_state.current_speaker = introduced_npc.name
+            logger.info(f"Set current_speaker to introduced NPC: {introduced_npc.name}")
+        elif speaker_tag and speaker_tag.upper() == 'DM':
+            # Pure DM narration with no NPC - clear current speaker
+            self.game_state.current_speaker = None
+            logger.info("Cleared current_speaker (DM narration)")
+        
         # Determine display mode and portrait
         if speaking_npc:
             display_mode = "npc"
             portrait = speaking_npc.portrait_url or get_dm_portrait()
             npc_name = speaking_npc.name
             logger.info(f"NPC speaking: {npc_name}, portrait: {portrait}")
+        elif introduced_npc:
+            # Show the introduced NPC's portrait
+            display_mode = "npc"
+            portrait = introduced_npc.portrait_url or get_dm_portrait()
+            npc_name = introduced_npc.name
+            logger.info(f"Showing introduced NPC: {npc_name}, portrait: {portrait}")
         else:
-            display_mode = "dm" 
+            display_mode = "dm"
             portrait = get_dm_portrait()
             npc_name = None
+            logger.info(f"DM narrating")
 
         return {
-            "narration": narration,  # Use cleaned narration without tag
+            "narration": clean_narration,
             "npc_portrait": portrait if display_mode == "npc" else None,
             "dm_portrait": portrait if display_mode == "dm" else None,
             "npc_name": npc_name,

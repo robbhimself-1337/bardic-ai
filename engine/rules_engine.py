@@ -273,8 +273,11 @@ class CheckEngine:
         modifier = self.get_ability_modifier(ability)
         
         # Add proficiency if proficient in this save
-        save_name = f"saving-throw-{ability.lower()}"
-        if save_name in [s.lower().replace('_', '-') for s in self.character.proficiencies.saving_throws]:
+        # Check multiple formats: "str", "con", "saving-throw-str", etc.
+        ability_lower = ability.lower()
+        save_profs_normalized = [s.lower().replace('_', '-').replace('saving-throw-', '') 
+                                  for s in self.character.proficiencies.saving_throws]
+        if ability_lower in save_profs_normalized:
             modifier += self.character.proficiency_bonus
         
         if advantage and not disadvantage:

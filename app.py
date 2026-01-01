@@ -267,22 +267,33 @@ def game():
     audio_url = None
     subtitle_chunks = []
     if checkpoint_info.get('narration'):
+        logger.info(f"Generating TTS for narration: {checkpoint_info['narration'][:100]}...")
         try:
             tts_result = text_to_speech_with_chunks(checkpoint_info['narration'])
+            logger.info(f"TTS result: {tts_result}")
             if tts_result['audio']:
                 # Pass raw filenames - frontend handles /audio/ prefix
                 audio_url = tts_result['audio']
                 subtitle_chunks = tts_result['chunks']
+                logger.info(f"Audio URL: {audio_url}")
         except Exception as e:
             logger.error(f"TTS generation failed: {e}")
+            import traceback
+            traceback.print_exc()
             # Continue without audio - don't crash the game
+    else:
+        logger.warning("No narration in checkpoint_info!")
 
     checkpoint_info['audio_url'] = audio_url
     checkpoint_info['subtitle_chunks'] = subtitle_chunks
 
+    # Convert character to dict for JSON serialization in template
+    character = game_data['game_state'].character
+    character_dict = character.to_dict() if hasattr(character, 'to_dict') else character
+
     return render_template(
         'game.html',
-        character=game_data['game_state'].character,
+        character=character_dict,
         **checkpoint_info
     )
 

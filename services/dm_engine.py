@@ -436,8 +436,23 @@ Do not use asterisks or action descriptions, just speak."""
 
         prompt = "\n".join(context_parts)
 
+        # DEBUG: Log the full prompt being sent to Ollama
+        logger.info("=" * 60)
+        logger.info("PROMPT TO QWEN:")
+        logger.info("=" * 60)
+        for line in prompt.split('\n'):
+            logger.info(line)
+        logger.info("=" * 60)
+
         logger.info("Calling Ollama for custom action...")
         response = call_ollama(prompt)
+        
+        # DEBUG: Log Qwen's response
+        logger.info("=" * 60)
+        logger.info("QWEN RESPONSE:")
+        logger.info("=" * 60)
+        logger.info(response)
+        logger.info("=" * 60)
 
         # Record action
         self.game_state.add_action(player_input)

@@ -1988,7 +1988,11 @@
         // ============================================
 
         function toggleCharacterSheet() {
-            const modal = document.getElementById('characterSheetModal');
+            const modal = document.getElementById('characterSheet');
+            if (!modal) {
+                console.error('Character sheet modal not found');
+                return;
+            }
             isCharacterSheetOpen = !isCharacterSheetOpen;
 
             if (isCharacterSheetOpen) {
@@ -2001,66 +2005,78 @@
         function updateCharacterSheet(characterData) {
             // Update character sheet with fresh data
             // This would be called when receiving updates from backend
+            if (!characterData) return;
 
-            if (characterData.name) {
-                document.getElementById('charName').textContent = characterData.name;
+            // Update name and class
+            const nameEl = document.getElementById('sheetCharName');
+            if (nameEl && characterData.name) {
+                nameEl.textContent = characterData.name;
             }
 
-            if (characterData.race && characterData.char_class && characterData.level) {
-                document.getElementById('charSubtitle').textContent =
-                    `Level ${characterData.level} ${characterData.race} ${characterData.char_class}`;
+            const classEl = document.getElementById('sheetCharClass');
+            if (classEl && characterData.char_class) {
+                classEl.textContent = `Level ${characterData.level || 1} ${characterData.race || ''} ${characterData.char_class}`;
             }
 
             // Update ability scores
-            if (characterData.ability_scores) {
+            if (characterData.stats) {
+                // Old format: stats = {strength: 16, dexterity: 14, ...}
+                const abilityMap = {
+                    'str': 'strength', 'dex': 'dexterity', 'con': 'constitution',
+                    'int': 'intelligence', 'wis': 'wisdom', 'cha': 'charisma'
+                };
                 const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
                 abilities.forEach(ability => {
-                    const score = characterData.ability_scores[ability];
+                    const score = characterData.stats[abilityMap[ability]] || 10;
                     const modifier = Math.floor((score - 10) / 2);
-                    const modText = modifier >= 0 ? `+${modifier}` : modifier;
+                    const modText = modifier >= 0 ? `+${modifier}` : `${modifier}`;
 
-                    const elem = document.getElementById(`char${ability.toUpperCase()}`);
-                    if (elem) {
-                        elem.innerHTML = `<strong>${score}</strong><br><small>${modText}</small>`;
-                    }
+                    const scoreEl = document.getElementById(`sheet${ability.charAt(0).toUpperCase() + ability.slice(1)}`);
+                    const modEl = document.getElementById(`sheet${ability.charAt(0).toUpperCase() + ability.slice(1)}Mod`);
+                    if (scoreEl) scoreEl.textContent = score;
+                    if (modEl) modEl.textContent = modText;
                 });
             }
 
             // Update HP
-            if (characterData.hp) {
-                document.getElementById('charHPCurrent').textContent = characterData.hp.current;
-                document.getElementById('charHPMax').textContent = characterData.hp.max;
-
-                const hpBar = document.getElementById('charHPBar');
-                const hpPercent = (characterData.hp.current / characterData.hp.max * 100);
-                hpBar.style.width = hpPercent + '%';
+            const hpFill = document.getElementById('sheetHpFill');
+            const hpText = document.getElementById('sheetHpText');
+            if (hpFill && hpText && characterData.hp !== undefined && characterData.max_hp !== undefined) {
+                const hpPercent = (characterData.hp / characterData.max_hp * 100);
+                hpFill.style.width = hpPercent + '%';
+                hpText.textContent = `${characterData.hp}/${characterData.max_hp} HP`;
             }
 
-            // Update AC and Speed
-            if (characterData.armor_class) {
-                document.getElementById('charAC').textContent = characterData.armor_class;
-            }
-            if (characterData.speed) {
-                document.getElementById('charSpeed').textContent = `${characterData.speed} ft`;
+            // Update AC
+            const acEl = document.getElementById('sheetAC');
+            if (acEl && characterData.armor_class) {
+                acEl.textContent = characterData.armor_class;
             }
 
-            // Update inventory count
-            if (characterData.inventory) {
-                document.getElementById('charInventoryCount').textContent = characterData.inventory.length;
+            // Update inventory
+            const invEl = document.getElementById('sheetInventory');
+            if (invEl && characterData.inventory) {
+                if (Array.isArray(characterData.inventory) && characterData.inventory.length > 0) {
+                    invEl.innerHTML = characterData.inventory.map(item => `<li>${item}</li>`).join('');
+                } else {
+                    invEl.innerHTML = '<li>No items</li>';
+                }
             }
 
             // Update gold
-            if (characterData.gold) {
-                const total = characterData.gold.total_in_gold || characterData.gold.gp || 0;
-                document.getElementById('charGold').textContent = `${total} gp`;
+            const goldEl = document.getElementById('sheetGold');
+            if (goldEl && characterData.gold !== undefined) {
+                goldEl.textContent = characterData.gold;
             }
 
             // Update conditions
             if (characterData.conditions && characterData.conditions.length > 0) {
-                const conditionsList = document.getElementById('charConditionsList');
-                conditionsList.innerHTML = characterData.conditions.map(c =>
-                    `<span class="condition-tag">${c}</span>`
-                ).join(' ');
+                const conditionsList = document.getElementById('sheetConditions');
+                if (conditionsList) {
+                    conditionsList.innerHTML = characterData.conditions.map(c =>
+                        `<span class="condition-tag">${c}</span>`
+                    ).join(' ');
+                }
             }
         }
 

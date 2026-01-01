@@ -1,0 +1,13 @@
+{
+  "session_id": "test_session",
+  "campaign_id": "goblin_kidnapping_v2",
+  "saved_at": "2025-12-31T23:26:37.468313",
+  "character_name": "Test Hero",
+  "current_node": "rusty_dragon_bar",
+  "flags": {
+    "test_flag": true,
+    "another_flag": true,
+    "has_supplies": true
+  },
+  "note": "Full serialization not yet implemented"
+}

@@ -1,0 +1,978 @@
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:17] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:17] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:17] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:18] "GET /start HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:18] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:18] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:30] "POST /start HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:30] "GET /campaign_select HTTP/1.1" 200 -
+INFO:__main__:Campaign goblin_kidnapping_v2 format: new
+INFO:engine.loaders:Loading campaign from data/campaigns/goblin_kidnapping_v2/campaign.json
+INFO:engine.loaders:✓ Loaded campaign: The Goblin Kidnapping
+INFO:engine.loaders:  Chapters: 1
+INFO:engine.loaders:Loading nodes from data/campaigns/goblin_kidnapping_v2/chapter_1_nodes.json
+INFO:engine.loaders:✓ Loaded 7 nodes
+INFO:engine.loaders:Loading NPCs from data/campaigns/goblin_kidnapping_v2/npcs.json
+INFO:engine.loaders:✓ Loaded 3 NPCs
+INFO:engine.loaders:Loading encounters from data/campaigns/goblin_kidnapping_v2/encounters.json
+INFO:engine.loaders:✓ Loaded 3 encounters
+INFO:engine.state_manager:✓ Initialized new game: 50cd73cc75a4ca62780ccd3bee8bcc4f
+INFO:engine.state_manager:  Starting at: rusty_dragon_main
+INFO:__main__:Started NEW ENGINE campaign goblin_kidnapping_v2 with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:34] "GET /start_campaign/goblin_kidnapping_v2 HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:34] "GET /preparing_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:09:34] "POST /api/prepare_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Scene ready for rusty_dragon_main: /static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.image_generator:Generating image for: Fantasy tavern bar, polished wood, bottles of ale ...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/2f389a6ab4be.png
+INFO:__main__:Scene ready for rusty_dragon_bar: /static/images/generated/scenes/2f389a6ab4be.png
+INFO:services.image_generator:Generating image for: Medieval fantasy town square, cobblestone streets,...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/4a0108c879dd.png
+INFO:__main__:Scene ready for town_square: /static/images/generated/scenes/4a0108c879dd.png
+INFO:services.image_generator:Generating image for: Medieval fantasy guard post, stone building, guard...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/820e89253bd9.png
+INFO:__main__:Scene ready for guard_post: /static/images/generated/scenes/820e89253bd9.png
+INFO:services.image_generator:Generating image for: Small weathered cottage at forest edge, thatched r...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/29062566f288.png
+INFO:__main__:Scene ready for tobias_cottage_exterior: /static/images/generated/scenes/29062566f288.png
+INFO:services.image_generator:Generating image for: Rustic cottage interior, stone fireplace with fire...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/5a30946c484a.png
+INFO:__main__:Scene ready for tobias_cottage_interior: /static/images/generated/scenes/5a30946c484a.png
+INFO:services.image_generator:Generating image for: Edge of dark fantasy forest, massive pine trees, d...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/scenes/29bf8d1584ff.png
+INFO:__main__:Scene ready for forest_edge: /static/images/generated/scenes/29bf8d1584ff.png
+INFO:services.image_generator:Generating image for: Beautiful half-elf woman, long black hair, amber e...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/npcs/f469a37e3335.png
+INFO:__main__:Portrait ready for Ameiko Kaijitsu: /static/images/generated/npcs/f469a37e3335.png
+INFO:services.image_generator:Generating image for: Grizzled human guard captain, scarred face, gray h...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/npcs/7a9108303040.png
+INFO:__main__:Portrait ready for Guard Captain Marcus Thorne: /static/images/generated/npcs/7a9108303040.png
+INFO:services.image_generator:Generating image for: Elderly human hermit, wild white hair and beard, s...
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+INFO:services.image_generator:Image saved to: static/images/generated/npcs/f6a27cffbfa4.png
+INFO:__main__:Portrait ready for Old Man Tobias Greenthorn: /static/images/generated/npcs/f6a27cffbfa4.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Generating TTS for narration: The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous...
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: The Rusty Dragon's main hall would normally be fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air.", 'A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 3.286
+INFO:TTS.utils.synthesizer:Real-time factor: 0.220
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/b131e413-029c-48aa-9cb2-6c244eabe233.wav
+INFO:services.voice_output:Generating chunk 2/3: The fire in the hearth crackles softly, and Ameiko...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes.", "Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,"]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.304
+INFO:TTS.utils.synthesizer:Real-time factor: 0.186
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/323e6074-19f1-4c85-b9a1-6f5c0187aefb.wav
+INFO:services.voice_output:Generating chunk 3/3: now seeming to loom over the subdued atmosphere li...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.018
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/39a40c32-f081-4426-a4ce-5ad725fd20a4.wav
+INFO:__main__:TTS result: {'audio': 'b131e413-029c-48aa-9cb2-6c244eabe233.wav,323e6074-19f1-4c85-b9a1-6f5c0187aefb.wav,39a40c32-f081-4426-a4ce-5ad725fd20a4.wav', 'chunks': ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.", "The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,", 'now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']}
+INFO:__main__:Audio URL: b131e413-029c-48aa-9cb2-6c244eabe233.wav,323e6074-19f1-4c85-b9a1-6f5c0187aefb.wav,39a40c32-f081-4426-a4ce-5ad725fd20a4.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:12:49] "GET /game HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:12:49] "GET /static/images/generated/scenes/c1ce4dfacccc.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:12:50] "GET /audio/b131e413-029c-48aa-9cb2-6c244eabe233.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:13:04] "GET /audio/323e6074-19f1-4c85-b9a1-6f5c0187aefb.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:13:16] "GET /audio/39a40c32-f081-4426-a4ce-5ad725fd20a4.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [DM] Ameiko turns towards you with a forced smile, her eyes still reflecting the worry of recent eve...
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: Ameiko turns towards you with a forced smile, her ...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Ameiko turns towards you with a forced smile, her eyes still reflecting the worry of recent events.', '"Hello there," she greets, her voice soft but steady.', '"I\'m glad to see some cheerful faces today."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.281
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/8a21f543-8637-426d-b630-01b0a7149dd1.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:13:46] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:13:46] "GET /audio/8a21f543-8637-426d-b630-01b0a7149dd1.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:13:46] "GET /Medieval%20fantasy%20tavern%20interior,%20wooden%20tables%20and%20chairs,%20large%20fireplace,%20carved%20dragon%20decoration%20on%20wall,%20worried%20patrons,%20warm%20lighting%20from%20candles%20and%20fire,%20half-elf%20woman%20innkeeper HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/app.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:35] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:35] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:35] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:37] "GET /start HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:37] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:37] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:40] "POST /start HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:40] "GET /campaign_select HTTP/1.1" 200 -
+INFO:__main__:Campaign goblin_kidnapping_v2 format: new
+INFO:engine.loaders:Loading campaign from data/campaigns/goblin_kidnapping_v2/campaign.json
+INFO:engine.loaders:✓ Loaded campaign: The Goblin Kidnapping
+INFO:engine.loaders:  Chapters: 1
+INFO:engine.loaders:Loading nodes from data/campaigns/goblin_kidnapping_v2/chapter_1_nodes.json
+INFO:engine.loaders:✓ Loaded 7 nodes
+INFO:engine.loaders:Loading NPCs from data/campaigns/goblin_kidnapping_v2/npcs.json
+INFO:engine.loaders:✓ Loaded 3 NPCs
+INFO:engine.loaders:Loading encounters from data/campaigns/goblin_kidnapping_v2/encounters.json
+INFO:engine.loaders:✓ Loaded 3 encounters
+INFO:engine.state_manager:✓ Initialized new game: 7c8e32f403a64a74ceb2de7c4083bc72
+INFO:engine.state_manager:  Starting at: rusty_dragon_main
+INFO:__main__:Started NEW ENGINE campaign goblin_kidnapping_v2 with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:42] "GET /start_campaign/goblin_kidnapping_v2 HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:42] "GET /preparing_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:42] "POST /api/prepare_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Scene ready for rusty_dragon_main: /static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/2f389a6ab4be.png
+INFO:__main__:Scene ready for rusty_dragon_bar: /static/images/generated/scenes/2f389a6ab4be.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/4a0108c879dd.png
+INFO:__main__:Scene ready for town_square: /static/images/generated/scenes/4a0108c879dd.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/820e89253bd9.png
+INFO:__main__:Scene ready for guard_post: /static/images/generated/scenes/820e89253bd9.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29062566f288.png
+INFO:__main__:Scene ready for tobias_cottage_exterior: /static/images/generated/scenes/29062566f288.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/5a30946c484a.png
+INFO:__main__:Scene ready for tobias_cottage_interior: /static/images/generated/scenes/5a30946c484a.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29bf8d1584ff.png
+INFO:__main__:Scene ready for forest_edge: /static/images/generated/scenes/29bf8d1584ff.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:__main__:Portrait ready for Ameiko Kaijitsu: /static/images/generated/npcs/f469a37e3335.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/7a9108303040.png
+INFO:__main__:Portrait ready for Guard Captain Marcus Thorne: /static/images/generated/npcs/7a9108303040.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f6a27cffbfa4.png
+INFO:__main__:Portrait ready for Old Man Tobias Greenthorn: /static/images/generated/npcs/f6a27cffbfa4.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Generating TTS for narration: The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous...
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: The Rusty Dragon's main hall would normally be fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air.", 'A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 3.358
+INFO:TTS.utils.synthesizer:Real-time factor: 0.217
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/691201ff-d99f-4809-96da-281bb821a8bd.wav
+INFO:services.voice_output:Generating chunk 2/3: The fire in the hearth crackles softly, and Ameiko...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes.", "Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,"]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.348
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/819e817f-31d2-403a-ab9c-a36eca463b8c.wav
+INFO:services.voice_output:Generating chunk 3/3: now seeming to loom over the subdued atmosphere li...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.086
+INFO:TTS.utils.synthesizer:Real-time factor: 0.186
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/4c4c3c37-954c-4333-848a-2c90aed4a6a3.wav
+INFO:__main__:TTS result: {'audio': '691201ff-d99f-4809-96da-281bb821a8bd.wav,819e817f-31d2-403a-ab9c-a36eca463b8c.wav,4c4c3c37-954c-4333-848a-2c90aed4a6a3.wav', 'chunks': ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.", "The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,", 'now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']}
+INFO:__main__:Audio URL: 691201ff-d99f-4809-96da-281bb821a8bd.wav,819e817f-31d2-403a-ab9c-a36eca463b8c.wav,4c4c3c37-954c-4333-848a-2c90aed4a6a3.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:50] "GET /game HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:50] "GET /static/images/generated/scenes/c1ce4dfacccc.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:20:50] "GET /audio/691201ff-d99f-4809-96da-281bb821a8bd.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:21:05] "GET /audio/819e817f-31d2-403a-ab9c-a36eca463b8c.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:21:17] "GET /audio/4c4c3c37-954c-4333-848a-2c90aed4a6a3.wav HTTP/1.1" 206 -
+INFO:services.voice_input:Starting transcription of /tmp/tmp828ys4h6.webm...
+INFO:services.voice_input:Transcription complete: Hello Amiko....
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [DM] Ameiko turns toward you with a forced smile, her eyes reflecting the worry of the moment. "Hell...
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: Ameiko turns toward you with a forced smile, her e...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Ameiko turns toward you with a forced smile, her eyes reflecting the worry of the moment.', '"Hello there," she greets softly, her voice tinged with concern.', '"I\'m afraid today is not one of our usual lively days at the Rusty Dragon."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.719
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/0ea254f0-296d-4da6-9825-40274f3d6211.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:21:44] "POST /game/voice_action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:21:44] "GET /audio/0ea254f0-296d-4da6-9825-40274f3d6211.wav HTTP/1.1" 206 -
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/dm_engine_v2.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/dm_engine_v2.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:39] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:39] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:41] "GET /start HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:41] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:41] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:45] "POST /start HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:45] "GET /campaign_select HTTP/1.1" 200 -
+INFO:__main__:Campaign goblin_kidnapping_v2 format: new
+INFO:engine.loaders:Loading campaign from data/campaigns/goblin_kidnapping_v2/campaign.json
+INFO:engine.loaders:✓ Loaded campaign: The Goblin Kidnapping
+INFO:engine.loaders:  Chapters: 1
+INFO:engine.loaders:Loading nodes from data/campaigns/goblin_kidnapping_v2/chapter_1_nodes.json
+INFO:engine.loaders:✓ Loaded 7 nodes
+INFO:engine.loaders:Loading NPCs from data/campaigns/goblin_kidnapping_v2/npcs.json
+INFO:engine.loaders:✓ Loaded 3 NPCs
+INFO:engine.loaders:Loading encounters from data/campaigns/goblin_kidnapping_v2/encounters.json
+INFO:engine.loaders:✓ Loaded 3 encounters
+INFO:engine.state_manager:✓ Initialized new game: 6edb7774ccad99bf0634b836b0ae5253
+INFO:engine.state_manager:  Starting at: rusty_dragon_main
+INFO:__main__:Started NEW ENGINE campaign goblin_kidnapping_v2 with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:48] "GET /start_campaign/goblin_kidnapping_v2 HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:48] "GET /preparing_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:48] "POST /api/prepare_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Scene ready for rusty_dragon_main: /static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/2f389a6ab4be.png
+INFO:__main__:Scene ready for rusty_dragon_bar: /static/images/generated/scenes/2f389a6ab4be.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/4a0108c879dd.png
+INFO:__main__:Scene ready for town_square: /static/images/generated/scenes/4a0108c879dd.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/820e89253bd9.png
+INFO:__main__:Scene ready for guard_post: /static/images/generated/scenes/820e89253bd9.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29062566f288.png
+INFO:__main__:Scene ready for tobias_cottage_exterior: /static/images/generated/scenes/29062566f288.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/5a30946c484a.png
+INFO:__main__:Scene ready for tobias_cottage_interior: /static/images/generated/scenes/5a30946c484a.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29bf8d1584ff.png
+INFO:__main__:Scene ready for forest_edge: /static/images/generated/scenes/29bf8d1584ff.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:__main__:Portrait ready for Ameiko Kaijitsu: /static/images/generated/npcs/f469a37e3335.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/7a9108303040.png
+INFO:__main__:Portrait ready for Guard Captain Marcus Thorne: /static/images/generated/npcs/7a9108303040.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f6a27cffbfa4.png
+INFO:__main__:Portrait ready for Old Man Tobias Greenthorn: /static/images/generated/npcs/f6a27cffbfa4.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Generating TTS for narration: The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous...
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: The Rusty Dragon's main hall would normally be fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air.", 'A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 3.189
+INFO:TTS.utils.synthesizer:Real-time factor: 0.216
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/1d505d6c-3368-456d-b3e8-e68977e118c6.wav
+INFO:services.voice_output:Generating chunk 2/3: The fire in the hearth crackles softly, and Ameiko...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes.", "Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,"]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.540
+INFO:TTS.utils.synthesizer:Real-time factor: 0.183
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/4cc2b31c-dc4a-47cc-885d-18cf39dda6ed.wav
+INFO:services.voice_output:Generating chunk 3/3: now seeming to loom over the subdued atmosphere li...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.014
+INFO:TTS.utils.synthesizer:Real-time factor: 0.183
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/afb762d9-8593-4dbf-8b92-e5ad09275480.wav
+INFO:__main__:TTS result: {'audio': '1d505d6c-3368-456d-b3e8-e68977e118c6.wav,4cc2b31c-dc4a-47cc-885d-18cf39dda6ed.wav,afb762d9-8593-4dbf-8b92-e5ad09275480.wav', 'chunks': ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.", "The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,", 'now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']}
+INFO:__main__:Audio URL: 1d505d6c-3368-456d-b3e8-e68977e118c6.wav,4cc2b31c-dc4a-47cc-885d-18cf39dda6ed.wav,afb762d9-8593-4dbf-8b92-e5ad09275480.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:55] "GET /game HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:55] "GET /static/images/generated/scenes/c1ce4dfacccc.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:26:56] "GET /audio/1d505d6c-3368-456d-b3e8-e68977e118c6.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:27:10] "GET /audio/4cc2b31c-dc4a-47cc-885d-18cf39dda6ed.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:27:23] "GET /audio/afb762d9-8593-4dbf-8b92-e5ad09275480.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "Hello there. I wish it were under better circumstances that we meet. Please, take...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: "Hello there. I wish it were under better circumst...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Hello there. I wish it were under better circumstances that we meet. Please, take a seat and let me know if you need anything to drink or eat," she says with a gentle smile,']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.861
+INFO:TTS.utils.synthesizer:Real-time factor: 0.191
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/733922cf-8f85-4dad-b832-27c1e22f8465.wav
+INFO:services.voice_output:Generating chunk 2/2: though her eyes reveal the weight of worry beneath...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['though her eyes reveal the weight of worry beneath her composed exterior.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.784
+INFO:TTS.utils.synthesizer:Real-time factor: 0.177
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/78496922-eff7-4ca1-8e67-0a980373976c.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:27:55] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:27:55] "GET /audio/733922cf-8f85-4dad-b832-27c1e22f8465.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:27:55] "GET /static/images/generated/npcs/f469a37e3335.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:28:04] "GET /audio/78496922-eff7-4ca1-8e67-0a980373976c.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] Oh, thank you for asking, but I'm sure you've noticed the silence around here. It'...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: Oh, thank you for asking, but I'm sure you've noti...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["Oh, thank you for asking, but I'm sure you've noticed the silence around here.", "It's about our beloved Shalelu, and she hasn't been herself lately due to the recent kidnappings of children in Sandpoint."]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.166
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/c8c18f16-a182-488e-a451-6cd391349432.wav
+INFO:services.voice_output:Generating chunk 2/2: She's out searching now, trying to find answers.
+
+...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["She's out searching now, trying to find answers.", 'Ameiko shifts nervously as she looks over her shoulder towards the carved wooden dragon on the wall before returning her gaze to the player.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.993
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/fc1b503c-d3f2-47f6-a843-4ef179cddbad.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:28:35] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:28:35] "GET /audio/c8c18f16-a182-488e-a451-6cd391349432.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:28:46] "GET /audio/fc1b503c-d3f2-47f6-a843-4ef179cddbad.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: True
+INFO:engine.dm_engine_v2:Raw response: [DM] As you turn your gaze toward the carved wooden dragon behind Ameiko, there doesn’t seem to be a...
+INFO:engine.state_manager:Conversation ended
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: As you turn your gaze toward the carved wooden dra...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['As you turn your gaze toward the carved wooden dragon behind Ameiko, there doesn’t seem to be anything immediately unusual about it.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.443
+INFO:TTS.utils.synthesizer:Real-time factor: 0.186
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/f78ff464-7ec7-4739-bd0e-38cd9147f599.wav
+INFO:services.voice_output:Generating chunk 2/3: It still looks like a grand piece of art, with int...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['It still looks like a grand piece of art, with intricate details and vivid colors that stand out against the otherwise somber decor of the tavern.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.480
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/2bf2f502-62ea-4c3f-a094-6fb177d194e1.wav
+INFO:services.voice_output:Generating chunk 3/3: However, as you look closer, one of its eyes appea...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['However, as you look closer, one of its eyes appears slightly askew, as if it had been recently repaired or touched.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.642
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/5d7f44d0-c912-436a-a626-164f8b94111a.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:30:08] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:30:09] "GET /audio/f78ff464-7ec7-4739-bd0e-38cd9147f599.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:30:16] "GET /audio/2bf2f502-62ea-4c3f-a094-6fb177d194e1.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:30:23] "GET /audio/5d7f44d0-c912-436a-a626-164f8b94111a.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [DM] Ameiko approaches your table with a somber expression. "No troublemakers have come here," she r...
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: Ameiko approaches your table with a somber express...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Ameiko approaches your table with a somber expression.', '"No troublemakers have come here," she responds, her voice steady but tinged with worry.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.765
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/4c622cae-9f18-460f-bb2c-2abd4a0dc606.wav
+INFO:services.voice_output:Generating chunk 2/2: "Only people looking for news or trying to help." ...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Only people looking for news or trying to help."', 'She pauses, glancing around at the concerned faces of other patrons before adding, "But something strange has been happening outside these walls."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.118
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/689f1523-954f-4d56-8a3c-d59419c734f2.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:09] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:09] "GET /audio/4c622cae-9f18-460f-bb2c-2abd4a0dc606.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:18] "GET /audio/689f1523-954f-4d56-8a3c-d59419c734f2.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: system, target: None, dm_addressed: False
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: I didn't understand that command....
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["I didn't understand that command."]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.491
+INFO:TTS.utils.synthesizer:Real-time factor: 0.187
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/ca30927b-2af5-47fd-8cd4-826e3d70fa8f.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:51] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:51] "GET /audio/ca30927b-2af5-47fd-8cd4-826e3d70fa8f.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:51] "GET /static/images/dm/dm_portrait.png HTTP/1.1" 304 -
+INFO:engine.dm_engine_v2:Player intent: system, target: None, dm_addressed: False
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: I didn't understand that command....
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["I didn't understand that command."]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.510
+INFO:TTS.utils.synthesizer:Real-time factor: 0.188
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/d13a45db-187a-4436-88dc-a613285fe53d.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:58] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:31:58] "GET /audio/d13a45db-187a-4436-88dc-a613285fe53d.wav HTTP/1.1" 206 -
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/state_manager.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/dm_engine_v2.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:56] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:56] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:57] "GET /start HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:57] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:57] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:59] "POST /start HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:36:59] "GET /campaign_select HTTP/1.1" 200 -
+INFO:__main__:Campaign goblins_gambit format: old
+ERROR:__main__:Error starting campaign: [Errno 2] No such file or directory: 'data/campaigns/templates/goblins_gambit.json'
+Traceback (most recent call last):
+  File "/home/robbhimself/bardic-ai/app.py", line 360, in start_campaign
+    campaign = Campaign.load_campaign(campaign_id)
+  File "/home/robbhimself/bardic-ai/models/campaign.py", line 262, in load_campaign
+    with open(template_path, 'r') as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data/campaigns/templates/goblins_gambit.json'
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:01] "GET /start_campaign/goblins_gambit HTTP/1.1" 500 -
+INFO:__main__:Campaign goblin_cave format: old
+INFO:__main__:Started OLD ENGINE campaign goblin_cave with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:09] "GET /start_campaign/goblin_cave HTTP/1.1" 302 -
+INFO:__main__:Generating TTS for narration: The Rusty Dragon Tavern - A cozy establishment filled with the smell of ale and roasted meat. The in...
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: The Rusty Dragon Tavern - A cozy establishment fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['The Rusty Dragon Tavern - A cozy establishment filled with the smell of ale and roasted meat.', 'The innkeeper, Ameiko, looks worried as she approaches you with urgent news about missing villagers.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.902
+INFO:TTS.utils.synthesizer:Real-time factor: 0.226
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/689841b5-5907-42e6-8295-b7b64ff91138.wav
+INFO:__main__:TTS result: {'audio': '689841b5-5907-42e6-8295-b7b64ff91138.wav', 'chunks': ['The Rusty Dragon Tavern - A cozy establishment filled with the smell of ale and roasted meat. The innkeeper, Ameiko, looks worried as she approaches you with urgent news about missing villagers.']}
+INFO:__main__:Audio URL: 689841b5-5907-42e6-8295-b7b64ff91138.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:12] "GET /game HTTP/1.1" 200 -
+INFO:__main__:Campaign goblin_kidnapping_v2 format: new
+INFO:engine.loaders:Loading campaign from data/campaigns/goblin_kidnapping_v2/campaign.json
+INFO:engine.loaders:✓ Loaded campaign: The Goblin Kidnapping
+INFO:engine.loaders:  Chapters: 1
+INFO:engine.loaders:Loading nodes from data/campaigns/goblin_kidnapping_v2/chapter_1_nodes.json
+INFO:engine.loaders:✓ Loaded 7 nodes
+INFO:engine.loaders:Loading NPCs from data/campaigns/goblin_kidnapping_v2/npcs.json
+INFO:engine.loaders:✓ Loaded 3 NPCs
+INFO:engine.loaders:Loading encounters from data/campaigns/goblin_kidnapping_v2/encounters.json
+INFO:engine.loaders:✓ Loaded 3 encounters
+INFO:engine.state_manager:✓ Initialized new game: 4beea8fec17e5193b2f1630add85ba96
+INFO:engine.state_manager:  Starting at: rusty_dragon_main
+INFO:__main__:Started NEW ENGINE campaign goblin_kidnapping_v2 with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:12] "GET /start_campaign/goblin_kidnapping_v2 HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:12] "GET /preparing_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:12] "POST /api/prepare_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Scene ready for rusty_dragon_main: /static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/2f389a6ab4be.png
+INFO:__main__:Scene ready for rusty_dragon_bar: /static/images/generated/scenes/2f389a6ab4be.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/4a0108c879dd.png
+INFO:__main__:Scene ready for town_square: /static/images/generated/scenes/4a0108c879dd.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/820e89253bd9.png
+INFO:__main__:Scene ready for guard_post: /static/images/generated/scenes/820e89253bd9.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29062566f288.png
+INFO:__main__:Scene ready for tobias_cottage_exterior: /static/images/generated/scenes/29062566f288.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/5a30946c484a.png
+INFO:__main__:Scene ready for tobias_cottage_interior: /static/images/generated/scenes/5a30946c484a.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29bf8d1584ff.png
+INFO:__main__:Scene ready for forest_edge: /static/images/generated/scenes/29bf8d1584ff.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:__main__:Portrait ready for Ameiko Kaijitsu: /static/images/generated/npcs/f469a37e3335.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/7a9108303040.png
+INFO:__main__:Portrait ready for Guard Captain Marcus Thorne: /static/images/generated/npcs/7a9108303040.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f6a27cffbfa4.png
+INFO:__main__:Portrait ready for Old Man Tobias Greenthorn: /static/images/generated/npcs/f6a27cffbfa4.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Generating TTS for narration: The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous...
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: The Rusty Dragon's main hall would normally be fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air.", 'A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.782
+INFO:TTS.utils.synthesizer:Real-time factor: 0.187
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/4b2f4043-11da-4c24-b1f1-fa6e8b7848bd.wav
+INFO:services.voice_output:Generating chunk 2/3: The fire in the hearth crackles softly, and Ameiko...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes.", "Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,"]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.259
+INFO:TTS.utils.synthesizer:Real-time factor: 0.183
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/5f4d300a-b81b-4bbe-b5b0-eb65c0c5bc1e.wav
+INFO:services.voice_output:Generating chunk 3/3: now seeming to loom over the subdued atmosphere li...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.997
+INFO:TTS.utils.synthesizer:Real-time factor: 0.181
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/896a58c3-b645-4ecb-8871-ee27a417cbfe.wav
+INFO:__main__:TTS result: {'audio': '4b2f4043-11da-4c24-b1f1-fa6e8b7848bd.wav,5f4d300a-b81b-4bbe-b5b0-eb65c0c5bc1e.wav,896a58c3-b645-4ecb-8871-ee27a417cbfe.wav', 'chunks': ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.", "The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,", 'now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']}
+INFO:__main__:Audio URL: 4b2f4043-11da-4c24-b1f1-fa6e8b7848bd.wav,5f4d300a-b81b-4bbe-b5b0-eb65c0c5bc1e.wav,896a58c3-b645-4ecb-8871-ee27a417cbfe.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:19] "GET /game HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:19] "GET /static/images/generated/scenes/c1ce4dfacccc.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:19] "GET /audio/4b2f4043-11da-4c24-b1f1-fa6e8b7848bd.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:33] "GET /audio/5f4d300a-b81b-4bbe-b5b0-eb65c0c5bc1e.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:37:45] "GET /audio/896a58c3-b645-4ecb-8871-ee27a417cbfe.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: True
+INFO:engine.dm_engine_v2:Raw response: [DM] You approach Ameiko, who seems to notice you and forces a small smile as she comes closer. Her ...
+INFO:engine.state_manager:Conversation ended
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: You approach Ameiko, who seems to notice you and f...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['You approach Ameiko, who seems to notice you and forces a small smile as she comes closer.', 'Her eyes tell a different story, though—concern and worry are evident beneath the surface of her polite demeanor.', '"Ah, greetings!']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.676
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/21cc6e3f-7168-4a37-bf20-92be761049dd.wav
+INFO:services.voice_output:Generating chunk 2/2: Thank you for coming in today despite... everythin...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Thank you for coming in today despite... everything.', 'Is there something I can help with?"']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.034
+INFO:TTS.utils.synthesizer:Real-time factor: 0.177
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/ca081f19-eb4b-4e8c-8d13-672892be07ef.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:38:39] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:38:39] "GET /audio/21cc6e3f-7168-4a37-bf20-92be761049dd.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:38:39] "GET /static/images/dm/dm_portrait.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:38:53] "GET /audio/ca081f19-eb4b-4e8c-8d13-672892be07ef.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [DM] Ameiko's expression softens slightly as she looks at the player, her eyes reflecting a mixture ...
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: Ameiko's expression softens slightly as she looks ...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["Ameiko's expression softens slightly as she looks at the player, her eyes reflecting a mixture of gratitude and sorrow.", '"Thank you for asking," she says quietly, her voice tinged with worry.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.296
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/189117c1-0ac1-4e6a-b430-73f848e32d6f.wav
+INFO:services.voice_output:Generating chunk 2/2: "I'm afraid today isn't like any other day here at...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"I\'m afraid today isn\'t like any other day here at the Rusty Dragon. Early this morning, my brother Kaijitsu was kidnapped by goblins. They demand a ransom in exchange for his safe return."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.142
+INFO:TTS.utils.synthesizer:Real-time factor: 0.190
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/7fe5c537-e23c-46f0-b277-54c552fd72bc.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:39:39] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:39:39] "GET /audio/189117c1-0ac1-4e6a-b430-73f848e32d6f.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:39:50] "GET /audio/7fe5c537-e23c-46f0-b277-54c552fd72bc.wav HTTP/1.1" 206 -
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/dm_engine_v2.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug: * Detected change in '/home/robbhimself/bardic-ai/engine/dm_engine_v2.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+^C                                                                                                                                                                                                                                           
+┌──(venv)─(robbhimself㉿parsesnip)-[~/bardic-ai]
+└─$ python app.py 
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.88:5000
+INFO:werkzeug:Press CTRL+C to quit
+INFO:werkzeug: * Restarting with stat
+INFO:services.voice_input:Loading Whisper base model...
+INFO:services.voice_input:Whisper model loaded successfully
+INFO:services.voice_output:Loading Coqui TTS XTTS v2 model...
+INFO:TTS.utils.manage:tts_models/multilingual/multi-dataset/xtts_v2 is already downloaded.
+INFO:TTS.tts.models:Using model: xtts
+INFO:services.voice_output:TTS model loaded successfully on CUDA
+INFO:__main__:Open5e cache found and loaded
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 493-015-329
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:15] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:15] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:15] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:17] "GET /start HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:17] "GET /static/images/characters/Anastasia_20251230_222231.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:17] "GET /static/images/characters/Smite_20251230_223303.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:20] "POST /start HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:20] "GET /campaign_select HTTP/1.1" 200 -
+INFO:__main__:Campaign goblin_kidnapping_v2 format: new
+INFO:engine.loaders:Loading campaign from data/campaigns/goblin_kidnapping_v2/campaign.json
+INFO:engine.loaders:✓ Loaded campaign: The Goblin Kidnapping
+INFO:engine.loaders:  Chapters: 1
+INFO:engine.loaders:Loading nodes from data/campaigns/goblin_kidnapping_v2/chapter_1_nodes.json
+INFO:engine.loaders:✓ Loaded 7 nodes
+INFO:engine.loaders:Loading NPCs from data/campaigns/goblin_kidnapping_v2/npcs.json
+INFO:engine.loaders:✓ Loaded 3 NPCs
+INFO:engine.loaders:Loading encounters from data/campaigns/goblin_kidnapping_v2/encounters.json
+INFO:engine.loaders:✓ Loaded 3 encounters
+INFO:engine.state_manager:✓ Initialized new game: f836508ce4c3f73ee0738fc01f39721b
+INFO:engine.state_manager:  Starting at: rusty_dragon_main
+INFO:__main__:Started NEW ENGINE campaign goblin_kidnapping_v2 with character Smite
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:23] "GET /start_campaign/goblin_kidnapping_v2 HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:23] "GET /preparing_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:23] "POST /api/prepare_campaign/goblin_kidnapping_v2 HTTP/1.1" 200 -
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Scene ready for rusty_dragon_main: /static/images/generated/scenes/c1ce4dfacccc.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/2f389a6ab4be.png
+INFO:__main__:Scene ready for rusty_dragon_bar: /static/images/generated/scenes/2f389a6ab4be.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/4a0108c879dd.png
+INFO:__main__:Scene ready for town_square: /static/images/generated/scenes/4a0108c879dd.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/820e89253bd9.png
+INFO:__main__:Scene ready for guard_post: /static/images/generated/scenes/820e89253bd9.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29062566f288.png
+INFO:__main__:Scene ready for tobias_cottage_exterior: /static/images/generated/scenes/29062566f288.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/5a30946c484a.png
+INFO:__main__:Scene ready for tobias_cottage_interior: /static/images/generated/scenes/5a30946c484a.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/29bf8d1584ff.png
+INFO:__main__:Scene ready for forest_edge: /static/images/generated/scenes/29bf8d1584ff.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:__main__:Portrait ready for Ameiko Kaijitsu: /static/images/generated/npcs/f469a37e3335.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/7a9108303040.png
+INFO:__main__:Portrait ready for Guard Captain Marcus Thorne: /static/images/generated/npcs/7a9108303040.png
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f6a27cffbfa4.png
+INFO:__main__:Portrait ready for Old Man Tobias Greenthorn: /static/images/generated/npcs/f6a27cffbfa4.png
+INFO:services.image_generator:Using cached image: static/images/generated/scenes/c1ce4dfacccc.png
+INFO:__main__:Generating TTS for narration: The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous...
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: The Rusty Dragon's main hall would normally be fil...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air.", 'A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 3.167
+INFO:TTS.utils.synthesizer:Real-time factor: 0.216
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/718a2516-43b4-4353-9dab-7be79bad2dfa.wav
+INFO:services.voice_output:Generating chunk 2/3: The fire in the hearth crackles softly, and Ameiko...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes.", "Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,"]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.221
+INFO:TTS.utils.synthesizer:Real-time factor: 0.183
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/f730a462-d2c1-4f3c-aa3f-3d93d263a49b.wav
+INFO:services.voice_output:Generating chunk 3/3: now seeming to loom over the subdued atmosphere li...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.959
+INFO:TTS.utils.synthesizer:Real-time factor: 0.181
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/839f7328-4dc5-4258-ad71-3c3af49ec086.wav
+INFO:__main__:TTS result: {'audio': '718a2516-43b4-4353-9dab-7be79bad2dfa.wav,f730a462-d2c1-4f3c-aa3f-3d93d263a49b.wav,839f7328-4dc5-4258-ad71-3c3af49ec086.wav', 'chunks': ["The Rusty Dragon's main hall would normally be filled with laughter and the smell of Ameiko's famous curry, but today a heavy silence hangs in the air. A handful of worried townsfolk sit at scattered tables, speaking in hushed voices.", "The fire in the hearth crackles softly, and Ameiko moves between tables with forced cheer that doesn't reach her eyes. Behind her, a carved wooden dragon adorns the wall - the tavern's namesake,", 'now seeming to loom over the subdued atmosphere like a guardian watching over troubled times.']}
+INFO:__main__:Audio URL: 718a2516-43b4-4353-9dab-7be79bad2dfa.wav,f730a462-d2c1-4f3c-aa3f-3d93d263a49b.wav,839f7328-4dc5-4258-ad71-3c3af49ec086.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:30] "GET /game HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:30] "GET /static/images/generated/scenes/c1ce4dfacccc.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:30] "GET /audio/718a2516-43b4-4353-9dab-7be79bad2dfa.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:44] "GET /audio/f730a462-d2c1-4f3c-aa3f-3d93d263a49b.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:49:55] "GET /audio/839f7328-4dc5-4258-ad71-3c3af49ec086.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "Hello there," she says with a warm but strained smile. "I'm sorry the tavern isn'...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: "Hello there," she says with a warm but strained s...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Hello there," she says with a warm but strained smile.', '"I\'m sorry the tavern isn\'t in its usual spirits today. Have you heard about what\'s happened?"']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.621
+INFO:TTS.utils.synthesizer:Real-time factor: 0.181
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/ec09fd9f-0161-478a-aadf-dd0b4e507865.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:21] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:21] "GET /audio/ec09fd9f-0161-478a-aadf-dd0b4e507865.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:21] "GET /static/images/generated/npcs/f469a37e3335.png HTTP/1.1" 304 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "Oh, my apologies," she starts, her voice soft but urgent. "I was just telling the...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: "Oh, my apologies," she starts, her voice soft but...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Oh, my apologies," she starts, her voice soft but urgent.', '"I was just telling them about how Sandpoint\'s children were taken by goblins yesterday evening.', "It's..."]
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.042
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/a177a355-32d0-4d00-9ae2-02d01515da32.wav
+INFO:services.voice_output:Generating chunk 2/2: it's a terrible thing, and I don't know who to tur...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["it's a terrible thing, and I don't know who to turn to for help.", '" Her eyes search the player’s face hopefully, looking for any sign of support or guidance.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.714
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/2bd80bff-76d5-4bfa-9681-d94ac05c1227.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:47] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:47] "GET /audio/a177a355-32d0-4d00-9ae2-02d01515da32.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:50:58] "GET /audio/2bd80bff-76d5-4bfa-9681-d94ac05c1227.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] Her eyes flash with determination as she listens to your declaration. "That's exac...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: Her eyes flash with determination as she listens t...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Her eyes flash with determination as she listens to your declaration.', '"That\'s exactly what I was hoping you\'d say," she replies, her voice warm but strained.', '"The guards found tracks leading north into the Mosswood Forest.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.462
+INFO:TTS.utils.synthesizer:Real-time factor: 0.181
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/5e3f69b1-a583-4972-9b7f-7b71e2099427.wav
+INFO:services.voice_output:Generating chunk 2/2: Old Man Tobias lives out that way—he might know so...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Old Man Tobias lives out that way—he might know something useful.', '"']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.066
+INFO:TTS.utils.synthesizer:Real-time factor: 0.180
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/d25ecd0f-9a94-4381-8cf4-cca742c8ed25.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:51:40] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:51:40] "GET /audio/5e3f69b1-a583-4972-9b7f-7b71e2099427.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:51:53] "GET /audio/d25ecd0f-9a94-4381-8cf4-cca742c8ed25.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "Oh, yes, we have plenty of supplies in the back. Please take what you need to hel...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: "Oh, yes, we have plenty of supplies in the back. ...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Oh, yes, we have plenty of supplies in the back. Please take what you need to help find Belka and the others."', 'Her voice is warm but strained as she tries to hide her worry.', '"I\'m so sorry this happened.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.272
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/a8a82c06-4b6e-49b3-b3bb-28bd400ed880.wav
+INFO:services.voice_output:Generating chunk 2/2: If there's anything else I can do for you, just le...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ["If there's anything else I can do for you, just let me know.", '"']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.845
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/6800d037-3ad5-4bba-859f-678e0f31f2a6.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:52:48] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:52:48] "GET /audio/a8a82c06-4b6e-49b3-b3bb-28bd400ed880.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:53:00] "GET /audio/6800d037-3ad5-4bba-859f-678e0f31f2a6.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: True
+INFO:engine.dm_engine_v2:Raw response: [DM] You approach the bar and Ameiko greets you with a warm but strained smile. She quickly hands yo...
+INFO:engine.state_manager:Conversation ended
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: You approach the bar and Ameiko greets you with a ...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['You approach the bar and Ameiko greets you with a warm but strained smile.', 'She quickly hands you a small pack containing various useful items such as ropes, torches, and some healing potions.', '"Take whatever you need," she says softly.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.830
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/10a8cb39-7d0f-4b1f-9d46-2e0c40584c80.wav
+INFO:services.voice_output:Generating chunk 2/2: "Please bring back my sisters safe."...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Please bring back my sisters safe."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 0.436
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/86bef3f2-63cc-4ed1-88f8-be7c98cd4164.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:53:28] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:53:28] "GET /audio/10a8cb39-7d0f-4b1f-9d46-2e0c40584c80.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:53:29] "GET /static/images/dm/dm_portrait.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:53:43] "GET /audio/86bef3f2-63cc-4ed1-88f8-be7c98cd4164.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: True
+INFO:engine.dm_engine_v2:Raw response: [DM] As you survey the main hall of the Rusty Dragon Tavern, you notice several townsfolk who seem d...
+INFO:engine.state_manager:Conversation ended
+INFO:services.voice_output:Text split into 3 chunk(s)
+INFO:services.voice_output:Generating chunk 1/3: As you survey the main hall of the Rusty Dragon Ta...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['As you survey the main hall of the Rusty Dragon Tavern, you notice several townsfolk who seem deeply concerned.', 'At a corner table, a middle-aged man with a thick beard and worn leather armor appears particularly distressed;']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.519
+INFO:TTS.utils.synthesizer:Real-time factor: 0.182
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/5b34bcae-1950-4ade-b904-a00cf47528c2.wav
+INFO:services.voice_output:Generating chunk 2/3: he frequently checks his watch, likely waiting for...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['he frequently checks his watch, likely waiting for news or someone important.', "His name is Aldern Jorick, and he's a local hunter known to be friendly and helpful.", 'Ameiko approaches you, sensing your interest in the patrons.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.418
+INFO:TTS.utils.synthesizer:Real-time factor: 0.177
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/d795053a-3623-4fb8-b2d5-9fc483980608.wav
+INFO:services.voice_output:Generating chunk 3/3: "If you're looking for leads on what happened with...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"If you\'re looking for leads on what happened with the missing children, Aldern might know something. He\'s been trying to help since morning."']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.272
+INFO:TTS.utils.synthesizer:Real-time factor: 0.183
+INFO:services.voice_output:Chunk 3 saved to /tmp/bardic_audio/610f25e7-0880-4d8d-a996-1f30475941d6.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:55:06] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:55:06] "GET /audio/5b34bcae-1950-4ade-b904-a00cf47528c2.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:55:19] "GET /audio/d795053a-3623-4fb8-b2d5-9fc483980608.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:55:32] "GET /audio/610f25e7-0880-4d8d-a996-1f30475941d6.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "Oh, Aldern isn't just any man. He's a quiet sort, always on the move, but he care...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: "Oh, Aldern isn't just any man. He's a quiet sort,...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Oh, Aldern isn\'t just any man.', "He's a quiet sort, always on the move, but he cares deeply about Sandpoint.", 'He was here visiting his sister when the goblins struck.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.075
+INFO:TTS.utils.synthesizer:Real-time factor: 0.181
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/216bce21-8a05-430f-a160-942c251f3aa9.wav
+INFO:services.voice_output:Generating chunk 2/2: If anyone can help us understand what happened and...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['If anyone can help us understand what happened and how to stop them, it’s him.', '"']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.269
+INFO:TTS.utils.synthesizer:Real-time factor: 0.177
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/6bb2a1f6-ac53-408b-866d-7da673853ae3.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:56:13] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:56:13] "GET /audio/216bce21-8a05-430f-a160-942c251f3aa9.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:56:14] "GET /static/images/generated/npcs/f469a37e3335.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:56:24] "GET /audio/6bb2a1f6-ac53-408b-866d-7da673853ae3.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: action, target: None, dm_addressed: True
+INFO:engine.dm_engine_v2:Raw response: [DM] Aldern Rockfinder sits quietly at a table in the corner of the tavern, his brow furrowed as he ...
+INFO:engine.state_manager:Conversation ended
+INFO:services.voice_output:Text split into 2 chunk(s)
+INFO:services.voice_output:Generating chunk 1/2: Aldern Rockfinder sits quietly at a table in the c...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['Aldern Rockfinder sits quietly at a table in the corner of the tavern, his brow furrowed as he reads through some papers.', 'As you approach him, he looks up with a mixture of surprise and relief upon seeing someone willing to engage.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.560
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/e0c339e0-08bd-47e6-9c60-5d4aeea59fdf.wav
+INFO:services.voice_output:Generating chunk 2/2: "Ah, thank you for coming over," Aldern says, sett...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"Ah, thank you for coming over," Aldern says, setting aside his documents and extending a hand for a formal introduction.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 1.662
+INFO:TTS.utils.synthesizer:Real-time factor: 0.185
+INFO:services.voice_output:Chunk 2 saved to /tmp/bardic_audio/ade3f352-95d8-4916-8f47-a209cb98666b.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:57:19] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:57:19] "GET /audio/e0c339e0-08bd-47e6-9c60-5d4aeea59fdf.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:57:19] "GET /static/images/dm/dm_portrait.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:57:32] "GET /audio/ade3f352-95d8-4916-8f47-a209cb98666b.wav HTTP/1.1" 206 -
+INFO:engine.dm_engine_v2:Player intent: dialogue, target: ameiko, dm_addressed: False
+INFO:engine.dm_engine_v2:Raw response: [Ameiko Kaijitsu] "We do, indeed. I can't rest easy knowing my little brother and the other children...
+INFO:engine.state_manager:Now speaking with: ameiko
+INFO:services.image_generator:Using cached image: static/images/generated/npcs/f469a37e3335.png
+INFO:services.voice_output:Text split into 1 chunk(s)
+INFO:services.voice_output:Generating chunk 1/1: "We do, indeed. I can't rest easy knowing my littl...
+INFO:TTS.utils.synthesizer:Text split into sentences.
+INFO:TTS.utils.synthesizer:Input: ['"We do, indeed. I can\'t rest easy knowing my little brother and the other children are in danger. Would you be willing to help us find them?"', 'Her eyes search yours earnestly, a mix of worry and hope lingering within their amber depths.']
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.voices:Generated voice from reference audio
+INFO:TTS.utils.synthesizer:Processing time: 2.760
+INFO:TTS.utils.synthesizer:Real-time factor: 0.184
+INFO:services.voice_output:Chunk 1 saved to /tmp/bardic_audio/62438d10-f90b-4462-b4fb-abf55a74428b.wav
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:58:21] "POST /game/action HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:58:21] "GET /audio/62438d10-f90b-4462-b4fb-abf55a74428b.wav HTTP/1.1" 206 -
+INFO:werkzeug:127.0.0.1 - - [01/Jan/2026 11:58:21] "GET /static/images/generated/npcs/f469a37e3335.png HTTP/1.1" 304 -
+

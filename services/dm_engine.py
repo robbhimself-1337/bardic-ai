@@ -8,7 +8,7 @@ import logging
 from typing import Dict, List, Optional
 from models.game_state import GameState, Character
 from models.campaign import Campaign, NPCDialogue
-from services.ollama_client import call_ollama
+from services.llm_service import call_llm as call_ollama  # Backwards compatible
 from services.image_generator import (
     generate_scene,
     generate_npc_portrait,

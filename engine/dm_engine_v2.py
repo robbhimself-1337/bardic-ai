@@ -610,6 +610,14 @@ class NewDMEngine:
         if intent.type == PlayerIntentType.SYSTEM:
             return self._handle_system_command(intent)
         
+        # Get context for logging
+        context = self.state_manager.get_context_for_ai()
+        
+        # Log training data - location and NPCs present
+        npc_names = [npc['name'] for npc in context.get('npcs_present', [])]
+        logger.info(f"TRAINING_CONTEXT: location={context['location']['node_id']}, npcs_present={npc_names}")
+        logger.info(f"TRAINING_INPUT: raw=\"{player_input}\", cleaned=\"{intent.cleaned_input}\"")
+        
         # Build prompt
         prompt = self.build_prompt(intent)
         logger.debug(f"Prompt:\n{prompt}")
@@ -620,6 +628,10 @@ class NewDMEngine:
         
         # Parse and validate response
         response = self.parse_response(raw_response, intent)
+        
+        # Log full training data entry
+        response_preview = response.narration[:200] + "..." if len(response.narration) > 200 else response.narration
+        logger.info(f"TRAINING_OUTPUT: speaker_tag=\"{response.speaker}\", response=\"{response_preview}\"")
         
         # Apply state changes
         self._apply_state_changes(response, intent)

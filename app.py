@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 
-from services.ollama_client import call_ollama
+from services.llm_service import call_llm as call_ollama  # Unified LLM service (Ollama or Claude)
 from services.voice_input import transcribe_audio
 from services.voice_output import text_to_speech, text_to_speech_with_chunks, AUDIO_OUTPUT_DIR
 from services.dm_engine import DMEngine
